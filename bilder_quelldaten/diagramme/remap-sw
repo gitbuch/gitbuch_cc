@@ -1,0 +1,32 @@
+#!/bin/sh
+
+usage() {
+    echo "usage: "$(basename $0)" <file.dia> [<file2.dia>...]" >&2
+    exit 1
+}
+
+# check all files
+for f in "$@"; do
+    [ -f "$f" ] || usage
+done
+[ $# -ge 1 ] || usage
+
+anchor='<dia:color val="#'
+MAPFILE="global-sw-map"
+[ -f "$MAPFILE" ] || { echo "fatal: not found: $MAPFILE" >&2; exit 2; }
+
+SED=''
+while read old new; do
+    [ $old != \# ] || continue # skip comments
+    SED="${SED}s/${anchor}${old}/${anchor}${new}/g;"
+done < global-sw-map
+
+for f in "$@"; do
+    t="$(mktemp .dia.XXXXXX)"
+    zcat "$f" | sed "$SED" | gzip - > "$t"
+
+    echo -n "creating PNG... "
+    dia "$t" -s 2000x -e "../../bilder/$(basename "$f" .dia).png"
+
+    rm -fv $t
+done
