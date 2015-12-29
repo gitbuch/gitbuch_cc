@@ -1,0 +1,905 @@
+[[ch.intro]]
+== Einführung und erste Schritte ==
+
+Das folgende Kapitel bietet eine kompakte Einführung in Grundbegriffe
+und Konfigurationseinstellungen von Git. Ein kleines Beispielprojekt
+zeigt, wie Sie eine Datei mit Git unter Versionsverwaltung stellen und
+mit welchen Kommandos Sie die wichtigsten Arbeitsschritte erledigen.
+
+[[sec.begriffe]]
+=== Grundbegriffe === 
+
+Einige wichtige Fachbegriffe werden im Folgenden immer wieder
+vorkommen und bedürfen darum einer kurzen Erläuterung. Wenn Sie schon
+Erfahrung mit einem anderen Versionskontrollsystem gesammelt haben,
+werden Ihnen einige der damit verbundenen Konzepte bekannt sein, wenn
+vielleicht auch unter anderem Namen.
+
+
+
+indexterm:[Versionskontrollsystem,Definition]
+indextermsee:[VCS,Versionskontrollsystem]
+indextermsee:[SCM,Versionskontrollsystem]
+indexterm:[Repository,Definition]
+indexterm:[Working Tree,Definition]
+indextermsee:[Working Directory,Working Tree]
+indexterm:[Commit,Definition]
+indexterm:[HEAD,Definition]
+indexterm:[SHA-1]
+indextermsee:[Secure Hash Algorithm,SHA-1]
+indexterm:[Commit-ID]
+indexterm:[Objektmodell,Definition]
+indexterm:[Index,Definition]
+indextermsee:[Staging Area,Index]
+indextermsee:[Cache,Index]
+indexterm:[Clone,Definition]
+indexterm:[Branch,Definition]
+indexterm:[master,Definition]
+indexterm:[Tag,Definition]
+
+'Versionskontrollsystem' ('Version Control System', VCS):: Ein System
+zur Verwaltung und Versionierung von Software oder anderer digitaler
+Informationen.  Prominente Beispiele sind Git, Subversion, CVS,
+Mercurial (hg), Darcs und Bazaar.  Synonyme sind 'Software
+Configuration Management' (SCM) und 'Revision Control System'.
++
+Wir unterscheiden zwischen 'zentralen' und 'verteilten' Systemen.  In
+einem zentralen System, wie z.B. Subversion, muss es einen zentralen
+Server geben, auf dem die Geschichte des Projekts gespeichert
+wird. Alle Entwickler müssen sich mit diesem Server verbinden, um die
+Versionsgeschichte einzusehen oder Änderungen vorzunehmen. In einem
+verteilten System wie Git gibt es viele gleichwertige Instanzen des
+Repositorys, so dass jeder Entwickler über sein eigenes Repository
+verfügt. Der Austausch von Veränderungen ist flexibler und erfolgt
+nicht zwingend über einen zentralen Server.
+
+'Repository':: Das Repository ist eine Datenbank, in der Git die
+verschiedenen Zustände jeder Datei eines Projekts über die Zeit hinweg
+ablegt. Insbesondere wird jede Änderung als Commit verpackt und
+abgespeichert.
+
+'Working Tree':: Das 'Arbeitsverzeichnis' von Git (in anderen Systemen
+manchmal auch 'Sandbox' oder 'Checkout' genannt). Hier nehmen Sie alle
+Modifikationen am Quellcode vor. Oft findet man dafür auch die
+Bezeichnung 'Working Directory'.
+
+'Commit':: Veränderungen am Working Tree, also z.B. modifizierte oder
+neue Dateien, werden im Repository als Commits gespeichert. Ein Commit
+enthält sowohl diese Veränderungen als auch Metadaten, wie den Autor
+der Veränderungen, Datum und Uhrzeit, und eine Nachricht ('Commit
+Message'), die die Veränderungen beschreibt.  Ein Commit referenziert
+immer den Zustand 'aller' verwalteten Dateien zu einem bestimmten
+Zeitpunkt.  Die verschiedenen Git-Kommandos dienen dazu, Commits zu
+erstellen, zu manipulieren, einzusehen oder die Beziehungen zwischen
+ihnen zu verändern.
+
+
+`HEAD`:: Eine symbolische Referenz auf den neuesten Commit im
+aktuellen Branch. Von dieser Referenz hängt ab, welche Dateien Sie im
+Working Tree zur Bearbeitung vorfinden.  Es handelt sich also um den
+``Kopf'' bzw. die Spitze eines Entwicklungsstrangs (nicht zu
+verwechseln mit `HEAD` in Systemen wie CVS oder SVN).
+
+
+'SHA-1':: Der 'Secure Hash Algorithm' erstellt eine eindeutige, 160
+Bit lange Prüfsumme (40 hexadezimale Zeichen) für beliebige digitale
+Informationen. Alle Commits in Git werden nach ihrer SHA-1-Summe
+benannt ('Commit-ID'), die aus dem Inhalt und den Metadaten des
+Commits errechnet wird. Es ist sozusagen eine 'inhaltsabhängige'
+Versionsnummer, z.B.{empty}{nbsp}`f785b8f9ba1a1f5b707a2c83145301c807a7d661`.
+
+
+
+'Objektmodell':: Ein Git-Repository lässt sich als Graph von Commits
+modellieren, der durch Git-Kommandos manipuliert wird.  Durch diese
+Modellierung ist es sehr einfach, die Funktionsweise von Git
+detailliert zu beschreiben. Für eine ausführliche Beschreibung des
+Objektmodells siehe <<sec.objektmodell>>.
+
+
+
+'Index':: Der Index ist eine Zwischenstufe zwischen Working Tree und
+Repository, in der Sie einen Commit vorbereiten.  Der Index
+'indiziert' also, welche Änderungen an welchen Dateien Sie als Commit
+verpacken wollen.  Dieses Konzept ist einzigartig in Git und bereitet
+Anfängern und Umsteigern häufig Schwierigkeiten. Wir widmen uns dem
+Index ausführlich in <<sec.index>>.
+
+
+
+'Clone':: Wenn Sie sich ein Git-Repository aus dem Internet
+herunterladen, erzeugen Sie einen Klon ('Clone') dieses Repositorys.
+Der Klon enthält alle Informationen, die im Ursprungsrepository
+enthalten sind, vor allem also die gesamte Versionsgeschichte
+einschließlich aller Commits.
+
+
+
+'Branch':: Eine Abzweigung in der Entwicklung.  Branches werden in der
+Praxis verwendet, um beispielsweise neue Features zu entwickeln, Releases
+vorzubereiten oder um alte Versionen mit Bugfixes zu versorgen.
+Branches sind -- ebenso wie das Zusammenführen von Branches ('Merge')
+-- in Git extrem einfach zu handhaben und ein herausragendes Feature
+des Systems.
+
+
+
+`master`:: Da Sie zum Arbeiten mit Git mindestens
+    einen Branch brauchen, wird beim Initialisieren eines neuen
+    Repositorys der Branch `master` erstellt. Der Name ist eine
+    Konvention (analog zum `trunk` in anderen Systemen); Sie
+    können diesen Branch beliebig umbenennen oder löschen, sofern
+    mindestens ein anderer Branch zur Verfügung steht. Der
+    `master` unterscheidet sich technisch in keiner Weise von
+    anderen Branches.
+
+
+
+'Tag':: Tags sind symbolische Namen für schwer zu
+    merkende SHA-1-Summen. Wichtige Commits, wie z.B. Releases,
+    können Sie mit Tags kennzeichnen. Ein Tag kann einfach nur ein
+    Bezeichner, wie z.B.{empty}{nbsp}`v1.6.2`, sein, oder zusätzlich
+    Metadaten wie Autor, Beschreibung und GPG-Signatur enthalten.
+
+
+
+[[sec.erste-schritte]]
+=== Erste Schritte mit Git === 
+
+Zum Einstieg wollen wir an einem kleinen Beispiel den Arbeitsablauf
+mit Git illustrieren. Wir erstellen ein Repository und entwickeln
+darin einen Einzeiler, ein ``Hello, World!''-Programm in Perl.
+
+Damit Git einen Commit einem Autor zuordnen kann, müssen Sie Ihren
+Namen und Ihre E-Mail-Adresse hinterlegen:
+
+indexterm:[user.name]
+indexterm:[user.email]
+
+
+[subs="macros,quotes"]
+--------
+$ *git config --global user.name "Max Mustermann"*
+$ *git config --global user.email "max.mustermann@example.com"*
+--------
+
+Beachten Sie, dass bei einem Aufruf von Git ein 'Subkommando'
+angegeben wird, in diesem Fall `config`.  Git stellt alle
+Operationen durch solche Subkommandos zur Verfügung.  Wichtig ist
+auch, dass bei einem Aufruf von `git config` kein Gleichheitszeichen verwendet wird.  Folgender Aufruf ist also
+'falsch':
+
+
+[subs="macros,quotes"]
+--------
+$ *git config --global user.name = "Max Mustermann"*
+--------
+
+Das ist besonders für Anfänger eine Stolperfalle, da Git keine
+Fehlermeldung ausgibt, sondern das Gleichheitszeichen als zu setzenden
+Wert übernimmt.
+
+
+[[sec.erstes-repo]]
+==== Das erste Repository ==== 
+
+Bevor wir mit Git Dateien verwalten, müssen wir ein Repository für das
+Beispiel-Projekt erstellen. Das Repository wird 'lokal' erstellt,
+liegt also nur auf dem Dateisystem des Rechners, auf dem Sie arbeiten.
+
+Es empfiehlt sich generell, den Umgang mit Git zunächst lokal zu üben
+und erst später in die dezentralen Eigenschaften und Funktionen von
+Git einzutauchen.
+
+indexterm:[git,init]
+indexterm:[Initialisierung,eines Repositories]
+
+
+[subs="macros,quotes"]
+--------
+$ *git init beispiel*
+Initialized empty Git repository in /home/esc/beispiel/.git/
+--------
+
+indexterm:[git,status]
+Zunächst erstellt Git das Verzeichnis `beispiel/`, falls es
+noch nicht existiert. Danach initialisiert Git ein leeres Repository
+in diesem Verzeichnis und legt dafür ein Unterverzeichnis
+`.git/` an, in dem interne Daten verwaltet werden. Sollte das
+Verzeichnis `beispiel/` bereits existieren, erstellt Git darin
+ein neues Repository.  Gibt es bereits sowohl das Verzeichnis wie auch
+ein Repository, macht Git gar nichts.  Wir wechseln in das Verzeichnis und
+schauen uns mit `git status` den aktuellen Zustand an:
+
+
+
+
+[subs="macros,quotes"]
+--------
+$ *cd beispiel*
+$ *git status*
+On branch master
+
+Initial commit
+
+nothing to commit (create/copy files and use "git add" to track)
+--------
+
+Git weist uns darauf hin, dass wir vor dem ersten Commit stehen
+(`Initial commit`), hat aber nichts gefunden, was in diesen
+Commit einfließen könnte (`nothing to commit`). Dafür liefert
+es einen Hinweis, welche Schritte sich als nächste anbieten (das tun
+übrigens die meisten Git-Kommandos): ``Erstellen oder kopieren Sie
+Dateien, und verwenden Sie `git add`, um diese mit Git zu
+verwalten.''
+
+[[sec.erster-commit]]
+==== Der erste Commit ==== 
+
+Übergeben wir Git nun eine erste Datei zur Verwaltung, und zwar ein
+``Hello World!''-Programm in Perl.  Selbstverständlich
+können Sie stattdessen auch ein beliebiges Programm in der
+Programmiersprache Ihrer Wahl schreiben.
+
+Wir erstellen zunächst die Datei `hello.pl` mit folgendem
+Inhalt
+
+--------
+print "Hello World!\n";
+--------
+
+und führen das Script einmal aus:
+
+
+
+[subs="macros,quotes"]
+--------
+$ *perl hello.pl*
+Hello World!
+--------
+
+Damit sind wir bereit, die Datei mit Git zu verwalten. Schauen wir
+uns vorher aber noch die Ausgabe von `git status` an:
+
+
+
+[subs="macros,quotes"]
+--------
+$ *git status*
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+
+      hello.pl
+nothing added to commit but untracked files present (use "git add" to track)
+--------
+
+indexterm:[git,add]
+Zwar steht der erste Commit noch bevor, aber Git registriert, dass
+sich nun bereits Dateien in diesem Verzeichnis befinden, die dem System
+allerdings nicht bekannt sind -- Git nennt solche Dateien
+`untracked`. Es handelt sich hier natürlich um unser kleines
+Perl-Programm.  Um es mit Git zu verwalten, nutzen wir den Befehl
+`git add <datei>`:
+
+
+
+[subs="macros,quotes"]
+--------
+$ *git add hello.pl*
+--------
+
+Das `add` steht generell für ``Änderungen hinzufügen''
+-- Sie werden es also immer dann benötigen, wenn Sie Dateien
+bearbeitet haben, nicht nur beim ersten Hinzufügen!
+
+Git liefert bei diesem Befehl keine Ausgabe. Mit `git status`
+überprüfen Sie, ob der Aufruf erfolgreich war:
+
+
+[subs="macros,quotes"]
+--------
+$ *git status*
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached &lt;file&gt;..." to unstage)
+
+      new file:   hello.pl
+--------
+
+Git wird die Veränderungen -- also unsere neue Datei -- beim nächsten
+Commit übernehmen. Allerdings ist dieser Commit noch nicht vollzogen
+-- wir haben ihn bisher lediglich vorbereitet. 
+
+Um genau zu sein, haben wir die Datei dem 'Index' hinzugefügt,
+einer Zwischenstufe, in der Sie Veränderungen, die in den nächsten
+Commit einfließen sollen, sammeln. Weitere Erklärungen zu diesem
+Konzept in <<sec.index>>.
+
+Bei  `git status` sehen Sie unter
+`Changes to be committed` immer, welche Dateien sich im Index
+befinden, also in den nächsten Commit übernommen werden.
+
+Alles ist bereit für den ersten Commit mit dem Kommando
+`git commit`. Außerdem übergeben wir auf der Kommandozeile die
+Option `-m` mit einer Commit-Nachricht ('Commit Message'),
+in der wir den Commit beschreiben:
+
+indexterm:[git,commit]
+
+
+
+
+[subs="macros,quotes"]
+--------
+$ *git commit -m "Erste Version"*
+[master (root-commit) 07cc103] Erste Version
+ 1 file changed, 1 insertion(+)
+ create mode 100644 hello.pl
+--------
+
+Git bestätigt, dass der Vorgang erfolgreich abgeschlossen wurde und
+die Datei von nun an verwaltet wird. Die etwas kryptische Ausgabe
+bedeutet soviel wie: Git hat den initialen Commit
+(`root-commit`) mit der entsprechenden Nachricht erstellt. Es
+wurde eine Zeile in einer Datei hinzugefügt und die Datei mit den
+Unix-Rechten `0644` angelegt.{empty}footnote:[Auch
+  wenn Sie das Beispiel exakt nachvollziehen, werden Sie nicht
+  dieselben SHA-1-Prüfsummen erhalten, da diese unter anderem aus dem
+  Inhalt des Commits, dem Autor, und dem Commit-Zeitpunkt errechnet
+  werden.]
+
+Wie Sie mittlerweile sicher festgestellt haben, ist `git
+  status` ein unerlässliches Kommando in der täglichen Arbeit -- wir
+nutzen es an dieser Stelle noch einmal:
+
+
+
+
+[subs="macros,quotes"]
+--------
+$ *git status*
+On branch master
+nothing to commit, working directory clean
+--------
+
+Unser Beispiel-Repository ist jetzt ``sauber'', denn es gibt
+weder Veränderungen im Working Tree noch im Index, auch keine Dateien,
+die nicht mit Git verwaltet werden ('Untracked Files').
+
+[[sec.commits-einsehen]]
+==== Commits einsehen ==== 
+
+Zum Abschluss dieser kleinen Einführung stellen wir Ihnen noch zwei
+sehr nützliche Kommandos vor, die Sie häufig einsetzen werden, um die
+Versionsgeschichte von Projekten zu untersuchen.
+
+Zunächst erlaubt `git show` die Untersuchung eines einzelnen
+Commits – ohne weitere Argumente ist das der aktuellste:
+
+indexterm:[git,show]
+
+
+[subs="macros,quotes"]
+--------
+$ *git show*
+commit 07cc103feb393a93616842921a7bec285178fd56
+Author: Valentin Haenel &lt;pass:quotes[valentin.haenel@gmx.de]&gt;
+Date:   Tue Nov 16 00:40:54 2010 +0100
+
+    Erste Version
+
+diff --git a/hello.pl b/hello.pl
+new file mode 100644
+index 0000000..fa5a091
+--- /dev/null
+pass:quotes[\+++ b/hello.pl]
+@@ -0,0 +1 @@
++print "Hello World!\n";
+--------
+
+Sie sehen alle relevanten Informationen zu dem Commit: die
+'Commit-ID', den Autor, das Datum und die Uhrzeit des Commits,
+die Commit-Nachricht sowie eine Zusammenfassung der Veränderungen im
+'Unified-Diff'-Format.
+
+Standardmäßig gibt `git show` immer den `HEAD` aus (ein
+symbolischer Name für den aktuellsten Commit); Sie könnten aber auch
+z.B. die Commit-ID, also die SHA-1-Prüfsumme des Commits, ein
+eindeutiges Präfix davon oder den Branch (in diesem Fall
+`master`) angeben. Somit sind in
+diesem Beispiel folgende Kommandos äquivalent:
+
+
+[subs="macros,quotes"]
+--------
+$ *git show*
+$ *git show HEAD*
+$ *git show master*
+$ *git show 07cc103*
+$ *git show 07cc103feb393a93616842921a7bec285178fd56*
+--------
+
+Wollen Sie mehr als einen Commit einsehen, empfiehlt sich `git
+  log`.  Um das Kommando sinnvoll zu demonstrieren, bedarf es weiterer
+Commits; andernfalls würde sich die Ausgabe kaum von `git show`
+unterscheiden, da das Beispiel-Repository im Moment nur einen einzigen
+Commit enthält. Fügen wir also folgende Kommentarzeile dem ``Hello
+  World!''-Programm hinzu:
+
+--------
+# Hello World! in Perl
+--------
+
+Schauen wir uns der Übung halber noch einmal mit `git status`
+den aktuellen Zustand an:
+
+
+[subs="macros,quotes"]
+--------
+$ *git status*
+On branch master
+Changes not staged for commit:
+  (use "git add &lt;file&gt;..." to update what will be committed)
+  (use "git checkout -- &lt;file&gt;..." to discard changes in working 
+   directory)
+
+      modified:   hello.pl
+
+no changes added to commit (use "git add" and/or "git commit -a")
+--------
+
+Benutzen Sie danach, wie in der Ausgabe des Kommandos schon
+beschrieben, `git add`, um die Veränderungen dem Index
+hinzuzufügen. Wie bereits erwähnt, wird `git add` sowohl zum
+Hinzufügen neuer Dateien wie auch zum Hinzufügen von Veränderungen an
+Dateien, die bereits verwaltet werden, verwendet.
+
+
+[subs="macros,quotes"]
+--------
+$ *git add hello.pl*
+--------
+
+Erstellen Sie anschließend einen Commit:
+
+
+[subs="macros,quotes"]
+--------
+$ *git commit -m "Kommentar-Zeile"*
+[master 8788e46] Kommentar-Zeile
+ 1 file changed, 1 insertion(+)
+--------
+
+indexterm:[git,log]
+Nun zeigt Ihnen `git log` die beiden Commits:
+
+
+[subs="macros,quotes"]
+--------
+$ *git log*
+commit 8788e46167aec2f6be92c94c905df3b430f6ecd6
+Author: Valentin Haenel pass:quotes[&lt;valentin.haenel@gmx.de&gt;]
+Date:   Fri May 27 12:52:58 2011 +0200
+
+    Kommentar-Zeile
+
+commit 07cc103feb393a93616842921a7bec285178fd56
+Author: Valentin Haenel pass:quotes[&lt;valentin.haenel@gmx.de&gt;]
+Date:   Tue Nov 16 00:40:54 2010 +0100
+
+    Erste Version
+--------
+
+[[chap.git-config]]
+=== Git konfigurieren === 
+
+indexterm:[Konfiguration]
+Wie die meisten textbasierten Programme bietet Git eine Fülle an
+Konfigurationsoptionen. Es ist daher jetzt an der Zeit, einige
+grundlegende Einstellungen vorzunehmen. Dazu gehören Farbeinstellungen,
+die in neueren Versionen standardmäßig bereits eingeschaltet sind und
+die es Ihnen erleichtern, die Ausgabe von Git-Kommandos zu erfassen,
+sowie kleine Aliase (Abkürzungen) für häufig benötigte Kommandos.
+
+indexterm:[Konfiguration,aktuelles Repository]
+indexterm:[Konfiguration,global]
+indexterm:[git,config]
+Git konfigurieren Sie über das Kommando `git config`. Die
+Konfiguration wird einem Format ähnlich einer INI-Datei gespeichert.
+Ohne Angabe weiterer Parameter gilt die Konfiguration nur für das
+aktuelle Repository (`.git/config`). Mit der Option `--global` wird sie in
+der Datei `.gitconfig` im Home-Verzeichnis des Nutzers abgelegt
+und gilt dann für alle Repositories.{empty}footnote:[Sie können die
+nutzerspezifische Konfiguration alternativ auch unter dem XDG-konformen
+Pfad `.config/git/config` im Home-Verzeichnis ablegen (oder
+entsprechend relativ zu Ihrer gesetzten Umgebungsvariable
+`$XDG_CONFIG_HOME`).]
+
+Wichtige Einstellungen, die Sie immer vornehmen sollten, sind Name
+und E-Mail-Adresse des Benutzers:
+
+indexterm:[user.name]
+indexterm:[user.email]
+
+
+[subs="macros,quotes"]
+--------
+$ *git config --global user.name "Max Mustermann"*
+$ *git config --global user.email "max.mustermann@example.com"*
+--------
+
+indexterm:[.gitconfig]
+indexterm:[Leerzeichen,bei Wertzuweisung]
+Beachten Sie, dass Sie Leerzeichen im Wert der Einstellung schützen
+müssen (durch Anführungszeichen oder Backslashes). Außerdem folgt der
+Wert direkt auf den Namen der Option -- ein Gleichheitszeichen ist auch
+hier nicht nötig. Das Ergebnis des Kommandos findet sich anschließend
+in der Datei `~/.gitconfig`:
+
+
+[subs="macros,quotes"]
+--------
+$ *less ~/.gitconfig*
+[user]
+    name = Max Mustermann
+    email = pass:quotes[max.mustermann@example.com]
+--------
+
+Die Einstellungen gelten nun ``global'', also für alle
+Repositories, die Sie unter diesem Nutzernamen bearbeiten.  Wollen Sie
+für ein bestimmtes Projekt eine andere E-Mail-Adresse als Ihre global
+definierte angeben, ändern Sie dort einfach die Einstellung (diesmal
+natürlich ohne den Zusatz `--global`):
+
+
+[subs="macros,quotes"]
+--------
+$ *git config user.email pass:quotes[maintainer@project.example.com]*
+--------
+
+indexterm:[/etc/gitconfig]
+indexterm:[Konfiguration,systemweit]
+Bei der Abfrage einer Option geht Git so vor, dass es zuerst die
+Einstellung im aktuellen Repository nutzt, sofern vorhanden,
+andernfalls die aus der globalen `.gitconfig`; gibt es auch
+diese nicht, wird auf den Default-Wert
+zurückgegriffen.footnote:[Sofern vorhanden,
+  werden auch Einstellungen aus `/etc/gitconfig` eingelesen
+  (mit niedrigster Priorität). Setzen kann man Optionen in dieser
+  Datei über den Parameter `--system`, wofür aber Root-Rechte
+  notwendig sind. Systemweit Git-Optionen zu setzen ist aber
+  unüblich.]  Letzteren erhält man für alle Optionen in der Man-Page
+`git-config`. Eine Liste aller gesetzten Einstellungen fragen
+Sie per `git config -l` ab.
+
+indexterm:[Konfiguration,Einstellung löschen]
+Sie können die Datei `.gitconfig` (bzw. im Repository
+`.git/config`) auch von Hand editieren. Gerade zum Löschen
+einer Einstellung ist das sinnvoll -- zwar bietet `git config`
+auch eine Option `--unset`, die entsprechende Zeile in einem
+Editor zu löschen ist aber einfacher.
+
+[TIP]
+==================
+Die Kommandos `git config -e` bzw. `git config --global -e` starten
+den für Git konfigurierten Editor auf der lokalen bzw. globalen
+Konfigurationsdatei.
+==================
+
+Beachten Sie allerdings, dass Git beim 'Setzen' von Optionen
+durch ein entsprechendes Kommando problematische Zeichen im Wert der
+Option automatisch schützt, so dass keine fehlerhaften
+Konfigurationsdateien entstehen.
+
+[[sec.git-alias]]
+==== Git Aliase ==== 
+
+indextermsee:[Konfiguration Aliase,Aliase]
+indexterm:[Aliase]
+Git bietet Ihnen über 'Aliase' die Möglichkeit, einzelne
+Kommandos und sogar ganze Kommandosequenzen abzukürzen. Die Syntax lautet:
+
+
+[subs="macros,quotes"]
+--------
+$ pass:quotes[*git config alias.&lt;alias-name&gt; &lt;entsprechung&gt;*]
+--------
+
+Um etwa `st` als Alias für `status` zu setzen:
+
+
+[subs="macros,quotes"]
+--------
+$ *git config --global alias.st status*
+$ *git st*
+On branch master
+...
+--------
+
+Sie können auch Optionen in ein Alias einbauen, z.B.:
+
+
+[subs="macros,quotes"]
+--------
+$ *git config --global alias.gconfig \'config --global'*
+--------
+
+Weitere nützliche Aliase finden Sie im weiteren Verlauf des Buches;
+wie Sie komplexere Aliase erstellen, ist in
+<<sec.git-erweiterte-aliase>> beschrieben.  Vorab aber schon
+einige nützliche Abkürzungen:
+
+--------
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    he = help
+    cl = clone
+--------
+
+
+[[chap.color-defaults]]
+==== Farbe einstellen ==== 
+
+indexterm:[Farbe,Ausgabe von Git]
+indexterm:[Konfiguration,Farbe]
+indexterm:[color.ui]
+Überaus hilfreich ist die Option `color.ui`, die prüft, ob Git
+die Ausgabe diverser Kommandos einfärben soll. So erscheinen gelöschte
+Dateien und Zeilen rot, neue Dateien und Zeilen grün, Commit-IDs 
+gelb usw. In neueren Git-Versionen (ab 1.8.4) ist diese Einstellung
+bereits automatisch gesetzt, Sie müssen also nichts tun.
+
+indexterm:[Farbe,Terminal vs. Pipe]
+indexterm:[Pager,wann wird aufgerufen]
+Die Option `color.ui` sollte auf `auto` gesetzt sein
+-- erfolgt die Ausgabe von Git in ein Terminal, werden Farben
+verwendet. Schreibt das Kommando stattdessen in eine Datei oder wird
+die Ausgabe an ein anderes Programm gepipet, so gibt Git keine
+Farbsequenzen aus, da das die automatische Weiterverarbeitung
+behindern könnte.
+
+
+[subs="macros,quotes"]
+--------
+$ *git config --global color.ui auto*
+--------
+
+
+[[chap.config-encoding]]
+==== Zeichensätze einstellen ==== 
+
+indexterm:[Konfiguration,Zeichensätze]
+indexterm:[Zeichensätze,für Commits]
+indexterm:[Encoding,für Commits]
+indexterm:[Encoding,Commit vs. verwaltete Dateien]
+indexterm:[UTF-8,Default-Encoding]
+indexterm:[I18N]
+Sofern nicht anders eingestellt, nimmt Git für alle Texte, also vor
+allem für die Namen der Autoren und die Commit-Nachricht, UTF-8 als
+Zeichenkodierung an. Wollen Sie
+ein anderes Encoding, sollten Sie dies explizit
+konfigurieren:footnote:[``i18n'' ist eine
+  gebräuchliche Abkürzung für das Wort ``Internationalization'' --
+  die 18 steht für die Anzahl der ausgelassenen Buchstaben zwischen
+  dem ersten und dem letzten Buchstaben des Wortes.]
+
+
+[subs="macros,quotes"]
+--------
+$ *git config i18n.commitEncoding ISO-8859-1*
+--------
+
+Analog bestimmt die Einstellung `i18n.logOutputEncoding`, in
+welchen Zeichensatz Git die Namen und Commit-Nachrichten konvertiert,
+bevor sie ausgegeben werden.
+
+Das Encoding der 'Dateien', die von Git verwaltet werden, spielt
+hier keine Rolle und wird von diesen Einstellungen nicht beeinflusst --
+Dateien sind nur Bit-Streams, die Git nicht interpretiert.
+
+indexterm:[less,LESSCHARSET]
+
+[TIP]
+================
+Wenn Sie in einer UTF-8-Umgebung mit Dateien, die nach ISO-8859-1
+kodiert sind, umgehen müssen, sollten Sie die Einstellung Ihres Pagers
+(s.u.) entsprechend anpassen. Für die Autoren bewährt sich die
+folgende Einstellung:
+
+[subs="macros,quotes"]
+--------
+$ *git config core.pager \'env LESSCHARSET=iso8859 less'*
+--------
+================
+
+[[sec.config-eol]]
+==== Zeilenenden einstellen ==== 
+
+indexterm:[Zeilenenden]
+indexterm:[CR vs. CRLF]
+Da Git auf Windows-Systemen wie auf unixoiden Systemen läuft, muss es
+das Problem verschiedener Zeilenende-Konventionen lösen. (Das betrifft
+nur Text-Dateien -- Binärdateien, die Git als solche erkennt, werden
+von dieser Behandlung ausgenommen.)
+
+indexterm:[core.eol]
+Dafür ist im Wesentlichen die Einstellung `core.eol` relevant,
+die einen der Werte `lf`, `crlf` oder `native`
+annehmen kann. Die Standardeinstellung `native` lässt Git den
+System-Default verwenden -- Unix: nur Line Feed (`lf`),
+Windows: Carriage Return & Line Feed (`crlf`). Die Datei wird
+automatisch konvertiert, um nur Line Feeds zu erhalten, wird aber bei
+Bedarf mit CRLF ausgecheckt.
+
+indexterm:[Zeilenenden,Konvertierung bei Checkout]
+indexterm:[core.safecrlf]
+Zwischen den beiden Varianten kann Git bei einem Checkout der Datei
+konvertieren; wichtig ist aber, dass die beiden Typen nicht vermischt
+werden. Dafür bietet die Option `core.safecrlf` einen
+Mechanismus, den Nutzer zu warnen (Wert `warn`) oder gar den
+Commit zu verbieten (Wert `true`).
+
+indexterm:[core.autocrlf]
+Eine sichere Einstellung, die auch mit älteren Git-Versionen unter
+Windows-Systemen funktioniert, ist `core.autocrlf` auf
+`input` zu setzen: Dadurch wird automatisch beim
+'Einlesen' der Dateien vom Dateisystem CRLF durch LF ersetzt. Ihr
+Editor muss dann entsprechend mit LF-Enden umgehen können.
+
+Sie können diese Einstellungen auch explizit pro Datei bzw.
+Unterverzeichnis angeben, so dass das Format über alle Plattformen
+hinweg gleich ist (siehe dafür <<sec.attributes>>).
+
+[[chap.ext-tools]]
+==== Editor, Pager und Browser einstellen ==== 
+
+indexterm:[Editor]
+indexterm:[Konfiguration,Editor]
+indexterm:[Pager]
+indexterm:[Konfiguration,Pager]
+indexterm:[Browser]
+indexterm:[Konfiguration,Browser]
+Git startet für bestimmte Aktionen automatisch einen Editor, Pager
+oder Browser. Meist werden vernünftige Defaults verwendet, wenn nicht,
+können Sie Ihr Wunschprogramm mit den folgenden
+Optionen konfigurieren:
+
+indexterm:[core.editor]
+indexterm:[core.pager]
+indexterm:[web.browser]
+
+* `core.editor`
+* `core.pager`
+* `web.browser`
+
+
+indexterm:[less,als Pager]
+indexterm:[Pager,less]
+indextermseealso:[Pager,less]
+Ein Wort zum Pager: Standardmäßig verwendet Git das Programm
+`less`, das auf den meisten Grundsystemen installiert ist.  Das
+Kommando wird 'immer' gestartet, sobald ein Git-Kommando eine
+Ausgabe auf einem Terminal produziert. Allerdings wird `less`
+durch eine entsprechende Umgebungsvariable automatisch konfiguriert
+sich zu beenden, wenn die Ausgabe vollständig auf das Terminal passt.
+Falls ein Kommando also viel Ausgabe produziert, tritt `less`
+automatisch in den Vordergrund -- und bleibt sonst unsichtbar.
+
+indexterm:[cat,als Pager]
+Wird `core.pager` auf `cat` gesetzt, verwendet Git
+keinen Pager. Dieses Verhalten kann man aber auch von Kommando zu
+Kommando durch den Parameter `--no-pager` erreichen.
+Zusätzlich kann man z.B. per `git config pager.diff false`
+erreichen, dass die Ausgabe des Diff-Kommandos nie in den Pager
+geleitet wird.
+
+[[chap.conf-env]]
+==== Konfiguration über Umgebungsvariablen ==== 
+
+indexterm:[Konfiguration,über Umgebungsvariablen]
+indexterm:[Umgebungsvariablen,zur Konfiguration]
+Einige Optionen lassen sich auch durch Umgebungsvariablen
+überschreiben. Auf diese Weise können in einem Shell-Script oder in
+einem Alias Optionen lediglich für ein einzelnes Kommando gesetzt
+werden.
+
+
+indexterm:[GIT_EDITOR]
+
+`GIT_EDITOR`::  der Editor, den Git z.B. zum
+  Erstellen der Commit-Nachricht startet. Alternativ
+  greift Git auf die Variable `EDITOR` zurück.
+
+indexterm:[GIT_PAGER]
+
+`GIT_PAGER`::  der zu verwendende Pager. Der Wert
+  `cat` schaltet den Pager aus.
+
+indexterm:[GIT_AUTHOR_EMAIL]
+indexterm:[GIT_COMMITTER_EMAIL]
+
+`GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_EMAIL`::
+verwendet die entsprechende E-Mail-Adresse für das Autor- bzw.
+Committer-Feld beim Erstellen eines Commits.
+
+indexterm:[GIT_AUTHOR_NAME]
+indexterm:[GIT_COMMITTER_NAME]
+
+`GIT_AUTHOR_NAME`, `GIT_COMMITTER_NAME`:: 
+  analog der Name.
+
+indexterm:[GIT_DIR]
+
+`GIT_DIR`:: 
+  Verzeichnis, in dem sich das Git-Repository befindet; nur sinnvoll,
+  wenn explizit ein Repository unter einem anderen Verzeichnis als
+  `.git` gespeichert wird.
+
+
+Die letztgenannte Variable ist beispielsweise praktisch, wenn Sie
+innerhalb eines Projekts auf die Versionsgeschichte eines anderen
+Repositorys zugreifen wollen, ohne das Verzeichnis zu wechseln:
+
+
+[subs="macros,quotes"]
+--------
+$ *GIT_DIR="~/proj/example/.git" git log*
+--------
+
+indexterm:[git,-c]
+Alternativ können Sie über die Option `-c`{empty}{nbsp} 'vor dem Subkommando' eine
+Einstellung nur für diesen Aufruf überschreiben. So könnten Sie zum
+Beispiel Git anweisen, für den kommenden Aufruf die Option
+`core.trustctime` zu deaktivieren:
+
+[subs="macros,quotes"]
+--------
+$ *git -c core.trustctime=false status*
+--------
+
+[[chap.correct-errors]]
+==== Automatische Fehlerkorrektur ==== 
+
+indexterm:[Fehlerkorrektur,automatisch]
+indexterm:[help.autocorrect]
+Der Wert der Option `help.autocorrect` bestimmt, was Git tun
+soll, wenn es das eingegebene Subkommando nicht findet, der
+Nutzer also z.B. versehentlich `git statsu` statt `git
+  status` tippt.
+
+Ist die Option auf eine Zahl `n` größer Null gesetzt und Git findet
+nur 'ein' Subkommando, das dem getippten Kommando ähnlich ist, so
+wird dieses Kommando nach `n` Zehntelsekunden ausgeführt. Ein Wert von
+`-1` führt das Kommando sofort aus. Ungesetzt oder mit dem Wert `0`
+werden nur die Möglichkeiten aufgelistet.
+
+Um also bei einem Vertipper das Kommando nach einer Sekunde zu
+korrigieren, setzt man:
+
+
+[subs="macros,quotes"]
+--------
+$ *git config --global help.autocorrect 10*
+$ *git statsu*
+WARNING: You called a Git command named \'statsu', which does not exist.
+Continuing under the assumption that you meant \'status'
+in 1.0 seconds automatically...
+[...]
+--------
+
+Sie können das Kommando natürlich während dieser Zeit mit
+key:[Strg,C] abbrechen.
+
+
+// vim:set tw=72 ft=asciidoc:

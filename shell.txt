@@ -1,0 +1,771 @@
+[[sec.shell-integration]]
+== Shell-Integration ==
+
+Da Sie Git-Kommandos zumeist auf der Shell ausführen, sollten Sie
+diese um Funktionalität erweitern, um mit Git zu interagieren.  Gerade
+für Git-Anfänger ist ein solches Zusammenspiel zwischen Shell und Git
+sehr hilfreich, um nicht den Überblick zu verlieren.
+
+In zwei Bereichen kann die Shell Ihnen besonders helfen:
+
+* Anzeige wichtiger Informationen zu einem Repository im
+  'Prompt' (Eingabeaufforderung). So müssen Sie nicht allzu
+  häufig `git status` und Konsorten aufrufen.
+
+* Eine maßgeschneiderte 'Completion' (automatische
+  Vervollständigung) hilft, Git-Kommandos direkt richtig
+  einzugeben, auch wenn die genaue Syntax nicht bekannt ist.
+
+
+
+
+Ein gutes Prompt sollte zusätzlich zum aktuellen Branch den Zustand
+des Working Tree signalisieren. Gibt es Veränderungen, die noch nicht
+gespeichert sind? Befinden sich schon Veränderungen im Index?
+
+Eine gute Completion sollte etwa bei der Eingabe von `git
+  checkout` und dem anschließenden Drücken der Tab-Taste nur Branches
+aus dem Repository zur Vervollständigung anbieten. Wenn Sie aber
+`git checkout --` eingeben, sollten nur Dateien vervollständigt
+werden. Das spart Zeit und schützt vor Tippfehlern. Auch andere
+Vervollständigungen sind sinnvoll, z.B. die vorhandenen
+Remotes bei `git push` und `git pull`.
+
+In diesem Kapitel stellen wir grundlegende Rezepte für zwei 
+beliebte Shells vor: die 'Bash' und die
+'Z-Shell'. Anleitungen für andere interaktive Shells finden Sie
+ggf. im Internet.
+
+Das Thema Shell-Integration ist sehr umfangreich, daher stellen die
+hier vorgestellten Anleitungen lediglich Anhaltspunkte und Ideen dar
+und erheben keinen Anspruch auf Vollständigkeit.  Es kommt erschwerend
+hinzu, dass die Git-Community die Benutzerschnittstelle -- also die
+vorhandenen Subkommandos und deren Optionen -- sehr schnell
+weiterentwickelt. Bitte wundern Sie sich daher nicht, wenn die
+Completion teilweise ``hinterherhinkt'' und brandneue
+Subkommandos und Optionen (noch) nicht verfügbar sind.
+
+[[sec.bash-integration]]
+=== Git und die Bash === 
+
+indexterm:[Bash,Completion]
+indexterm:[Shell,Completion]
+Sowohl die Funktionalität für die Completion als auch die
+Status-Kommandos für das Prompt sind in einem Script namens
+`git-completion.bash` implementiert. Es wird zusammen mit den
+Quellen für Git verwaltet. Sie finden die Datei im Verzeichnis
+`contrib/completion` des
+Git-Projekts. Häufig wird die Completion auch
+schon von Ihrer Distribution bzw. dem Git-Installer für Ihr
+Betriebssystem bereitgestellt. Haben Sie bei Debian oder Ubuntu das
+Paket `git` installiert, sollte die Datei bereits unter
+`/usr/share/bash-completion/completions/git` vorliegen. In Gentoo installieren
+Sie die Datei über das USE-Flag `bash-completion` von
+`dev-vcs/git`. Der aktuelle Maintainer ist Shawn O. Pearce.
+
+[[sec.bash-completion]]
+==== Completion ==== 
+
+Um die Completion zu aktivieren, laden Sie das Script mit dem Befehl
+`source` und übergeben als Argument die entsprechende Datei,
+also z.B.:
+
+--------
+source ~/Downloads/git-2.1.0/contrib/completion/git-completion.bash
+--------
+
+
+
+Die Completion vervollständigt unter anderem:
+
+
+
+Git-Subkommandos::  Geben Sie bspw. `git pu[TAB]` ein,
+bietet Ihnen die Bash `pull` und `push` an:
++
+[subs="macros,quotes"]
+--------
+$ *git pu[TAB]*
+pull push
+--------
++
+Anmerkung: Nur die 'Porcelain'-Kommandos sowie
+Benutzeraliase sind verfügbar. Externe- und
+'Plumbing'-Kommandos sind nicht implementiert.  Subkommandos, die
+selber über weitere Subkommandos verfügen, z.B.{empty}{nbsp}`git remote`
+oder `git stash`, werden ebenfalls vervollständigt:
++
+[subs="macros,quotes"]
+--------
+$ *git remote [TAB]*
+add     prune     rename     rm     set-head     show     update
+--------
+
+Lokale Branches und Tags::  Nützlich für Subkommandos, wie
+`checkout` und `rebase`, die eine lokale Referenz
+erwarten:
++
+[subs="macros,quotes"]
+--------
+$ *git branch*
+* master
+  refactor-cmd-line
+  refactor-profiling
+$ *git checkout refactor-[TAB]*
+refactor-cmd-line    refactor-profiling
+--------
+
+
+Konfigurierte Remotes::  Kommandos wie `git fetch` und
+`git remote` werden oft mit einem Remote als Argument aufgerufen. Auch hier
+hilft die Completion weiter:
++
+[subs="macros,quotes"]
+--------
+$ *git remote show [TAB]*
+github        sourceforge
+--------
+
+
+Remote Branches und Tags::  Die Completion kann auch auf der
+Remote-Seite ``nachsehen'', welche Referenzen vorhanden sind.
+Das erfolgt zum Beispiel beim Kommando `git pull`, das eine
+Remote-Referenz bzw. eine Refspec erwartet:
++
+[subs="macros,quotes"]
+--------
+$ *git pull origin v1.7.1[TAB]*
+v1.7.1       v1.7.1.2     v1.7.1.4     v1.7.1-rc1
+v1.7.1.1     v1.7.1.3     v1.7.1-rc0   v1.7.1-rc2
+--------
++
+Das funktioniert natürlich nur, wenn das Remote-Repository verfügbar
+ist. In den meisten Fällen ist eine Netzwerkverbindung sowie
+mindestens Lesezugriff notwendig.
+
+Optionen::  Die meisten Subkommandos verfügen
+über diverse 'Long Options' wie z.B.{empty}{nbsp}`--bare`.
+Die Completion kennt diese in der Regel und vervollständigt sie
+entsprechend:
++
+[subs="macros,quotes"]
+--------
+$ *git diff --color[TAB]*
+--color         --color-words
+--------
++
+'Short Options', wie z.B.{empty}{nbsp}`-a`, werden nicht komplettiert.
+
+Dateien::  Für Git-Kommandos, die Dateinamen erwarten. Gute
+Beispiele sind `git add` sowie `git checkout`:
++
+[subs="macros,quotes"]
+--------
+$ *git add [TAB]*
+.git/     hello.py  README    test/
+$ *git checkout -- [TAB]*
+.git/     hello.py  README    test/
+--------
+
+Git-Konfigurationsoptionen::  Die Bash-Completion für Git
+vervollständigt auch Konfigurationsoptionen, die Sie mit `git
+  config` einstellen:
++
+[subs="macros,quotes"]
+--------
+$ *git config user.[TAB]*
+user.email        user.name         user.signingkey
+--------
+
+Wie bei der Bash-Completion üblich, wird die Eingabe automatisch
+vervollständigt, sobald sie eindeutig ist. Existiert nur der Branch
+`feature`, führt die Eingabe von `git checkout fe[TAB]`
+dazu, dass `fe` vervollständigt wird; der Befehl `git
+  checkout feature` steht dann auf der Kommandozeile -- drücken Sie
+auf Enter, um den Befehl auszuführen. Nur wenn die Eingabe nicht
+eindeutig ist, zeigt die Bash die möglichen Vervollständigungen an.
+
+[[sec.bash-prompt]]
+==== Prompt ==== 
+
+indexterm:[Bash,Prompt]
+indexterm:[Shell,Prompt]
+indexterm:[Prompt]
+Neben der Completion gibt es ein weiteres Script, um Infos über das
+Git-Repository im Prompt anzuzeigen. Dafür müssen Sie die Datei
+`contrib/completion/git-prompt.sh` laden (ggf. ist diese auch von Ihrer
+Distribution installiert, z.B. unter `/usr/lib/git-core/git-sh-prompt`).
+Setzen Sie anschließend -- wie in folgendem Beispiel -- einen
+Aufruf der Funktion `__git_ps1` in die Variable `PS1`
+ein.  Als Argument nimmt die Funktion einen sogenannten
+'Format-String-Ausdruck' entgegen -- d.h. die Zeichenfolge
+`%s` wird durch Git-Infos ersetzt, alle anderen Zeichen werden
+übernommen.
+
+--------
+source /usr/lib/git-core/git-sh-prompt
+PS1='\u@\h \w$(__git_ps1 " (%s)") $ '
+--------
+
+
+Die Zeichen werden wie folgt ersetzt: `\u` ist der
+Benutzername, `\h` der Rechnername,
+`\w` ist das aktuelle Arbeitsverzeichnis und
+`$(__git_ps1 " (%s)")` sind die Git-Infos, die ohne
+zusätzliche Konfiguration (s.u.) nur aus dem Branch-Namen bestehen:
+
+[subs="macros,quotes"]
+--------
+pass:quotes[esc@creche] \~ $ *cd git-working/git*
+pass:quotes[esc@creche] ~/git-working/git (master) $
+--------
+
+Mit dem Format-String-Ausdruck passen Sie die Darstellung der
+Git-Infos an, indem Sie zusätzliche Zeichen oder aber Farbcodes
+nutzen, z.B.  mit folgendem Prompt:
+
+--------
+PS1='\u@\h \w$(__git_ps1 " (git)-[%s]") $ '
+--------
+
+Das sieht dann so aus:
+
+--------
+esc@creche ~/git-working/git (git)-[master] $
+--------
+
+Ist der aktuelle Commit nicht durch einen Branch referenziert
+(Detached-HEAD), wird entweder das Tag oder die abgekürzte
+SHA-1-Summe angezeigt, jeweils von einem Klammerpaar umgeben:
+
+--------
+esc@creche ~/git-working/git (git)-[(v1.7.1.4)] $
+esc@creche ~/git-working/git (git)-[(e760924...)] $
+--------
+
+Befinden Sie sich innerhalb des `$GIT_DIR` oder in einem
+Bare-Repository, wird dies entsprechend signalisiert:
+
+--------
+esc@creche ~/git-working/git/.git (git)-[GIT_DIR!] $
+esc@creche ~/git-working/git.git/.git (git)-[BARE:master] $
+--------
+
+Außerdem wird angezeigt, wenn Sie sich mitten in einem Merge-Vorgang,
+einem Rebase oder einem ähnlichem Zustand befinden, bei dem nur
+bestimmte Operationen möglich sind:
+
+--------
+esc@creche ~/git-working/git (git)-[master|REBASE-i] $
+--------
+
+
+Sie können die Anzeige auch erweitern, um sich den Zustand des Working
+Trees durch verschiedene Symbole anzeigen zu lassen. Sie müssen dazu
+folgende Umgebungsvariablen auf einen 'Non-Empty'-Wert setzen, also 
+z.B. auf `1`.
+
+
+`GIT_PS1_SHOWDIRTYSTATE`:: Bei Veränderungen, die noch nicht im Index
+sind ('unstaged'), wird ein Sternchen (`*`) angezeigt. Bei
+Veränderungen, die bereits im Index sind ('staged'), wird ein Plus
+(`+`) angezeigt. Die Anzeige erfordert, dass der Working Tree gelesen
+wird -- dadurch verlangsamt sich die Shell evtl. bei großen
+Repositories (Git muss jede Datei auf Modifikationen überprüfen). Sie
+können dieses Verhalten daher mit der Git-Variable
+`bash.showDirtyState` für einzelne Repositories deaktivieren:
++
+[subs="macros,quotes"]
+--------
+$ *git config bash.showDirtyState false*
+--------
+
+
+`GIT_PS1_SHOWSTASHSTATE`::  Sollten Sie einen oder
+mehrere Stashes angelegt haben, wird dies im Prompt durch das
+Dollar-Zeichen (`$`) signalisiert.
+
+`GIT_PS1_SHOWUNTRACKEDFILES`::  Die Existenz
+unbekannter Dateien ('untracked files') wird mit 
+Prozent-Zeichen (`%`) angezeigt.
+
+
+Alle diese Zusatzinformationen können Sie wie folgt aktivieren:
+
+--------
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWSTASHSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+--------
+
+Wenn im Repository nun alles zutrifft (also 'unstaged',
+'staged', 'stashed' und 'untracked') werden vier
+zusätzliche Zeichen (`*`, `+`, `$` und
+`%`) im Prompt angezeigt:
+
+--------
+esc@creche ~/git-working/git (git)-[master *+$%] $
+--------
+
+In neueren Git-Versionen verfügt das Script über ein
+neues Feature, das die Beziehung zum Upstream-Branch
+(`@{upstream}`) anzeigt.  Aktivieren Sie diese Funktion durch
+Setzen von `GIT_PS1_SHOWUPSTREAM` auf den Wert
+`git`.footnote:[Benutzen Sie
+  `git-svn`, können Sie das Script anweisen, statt des
+  Upstream-Branchs den SVN-Upstream (`remotes/git-svn`) für den
+  Vergleich zu verwenden (sofern dieser vorhanden ist), indem Sie die
+  Variable auf den Wert `auto` setzen.]  Das Prompt
+signalisiert dann alle Zustände, die in <<sec.remote-branch-vv>>
+beschrieben sind: 'up-to-date' mit dem Gleichheitszeichen
+(`=`); 'ahead' mit dem Größer-als-Zeichen (`>`);
+'behind' mit dem Kleiner-als-Zeichen (`<`);
+'diverged' mit sowohl einem Größer-als-Zeichen und einem
+Kleiner-als-Zeichen (`><`). Zum Beispiel:
+
+--------
+esc@creche ~/git-working/git (git)-[master >] $
+--------
+
+
+Diese Funktion ist mit der Option `--count` des
+Plumbing-Kommandos `git rev-list` implementiert, die in alten
+Git-Versionen, etwa 1.7.1, noch nicht existiert. Haben Sie eine solche
+alte Git-Version, aber ein aktuelles Script und wollen diese Anzeige
+trotzdem verwenden, setzen Sie den Wert der Umgebungsvariablen auf
+`legacy` -- das Script verwendet dann eine alternative
+Implementation, die ohne die besagte Option auskommt.  Wenn Sie
+außerdem noch wissen wollen, wie weit der Branch vorne bzw. zurück
+liegt, fügen Sie den Wert `verbose` hinzu.  Das Prompt zeigt
+dann auch noch die Anzahl der unterschiedlichen Commits an:
+
+--------
+esc@creche ~/git-working/git (git)-[master u+2] $
+--------
+
+
+Die gewünschten Werte sind der Umgebungsvariable als Liste zuzuweisen:
+
+--------
+GIT_PS1_SHOWUPSTREAM="legacy verbose git"
+--------
+
+[[sec.zsh-integration]]
+=== Git und die Z-Shell === 
+
+indexterm:[Z-Shell]
+Sowohl Completion- als auch Prompt-Funktionen werden bei der Z-Shell
+immer mitgeliefert.
+
+[TIP]
+========
+Die Z-Shell verfügt über ein sehr nützliches Feature, um Man-Pages
+aufzurufen: die `run-help` Funktion. Sie wird im Emacs-Modus
+standardmäßig mit key:[Esc,H] aufgerufen und zeigt für das
+Kommando, das bereits auf der Kommandozeile steht, die Man-Page an:
+
+[subs="macros,quotes"]
+--------
+$ *man[ESC]+[h]*
+#Man-Page man(1) wird angezeigt
+--------
+
+Da Git aber aus Subkommandos besteht und jedes Subkommando eine eigene
+Man-Page hat, funktioniert `run-help` nicht sonderlich gut --
+es wird immer nur die Man-Page `git(1)` angezeigt. Hier schafft
+die mitgelieferte Funktion `run-help-git` Abhilfe:
+
+[subs="macros,quotes"]
+--------
+$ *git rebase[ESC]\+[h]*
+#Man-Page git(1) wird angezeigt
+$ *unalias run-help*
+$ *autoload run-help*
+$ *autoload run-help-git*
+$ *git rebase[ESC]+[h]*
+#Man-Page git-rebase(1) wird angezeigt
+--------
+========
+
+
+[[sec.zsh-completion]]
+==== Completion ==== 
+
+Um die Completion für Git zu aktivieren, laden Sie zunächst das Completion-System:
+
+[subs="macros,quotes"]
+--------
+$ *autoload -Uz compinit &amp;&amp; compinit*
+--------
+
+
+Die Completion vervollständigt unter anderem:
+
+indexterm:[Z-Shell,Completion]
+
+
+Git-Subkommandos:: Subkommandos werden in der Z-Shell ebenfalls
+vervollständigt. Der Unterschied zur Bash ist, dass die Z-Shell
+zusätzlich zum eigentlichen Kommando noch eine Kurzbeschreibung
+anzeigt:
++
+[subs="macros,quotes"]
+--------
+$ *git pu[TAB]*
+pull     -- fetch from and merge with a remote repository
+push     -- update remote refs along with associated objects
+--------
++
+Das gleiche gilt auch für Subkommandos, die wiederum selbst
+Subkommandos haben:
++
+[subs="macros,quotes"]
+--------
+$ *git remote [TAB]*
+add      -- add a new remote
+prune    -- delete all stale tracking branches for a given remote
+rename   -- rename a remote from .git/config and update all...
+rm       -- remove a remote from .git/config and all...
+show     -- show information about a given remote
+update   -- fetch updates for a set of remotes
+--------
++
+Sowie auch Benutzeraliase:
++
+[subs="macros,quotes"]
+--------
+$ *git t[TAB]*
+tag           -- create tag object signed with GPG
+tree          -- alias for \'log --oneline --graph --decorate -23'
+--------
+
+Lokale Branches und Tags:: Die Z-Shell vervollständigt ebenfalls
+lokale Branches und Tags -- hier also kein Unterschied zur Bash.
+
+Konfigurierte Remotes:: Konfigurierte Remotes sind der Z-Shell
+bekannt.  Für Subkommandos, bei denen nur ein konfiguriertes Remote in
+Frage kommt, z.B.{empty}{nbsp}`git remote show`, werden auch nur konfigurierte
+Remotes angezeigt.  Sollte dies nicht eindeutig sein, wie z.B. bei
+`git pull`, dann greifen zusätzliche Mechanismen der Z-Shell und es
+wird meist eine lange Liste angezeigt, die sich unter anderem aus den
+Einträgen in den Dateien `.ssh/config` (die konfigurierten SSH-Hosts)
+und `.ssh/known_hosts` (Hosts, auf denen Sie sich schon mal eingeloggt
+haben) besteht.
+
+Optionen:: Im Gegensatz zur Bash kennt die Z-Shell sowohl lange als
+auch kurze Optionen und zeigt sie inklusive einer Kurzbeschreibung der
+Option. Hier ein Auszug:
++
+[subs="macros,quotes"]
+--------
+$ *git branch -[TAB]*
+-a              -- list both remote-tracking branches and local branches
+--contains      -- only list branches which contain the specified commit
+--force     -f  -- force the creation of a new branch
+--------
+
+Dateien:: Die Z-Shell ist ebenfalls in der Lage, Dateinamen zu
+vervollständigen -- sie stellt sich aber etwas schlauer an als die
+Bash. Zum Beispiel werden für `git add` und `git checkout` nur Dateien
+angeboten, die tatsächlich Veränderungen haben -- also Dateien, die
+entweder dem Index hinzugefügt oder zurückgesetzt werden
+können. Dateien, die nicht in Betracht kommen, werden auch nicht
+angeboten.
+
+Git-Konfigurationsoptionen:: Die Z-Shell-Completion für Git
+vervollständigt, wie die Bash auch, sämtliche Konfigurationsoptionen
+für Git.  Der Unterschied ist, dass auch hier eine Kurzbeschreibung
+der Optionen mit angezeigt wird:
++
+[subs="macros,quotes"]
+--------
+$ *git config user.[TAB]*
+email        -- email address used for commits
+name         -- full name used for commits
+signingkey   -- default GPG key to use when creating signed tags
+--------
+
+Ein großer Unterschied bei der Z-Shell ist die Art und Weise, wie
+vervollständigt wird. Die Z-Shell verwendet die sogenannte
+'Menu-Completion'. Das bedeutet, dass Ihnen die Z-Shell durch
+erneutes Drücken der Tab-Taste jeweils die nächste mögliche
+Vervollständigung anbietet.footnote:[Die
+  Man-Page `zshcompsys(1)` beschreibt, wie Sie die Completion
+  noch weiter anpassen. Besonders die Optionen `group-name` und
+  `menu-select` sind zu empfehlen.]
+
+[subs="macros,quotes"]
+--------
+$ *git pu[TAB]*
+pull  -- fetch from and merge with another repository or local branch
+push  -- update remote refs along with associated objects
+$ *git pu[TAB]*
+$ *git pull[TAB]*
+$ git push
+--------
+
+Die Z-Shell ist (noch) nicht in der Lage, Referenzen auf der
+Remote-Seite zu vervollständigen -- dies steht jedoch auf der
+To-do-Liste. Die Z-Shell ist aber heute schon in der Lage, Dateien über
+eine SSH-Verbindung hinweg zu vervollständigen.  Besonders nützlich
+ist dies im Zusammenhang mit Public-Key-Authentifizierung und
+vorkonfigurierten SSH-Hosts.  Angenommen, Sie haben folgenden Host in
+`.ssh/config` konfiguriert:
+
+--------
+Host example
+    HostName git.example.com
+    User max
+--------
+
+Auf dem Server in Ihrem Home-Verzeichnis befinden sich Ihre Projekte
+als Bare-Repositories: `projekt1.git` und
+`projekt2.git`. Außerdem haben Sie einen SSH-Schlüssel
+generiert und diesen in der Datei `.ssh/authorized_keys` auf
+dem Server abgelegt. Sie können nun die Vervollständigung über die
+SSH-Verbindung hinweg nutzen.
+
+[subs="macros,quotes"]
+--------
+$ *git clone example:[TAB]*
+projekt1.git/ projekt2.git/
+--------
+
+
+Möglich wird dies durch die Completion-Funktionen der Z-Shell für
+`ssh`.
+
+
+[[sec.zsh-prompt]]
+==== Prompt ==== 
+
+indexterm:[Z-Shell,Prompt]
+indexterm:[vcs_info]
+Die Z-Shell beinhaltet Funktionen, um das Prompt mit Git-Infos zu
+versehen. Die Funktionalität ist Teil des umfangreichen
+`vcs_info`-Systems, das neben Git circa ein
+Dutzend anderer Programme zur Versionsverwaltung kennt, inklusive
+Subversion, CVS und Mercurial. Die ausführliche Dokumentation finden
+Sie in der Man-Page `zshcontrib(1)`, im Abschnitt
+``Gathering Information From Version Control Systems''. Hier
+stellen wir nur die für Git relevanten Einstellungen und
+Anpassungsmöglichkeiten vor.
+
+Zunächst müssen Sie `vcs_info` laden und das Prompt so
+anpassen, dass Git-Infos angezeigt werden. Hierbei ist wichtig, dass
+die Z-Shell-Option `prompt_subst` gesetzt ist; sie sorgt
+dafür, dass Variablen im Prompt auch tatsächlich ersetzt werden,
+außerdem müssen Sie die Funktion `vcs_info` in der Funktion
+`precmd` aufrufen. `precmd` wird direkt vor
+der Anzeige des Prompts aufgerufen. Der Aufruf `vcs_info`
+darin sorgt dafür, dass die Git-Infos auch tatsächlich in der Variable
+`${vcs_info_msg_0_}` gespeichert werden. Fügen Sie Ihrer
+`.zshrc` folgende Zeilen hinzu, falls sie noch nicht enthalten
+sind:
+
+--------
+# vcs_info laden
+autoload -Uz vcs_info
+# prompt_subst aktivieren
+setopt prompt_subst
+# precmd definieren
+precmd () { vcs_info }
+# Prompt setzten
+PS1='%n@%m %~${vcs_info_msg_0_} $ '
+--------
+
+Das Prompt setzt sich wie folgt zusammen: `%n` ist der
+Benutzername, `%m` ist der Rechnername,
+`%~` das aktuelle Arbeitsverzeichnis und die
+Variable `${vcs_info_msg_0_}` enthält die Git-Infos.
+Wichtig ist dabei, dass das Prompt mit einfachen Anführungszeichen
+('single quotes') angegeben wird. Dadurch wird die
+'Zeichenfolge'{empty}{nbsp}`${vcs_info_msg_0_}` und nicht der
+Wert der Variablen abgespeichert. Erst bei Anzeige des Prompt wird
+der Wert der Variablen -- also die Git-Infos -- substituiert.
+
+Die o.g.  Einstellung für `PS1` sieht so aus:
+
+--------
+esc@creche ~/git-working/git (git)-[master]- $
+--------
+
+
+Da `vcs_info` mit sehr vielen Versionsverwaltungssystemen
+funktioniert, lohnt es sich, nur diejenigen zu aktivieren, die Sie
+tatsächlich verwenden:footnote:[Eine Liste
+  der verfügbaren Systeme erhalten Sie mit einem Aufruf der
+  Funktion `vcs_info_printsys`.]
+
+--------
+zstyle ':vcs_info:*' enable git
+--------
+
+Zum Anpassen von `vcs_info` verwenden Sie einen sogenannten
+`zstyle`, einen hierarchischen Konfigurationsmechanismus der
+Z-Shell, der in der Man-Page `zshmodules(1)` beschrieben ist.
+
+Besondere Zustände wie Merge- oder Rebase-Vorgänge werden entsprechend
+signalisiert:
+
+--------
+esc@creche ~/git-working/git (git)-[master|bisect]- $
+--------
+
+
+Auch bei einem Detached-HEAD wird entweder das Tag oder die
+abgekürzte SHA-1-Summe angezeigt:
+
+--------
+esc@creche ~/git-working/git (git)-[v1.7.1.4] $
+esc@creche ~/git-working/git (git)-[e760924...] $
+--------
+
+Die Z-Shell kann, wie die Bash auch, Zustände des Working Trees
+anzeigen.  Schalten Sie dies mit folgender Zeile an:
+
+--------
+zstyle ':vcs_info:git*:*' check-for-changes true
+--------
+
+So zeigt `vcs_info` für Veränderungen, die noch nicht im Index
+sind ('unstaged'), ein `U` an und für Veränderungen, die
+Sie im Index aufgenommen haben ('staged'), ein `S`:
+
+--------
+esc@creche ~/git-working/git (git)-[master]US- $
+--------
+
+
+Ein großer Vorteil von `vcs_info` ist, dass es sich sehr
+leicht anpassen lässt. Gefallen Ihnen etwa die Buchstaben `U`
+und `S` nicht, können Sie sie durch andere Zeichen z.B.{empty}{nbsp}`*` und `+` ersetzen:
+
+--------
+zstyle ':vcs_info:git*:*' unstagedstr '*'
+zstyle ':vcs_info:git*:*' stagedstr '+'
+
+--------
+
+Somit ähnelt das Zsh-Prompt nun immer mehr dem Beispiel aus dem
+Abschnitt zur Bash:
+
+--------
+esc@creche ~/git-working/git (git)-[master]*+- $
+--------
+
+
+Um solche noch nicht gespeicherten Informationen anzuzeigen,
+muss `vcs_info` immer den Working Tree
+untersuchen. Da dies bei großen Repositories bekanntlich Probleme
+bereitet, können Sie bestimmte Muster ausschließen:
+
+--------
+zstyle ':vcs_info:*' disable-patterns "/home/esc/git-working/linux-2.6(|/*)"
+--------
+
+Vielleicht möchten Sie nun noch die Reihenfolge der Zeichen ändern.
+In dem Fall müssen Sie zwei Format-String Ausdrücke anpassen:
+`formats` und `actionformats`. Der erste ist das
+Standardformat, der zweite das Format, wenn Sie sich mitten in einem
+Merge-Vorgang, Rebase oder ähnlichem befinden:
+
+--------
+zstyle ':vcs_info:git*:*' formats " (%s)-[%b%u%c]"
+zstyle ':vcs_info:git*:*' actionformats " (%s)-[%b|%a%u%c]"
+--------
+
+Eine Auswahl der wichtigsten Zeichen finden Sie in der folgenden
+Tabelle.  Eine detaillierte Auflistung bietet die oben erwähnte
+Man-Page.
+
+`%s`:: Versionsverwaltungssystem, in unserem Fall immer `git` 
+
+`%b`:: Aktueller Branch, z.B.{empty}{nbsp}`master` 
+
+`%a`:: Aktueller Vorgang, z.B.{empty}{nbsp}`merge` oder `rebase-i` (nur bei
+`actionformats`)
+
+`%u`:: Zeichen zur Anzeige von Veränderungen, die noch nicht im Index
+sind, z.B.{empty}{nbsp}`U`
+
+`%c`:: Zeichen zur Anzeige von Veränderungen, die schon im Index sind, z.B.{empty}{nbsp}`S` 
+
+Mit der o.g. Einstellung sieht das Prompt dann so aus:
+
+--------
+esc@creche ~/git-working/git (git)-[master*+] $
+--------
+
+
+indexterm:[vcs_info,Hook]
+Leider kann `vcs_info` standardmäßig die Existenz unbekannter
+Dateien und angelegter Stashes nicht signalisieren. Das System
+unterstützt aber ab Z-Shell Version 4.3.11 sogenannte
+'Hooks' -- Erweiterungen, die zusätzliche Information in das
+Prompt einschleusen. Wir werden nun zwei solcher Hooks vorstellen, die
+die beiden genannten, fehlenden Features implementieren.
+
+Die Hooks für `vcs_info` werden als Shell-Funktionen
+geschrieben.  Beachten Sie, dass der Funktionsname das Präfix
+`+vi-` hat, um mögliche Kollisionen zu vermeiden. Damit ein
+Hook auch wirklich funktioniert, muss er einen Wert im assoziativen
+Array `hook_com` verändern. In beiden Beispielen verändern wir
+den Wert des Eintrags `staged`, indem wir zusätzliche Zeichen
+anhängen, um bestimmte Zustände zu markieren. Wir verwenden das
+Prozent-Zeichen (`%`), um unbekannte Dateien zu signalisieren,
+und das Dollar-Zeichen (`$`) für angelegte Stashes. Das
+Prozentzeichen muss zweimal angegeben werden, damit die Z-Shell es
+nicht fälschlich als Formatierung wertet. Bei den Hooks greifen wir
+auf diverse Plumbing-Kommandos zurück (siehe <<sec.scripting>>).
+
+
+
+--------
++vi-untracked(){
+    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+        [[ -n $(git ls-files --others --exclude-standard) ]] ; then
+        hook_com[staged]+='%%'
+    fi
+}
++vi-stashed(){
+    if git rev-parse --verify refs/stash &> /dev/null ; then
+        hook_com[staged]+='$'
+    fi
+}
+--------
+
+
+Wir aktivieren die Hooks, so dass sie beim Setzen der Git-Infos
+ausgewertet werden (`+set-message`):
+
+--------
+zstyle ':vcs_info:git*+set-message:*' hooks stashed untracked 
+--------
+
+Wie beim Beispiel zu der Bash oben, werden ggf. ('unstaged',
+'staged', 'stashed' und 'untracked') vier zusätzliche
+Zeichen (`*`, `+`, `$` und `%`) im
+Prompt angezeigt:
+
+--------
+esc@creche ~/git-working/git (git)-[master*+$%] $
+--------
+
+Mit solchen Hooks ist es möglich, das Prompt nach Belieben zu
+erweitern. Zum Beispiel zeigt `vcs_info` standardmäßig nicht
+an, ob Sie sich innerhalb des `$GIT_DIR` oder aber in einem
+Bare-Repository befinden. Mit einem entsprechenden Hook bauen Sie
+diese Signale in das Prompt ein.
+
+Weitere Beispiele finden sich in der Datei
+`Misc/vcs_info-examples` des Z-Shell Repositorys, unter
+anderem auch ein Hook, der die Beziehung zum Upstream-Branch anzeigt
+(Abschnitt ``Compare local changes to remote changes''). Eine
+minimale Konfiguration für die Z-Shell entsprechend den Beispielen in
+diesem Abschnitt finden Sie in der Scriptsammlung für dieses
+Buch.footnote:[https://github.com/gitbuch/buch-scripte]
+
+///////////
+FIXME: das muss hier alles ein dritter prüfen, der Ahnung von Shell hat, da kann soviel schief gehen.
+//////////

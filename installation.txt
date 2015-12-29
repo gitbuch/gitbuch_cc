@@ -1,0 +1,138 @@
+[[sec.installation]]
+== Installation ==
+
+Die Installation von Git ist einfach und geht schnell vonstatten, da
+für die meisten Systeme bereits vorkonfigurierte Pakete bereitgestellt
+werden. Der Vollständigkeit halber wollen wir aber die wichtigsten
+Handgriffe unter Linux, Mac OS X und Windows dokumentieren.
+
+[[linux]]
+=== Linux === 
+
+Aufgrund der Vielzahl der Linux-Distributionen wird hier nur die
+Installation auf Debian-, Fedora- sowie Gentoo-Systemen beschrieben.
+Für andere Distributionen schauen Sie ggf. in der Dokumentation bzw.
+in der Paketverwaltung nach; natürlich können Sie Git auch aus dem
+Quellcode übersetzen und installieren.
+
+[[sec.debian-ubuntu]]
+==== Debian/Ubuntu ==== 
+
+Debian und Ubuntu stellen fertige Pakete zur Verfügung, die mit dem
+Debian-Paketmanagementsystem komfortabel und schnell zu installieren
+sind. Dabei wird die Git-Installation modularisiert, Sie können also
+bei Bedarf nur bestimmte Teile von Git installieren.
+
+
+`git`:: Hauptpaket, enthält Kernbefehle (vormals `git-core`)
+
+`git-email`:: Zusatz zum Verschicken von Patches per E-Mail
+
+`git-gui`:: Grafische Benutzerschnittstelle
+
+`git-svn`:: Subkommando `svn`, um mit Subversion-Repositories zu
+interagieren
+
+`git-cvs`:: Interaktion mit CVS
+
+`git-doc`:: Dokumentation (wird unter `/usr/share/doc` installiert)
+
+`gitk`:: Programm Gitk
+
+
+Darüber hinaus gibt es noch ein Meta-Paket `git-all`, das alle
+relevanten Pakete installiert. Auf einer regulären Workstation sollten
+Sie also Git wie folgt installieren:
+
+[subs="macros,quotes"]
+--------
+$ *sudo aptitude install git-all*
+--------
+
+Unter Ubuntu können Sie analog das Paket `git-all` über die
+grafische Paketverwaltung 'Synaptic' installieren.
+
+[[sec.fedora]]
+==== Fedora ==== 
+
+Auf einem Fedora-System sollten Sie Git über den Paketmanager
+`yum` installieren:
+
+[subs="macros,quotes"]
+--------
+$ *sudo yum install git*
+--------
+
+Analog zur Aufteilung in kleinere Pakete wie bei Debian, sind gewisse
+Zusatzfunktionen für Git in separaten Paketen erhältlich. Um alle
+Kommandos zu installieren, sollten Sie das Paket `git-all`
+installieren.
+
+[[sec.gentoo]]
+==== Gentoo ==== 
+
+Gentoo stellt den Ebuild `dev-vcs/git` zur Verfügung. Das
+grafische Tool zum Erstellen von Commits (`git gui`) sowie der
+Zusatz zum Verschicken von E-Mails (`git send-email`) werden
+per Default installiert. Wenn Sie zusätzlich noch eine grafische
+Benutzerschnittstelle zum Betrachten und Bearbeiten der Geschichte
+(`gitk`) haben möchten, aktivieren Sie das 'USE-Flag'{empty}{nbsp}`tk`. Sollten Sie vorhaben, die Subversion-Schnittstelle zu
+verwenden, aktivieren Sie das USE-Flag `subversion`. Zur
+Installation via Portage geben Sie folgenden Befehl ein:
+
+[subs="macros,quotes"]
+--------
+$ *sudo emerge dev-vcs/git*
+--------
+
+[[sec.quellcode-installation]]
+==== Installation aus den Quellen ==== 
+
+Wenn Ihre Distribution kein Paket für Git anbietet, dieses veraltet
+ist oder Sie keine Root-Rechte auf dem System haben, sollten Sie
+Git direkt aus den Quellen installieren.
+
+Git hängt von den fünf Bibliotheken `expat` (XML-Parser),
+`curl` (Datentransfer), `zlib` (Kompression), `pcre` (reguläre
+Ausdrücke) und `openssl` (Verschlüsselung/Hashing) ab. Deren Sourcen müssen
+Sie ggf. vorher kompilieren und die Bibliotheken entsprechend
+installieren, bevor Sie fortfahren.
+
+Laden Sie zuerst den Tarball der aktuellen Git Version herunter{empty}footnote:[http://www.kernel.org/pub/software/scm/git/]
+und entpacken Sie ihn:
+
+[subs="macros,quotes"]
+--------
+$ *wget pass:quotes[https://www.kernel.org/pub/software/scm/git/git-2.1.0.tar.gz]*
+$ *tar xvf git-2.1.0.tar.gz*
+--------
+
+Wechseln Sie nun in das Verzeichnis `git-2.1.0/` und
+kompilieren Sie den Quellcode; anschließend führen Sie `make
+  install` aus:
+
+[subs="macros,quotes"]
+--------
+$ *cd git-2.1.0/*
+$ *make -j8*
+$ *make install*
+--------
+
+Mit `make prefix=<praefix>` können Sie Git nach
+`<praefix>` installieren (Default: `$HOME`).
+
+[[sec.osx]]
+=== Mac OS X === 
+
+Das Projekt 'Git for OS X' stellt ein Installationsprogramm im
+Diskimage-Format (DMG) zur Verfügung.footnote:[http://code.google.com/p/git-osx-installer/]
+Sie können es also wie gewohnt installieren.
+
+[[sec.windows]]
+=== Windows === 
+
+Das Projekt 'Git for Windows' stellt ein Installationsprogramm für
+Microsoft Windows zur Verfügung: 'msysGit'. Sie können das
+Programm herunterladen{empty}footnote:[https://msysgit.github.io/]
+und wie gewohnt installieren.
+

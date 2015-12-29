@@ -1,0 +1,707 @@
+[[sec.workflows]]
+== Workflows
+
+indexterm:[Workflow]
+indexterm:[Entwicklung,agile]
+indexterm:[Agile Software Development]
+Mit 'Workflows' (dt. 'Arbeitsabläufe') werden in der
+Software-Entwicklung in der Regel Strategien bezeichnet, die
+Arbeitsabläufe im Team definieren (z.B. die 'Agile
+  Softwareentwicklung'). Wir können uns bei diesem Thema allgemein
+hier nur auf Literaturhinweise
+beschränken.footnote:[Zu empfehlen ist u.a.
+  das dritte Kapitel von 'Open Source Projektmanagement' von
+  Michael Prokop (Open Source Press, München, 2010). Auch das
+  'Manifesto for Agile Software Development' hält unter
+  http://agilemanifesto.org/ aufschlussreiche Hinweise
+  bereit.]
+
+In Git kann man ``Workflows'' unter zwei Aspekten sehen:
+Abläufe (Kommandosequenzen), die den einzelnen Nutzer betreffen, sowie
+projektbezogene Arbeitsabläufe (z.B.  Release-Management). Auf beide
+Aspekte wird im Folgenden eingegangen.
+
+[[sec.workflows-user]]
+=== Anwender === 
+
+Nachfolgend finden Sie eine Auflistung genereller
+Entwicklungsstrategien (ohne bestimmte Reihenfolge):
+
+indexterm:[Branch,Topic-Branch]
+indexterm:[Namespace]
+indexterm:[Branch,Namespace]
+indexterm:[Fast-Forward]
+indexterm:[Merge,Richtung beachten]
+indexterm:[Criss-Cross-Merge]
+indexterm:[Merge,Criss-Cross]
+indexterm:[Throw-Away-Integration]
+
+'Machen Sie möglichst kleine, eigenständige Commits':: Unterteilen Sie
+Ihre Arbeit in kleine, logische Schritte und tätigen Sie für jeden
+Schritt einen Commit. Die Commits sollten unabhängig von zukünftigen
+Commits sein und möglichst alle Tests (sofern vorhanden) bestehen. Das
+erleichtert es Ihren Kollegen bzw. den Maintainern, nachzuvollziehen,
+was Sie gemacht haben. Außerdem steigert es den Wirkungsgrad von
+Kommandos, die die Geschichte untersuchen, bspw. `git bisect` und `git
+blame`. Haben Sie keine Angst, zu kleine Commits zu tätigen. Es ist im
+Nachhinein einfacher, mehrere kleine Commits mit `git rebase
+--interactive` zusammenzufassen als einen großen in mehrere kleine zu
+teilen.
+
+'Entwickeln Sie in Topic-Branches':: Branching geht in Git leicht,
+schnell und intuitiv vonstatten.  Anschließendes Mergen funktioniert
+problemlos, auch wiederholt.  Nutzen Sie diese Flexibilität von Git:
+Entwickeln Sie nicht direkt in `master`, sondern jedes Feature in
+seinem eigenen Branch, genannt 'Topic-Branch'.
++
+Dadurch bieten sich einige Vorteile: Sie können Features unabhängig
+voneinander entwickeln; Sie erhalten einen wohldefinierten Zeitpunkt
+der Integration (Merge); Sie können die Entwicklung per Rebase
+``stromlinienförmig'' und übersichtlich gestalten, bevor Sie sie
+veröffentlichen; Sie erleichtern es anderen Entwicklern, ein neues
+Feature isoliert zu testen.
+
+'Verwenden Sie Namespaces':: Sie können durch `/`-Zeichen im
+Branch-Namen verschiedene Klassen von Branches kreieren. In einem
+zentralen Repository können Sie sich durch Ihre Initialen einen
+eigenen Namensraum schaffen (z.B.{empty}{nbsp}`jp/refactor-base64`) oder Ihre
+Features je nach Stabilität unter `experimental/` oder `pu/` (s.u.)
+ablegen.
+
+'Rebase early, Rebase often':: Wenn Sie auf Topic-Branches häufig mit
+Rebase arbeiten, erzeugen Sie eine deutlich lesbarere
+Versionsgeschichte. Das ist für Sie und andere Entwickler praktisch
+und hilft, den eigentlichen Programmiervorgang in logische Einheiten
+aufzuteilen.
++
+Verschmelzen Sie Kleinstcommits, wenn sie zusammengehören.  Nehmen Sie
+sich bei Bedarf die Zeit, große Commits noch einmal sinnvoll
+aufzuteilen (siehe <<sec.rebase-i-edit>>).
++
+Verwenden Sie allerdings Rebase nur für eigene Commits: Verändern Sie
+keinesfalls bereits veröffentlichte Commits oder die Commits anderer
+Entwickler.
+
+'Unterscheiden Sie bewusst zwischen FF- und regulären Merges'::
+Integrieren Sie Änderungen aus dem Upstream immer per Fast-Forward
+(Sie spulen die lokale Kopie der Branches einfach vor). Integrieren
+Sie im Gegensatz dazu neue Features durch reguläre Merges. Hilfreich
+für die Unterscheidung sind auch die in <<sec.merge-ff>> vorgestellten
+Aliase.
+
+'Beachten Sie die Merge-Richtung':: Das Kommando `git merge` zieht
+einen oder mehrere Branches in den aktuellen hinein. Beachten Sie
+daher immer die Richtung, in der Sie einen Merge durchführen:
+Integrieren Sie Topic-Branches in die 'Mainline' (den Branch, auf dem
+Sie das stabile Release vorbereiten), nicht umgekehrt.footnote:[Eine
+Ausnahme besteht, wenn Sie eine neue Entwicklung in der Mainline in
+Ihrem Topic-Branch benötigen; in dem Fall können Sie allerdings auch
+überlegen, den Topic-Branch per Rebase neu aufzubauen, so dass er die
+benötigte Funktionalität schon beinhaltet.]  Auf diese Weise können
+Sie auch im Nachhinein noch die Geschichte eines Features von der
+Mainline isolieren (`git log topic` listet nur die relevanten Commits
+auf).
++
+'Criss-Cross-Merges' (überkreuzte Merges) sind nach Möglichkeit zu
+vermeiden: Sie entstehen, wenn Sie einen Branch A in einen Branch B
+und eine ältere Version von B in A integrieren.  
+
+'Testen Sie die Verträglichkeit von Features per Throw-Away-Integration'::
+    Erstellen Sie einen neuen (Wegwerf-)Branch
+    und mergen Sie die Features, deren Kompatibilität Sie testen
+    wollen. Lassen Sie die Testsuite laufen oder testen Sie das
+    Zusammenspiel der neuen Komponenten auf andere Weise. Den Branch
+    können Sie anschließend löschen und die Features weiter getrennt
+    voneinander entwickeln. Solche 'Throw-Away'-Branches werden in der
+    Regel nicht veröffentlicht.
+
+Gewisse Arbeitsschritte tauchen wieder und wieder auf. Im Folgenden
+ein paar allgemeine Lösungsstrategien:
+
+indexterm:[Bugfixing]
+indexterm:[Commit,korrigieren]
+indexterm:[commit,--amend]
+indexterm:[Rebase]
+indexterm:[branch,--no-merged]
+indexterm:[apply]
+indexterm:[cherry-pick,--no-commit]
+indexterm:[merge,--squash]
+indexterm:[Squash-Merge]
+indexterm:[Merge,Squash]
+
+'Einen kleinen Bug fixen':: Wenn Sie einen kleinen
+    Bug bemerken, den Sie schnell korrigieren wollen, können Sie das
+    auf zwei Arten tun: vorliegende Änderungen per Stash in den
+    Hintergrund schieben (siehe <<sec.stash>>), den
+    entsprechenden Branch auschecken, den Bug beheben, wieder den
+    Branch wechseln und den Stash anwenden.
+    +
+    Die andere Möglichkeit besteht darin, auf dem Branch, auf dem Sie
+    gerade arbeiten, den Fehler zu beheben und nachträglich den/die
+    entsprechenden Commit(s) per Cherry-Pick oder Rebase-Onto (siehe
+    <<sec.cherry-pick>> bzw.  <<sec.rebase-onto>>)
+    in den dafür vorgesehenen Bugfix- oder Topic-Branch zu übernehmen.
+
+'Einen Commit korrigieren'::  Mit `git commit --amend` können Sie den letzten Commit anpassen. Die Option `--no-edit` bewirkt, dass die Beschreibung beibehalten und nicht erneut zur Bearbeitung angeboten wird.
++
+Um tiefer liegende Commits zu korrigieren, verwenden Sie entweder
+interaktives Rebase und das `edit`-Keyword (siehe
+<<sec.rebase-i-edit>>) oder Sie erstellen für jede
+Korrektur einen kleinen Commit, ordnen diese schließlich im
+interaktiven Rebase entsprechend an und versehen sie mit der
+Aktion `fixup`, um den ursprünglichen Commit zu
+korrigieren.
+
+'Welche Branches sind noch nicht in'{empty}{nbsp}`master`?:: Verwenden Sie `git branch -vv --no-merged`, um herauszufinden, welche Branches noch nicht in den aktuellen Branch integriert sind.  
+
+'Mehrere Änderungen aus unterschiedlichen Quellen zusammenfassen'::
+Nutzen Sie den Index, um mehrere Änderungen
+zusammenzufassen, z.B.   Änderungen, die einander
+ergänzen, aber in verschiedenen Branches oder als Patches
+vorliegen. Die Kommandos `git apply`, `git
+cherry-pick --no-commit` sowie `git merge --squash`
+wenden die entsprechenden Änderungen nur auf den Working Tree bzw.
+Index an, ohne einen Commit zu erzeugen.
+
+
+
+[[sec.branch-modell]]
+=== Ein Branching-Modell === 
+
+indexterm:[Workflows,Branching-Modell]
+indexterm:[Branching-Modell]
+Der folgende Abschnitt stellt ein Branching-Modell vor, das an das in
+der Man-Page `gitworkflows(7)` beschriebene Modell
+angelehnt ist. Das Branching-Modell bestimmt, welcher Branch
+welche Funktionen erfüllt, wann und wie Commits aus einem Branch übernommen
+werden, welche Commits als Releases getaggt werden sollen usw. Es ist flexibel,
+skaliert gut und kann bei Bedarf erweitert werden (s.u.).
+
+indexterm:[Proposed Updates]
+indexterm:[maint (Branch)]
+indexterm:[next (Branch)]
+In seiner Grundform besteht das Modell aus vier Branches:
+`maint`, `master`, `next`, und `pu`
+('Proposed Updates'). Der `master`-Branch dient vor allem
+der Vorbereitung des nächsten Releases und zum Sammeln trivialer
+Änderungen. `pu`-Branch(es) dienen der Feature-Entwicklung
+(Topic-Branches).  In dem Branch `next` werden halbwegs
+stabile neue Features gesammelt, im Verbund auf Kompatibilität,
+Stabilität und Korrektheit getestet und bei Bedarf verbessert. Auf dem
+`maint`-Branch werden kritische Bug-Fixes für vorangegangene
+Versionen gesammelt und als Maintenance-Releases veröffentlicht.
+
+Prinzipiell werden Commits immer durch einen Merge in einen anderen
+Branch integriert (in <<fig.branch-model>> durch Pfeile
+angedeutet). Im Gegensatz zum Cherry-Picking werden dabei Commits
+nicht gedoppelt, und Sie können einem Branch leicht ansehen, ob er
+einen bestimmten Commit schon enthält oder nicht.
+
+Das folgende Diagramm ist eine schematische Darstellung des zehn
+Punkte umfassenden Workflows, der unten detailliert erläutert wird.
+
+indexterm:[Feature Graduation]
+indexterm:[Bugfix,auf maint-Branch]
+
+.Branch-Modell gemäß `gitworkflows (7)`
+image::branch-model.png[id="fig.branch-model",width="90%"]
+
+. Neue Topic-Branches entstehen von
+  wohldefinierten Punkten, z.B. getaggten Releases, auf dem
+  `master`.
++
+[subs="macros,quotes"]
+--------
+$ *git checkout -b pu/cmdline-refactor v0.1*
+--------
+
+. Hinreichend stabile Features werden aus ihrem
+jeweiligen `pu`-Branch nach `next` übernommen
+('Feature Graduation').
++
+[subs="macros,quotes"]
+--------
+$ *git checkout next*
+$ *git merge pu/cmdline-refactor*
+--------
+
+. Releasevorbereitung: Wenn sich genügend neue Features in
+`next` (featuregetriebene Entwicklung) angesammelt haben, wird
+`next` nach `master` gemergt und ggf. ein Release-Candidate-Tag
+(RC-Tag) erzeugt (Suffix `-rc<n>`).
++
+[subs="macros,quotes"]
+--------
+$ *git checkout master*
+$ *git merge next*
+$ *git tag -a v0.2-rc1*
+--------
+
+. Von nun an werden nur noch sogenannte 'Release-Critical Bugs'
+(RC-Bugs) direkt im `master` korrigiert. Es handelt sich hierbei um
+``Show-Stopper'', also Bugs, die die Funktionalität der Software
+maßgeblich einschränken oder neue Features unbenutzbar machen.
+Gegebenenfalls können Sie Merges von problematischen Branches wieder
+rückgängig machen (siehe <<sec.revert>>).
++
+Was während der Release-Phase mit `next` passiert, hängt von
+der Größe des Projekts ab. Sind alle Entwickler damit beschäftigt,
+die RC-Bugs zu beheben, so bietet sich ein Entwicklungsstopp für
+`next` an.  Bei größeren Projekten, wo während der
+Release-Phase schon die Entwicklung für das übernächste Release
+vorangetrieben wird, kann `next` weiterhin als
+Integrations-Branch für neue Features dienen.
+
+. Sind alle RC-Bugs getilgt, wird der `master` als Release getaggt und
+ggf. als Quellcode-Archiv, Distributions-Paket usw. veröffentlicht.
+Außerdem wird `master` nach `next` gemergt, um alle Fixes für RC-Bugs
+zu übertragen. Wurden in der Zwischenzeit keine weiteren Commits auf
+`next` getätigt, so ist dies ein Fast-Forward-Merge. Nun können auch
+wieder neue Topic-Branches aufgemacht werden, die auf dem neuen
+Release basieren.
++
+[subs="macros,quotes"]
+--------
+$ *git tag -a v0.2*
+$ *git checkout next*
+$ *git merge master*
+--------
+
+. Feature-Branches, die es nicht ins Release
+geschafft haben, können nun entweder in den `next`-Branch
+gemergt werden, oder aber, falls sie noch nicht fertig sind, per
+Rebase auf eine neue, wohldefinierte Basis aufgebaut werden.
++
+[subs="macros,quotes"]
+--------
+$ *git checkout pu/numeric-integration*
+$ *git rebase next*
+--------
+
+. Um Feature-Entwicklung sauber von Bug-Fixes und 'Maintenance'
+(``Instandhaltung'') zu trennen, werden Bug-Fixes, die eine
+vorangegangene Version betreffen, im Branch `maint` getätigt. Dieser
+Maintenance-Branch zweigt, wie die Feature-Branches auch, an
+wohldefinierten Stellen von `master` ab.
+
+. Haben sich genügend Bug-Fixes angesammelt oder wurde ein kritischer
+Bug behoben, z.B. ein Security-Bug, wird der aktuelle Commit auf dem
+`maint`-Branch als Maintenance-Release getaggt und kann über die
+gewohnten Kanäle publiziert werden.
++
+[subs="macros,quotes"]
+--------
+$ *git checkout maint*
+$ *git tag -a v0.1.1*
+--------
++
+Manchmal kommt es vor, dass Bug-Fixes, die auf `master` gemacht
+wurden, auch in `maint` gebraucht werden. In diesem Fall ist es
+in Ordnung, diese per `git cherry-pick` dorthin zu übertragen.
+Das sollte aber eher die Ausnahme als die Regel sein.
+
+. Damit Bug-Fixes auch künftig verfügbar sind, wird der `maint`-Branch
+nach einem Maintenance-Release nach `master` gemergt.
++
+[subs="macros,quotes"]
+--------
+$ *git checkout master*
+$ *git merge maint*
+--------
++
+Sind die Bug-Fixes sehr dringend, können sie mit `git cherry-pick` in
+  den entsprechenden Branch (`next` oder `pu/*`) übertragen
+  werden. Wie bei einem `git cherry-pick` nach `maint` auch, sollte
+  dies nur selten passieren.
+
+. Bei einem neuen Release wird der `maint`-Branch per Fast-Forward auf
+den Stand von `master` gebracht, so dass `maint` nun auch alle Commits
+enthält, die das neue Release ausmachen. Ist hier kein Fast-Forward
+möglich, ist das ein Anzeichen dafür, dass sich noch Bug-Fixes in
+`maint` befinden, die nicht in `master` sind (siehe Punkt 9).
++
+[subs="macros,quotes"]
+--------
+$ *git checkout maint*
+$ *git merge --ff-only master*
+--------
+
+indexterm:[Namespace]
+indexterm:[Branch,Namespace]
+Das Branching-Modell können Sie beliebig erweitern. Ein Ansatz, den
+man oft antrifft, ist die Verwendung von 'Namespaces' (siehe
+<<sec.branches>>) im Zusatz zu den
+`pu/*`-Branches.  Das hat den Vorteil, dass jeder Entwickler
+einen eigenen Namensraum verwendet, der per Konvention abgegrenzt ist.
+Eine andere, sehr beliebte Erweiterung ist es, für jede vorangegangene
+Version einen eigenen `maint`-Branch zu erhalten.  Dadurch wird
+es möglich, beliebig viele ältere Versionen zu pflegen. Dazu wird vor
+dem Merge von `maint` nach `master` in Punkt 9
+ein entsprechender Branch für die Version erstellt.
+
+[subs="macros,quotes"]
+--------
+$ *git branch maint-v0.1.2*
+--------
+
+
+
+
+
+indexterm:[cherry-pick,von Bugfixes]
+Bedenken Sie aber, dass diese zusätzlichen Maintenance-Branches einen
+erhöhten Wartungsaufwand bedeuten, da jeder neue Bug-Fix geprüft
+werden muss. Ist er auch für eine ältere Version relevant, muss er per
+`git cherry-pick` in den Maintenance-Branch für die Version
+eingebaut werden. Außerdem muss ggf. eine neue Maintenance-Version
+getaggt und veröffentlicht werden.
+
+
+
+
+[[sec.releases-management]]
+=== Releases-Management === 
+
+indexterm:[Release-Management]
+indexterm:[Integration Manager]
+Sobald ein Projekt mehr als nur ein, zwei Entwickler hat, ist es in
+der Regel sinnvoll, einen Entwickler mit dem Management der Releases
+zu beauftragen. Dieser 'Integration Manager' entscheidet nach
+Rücksprache mit den anderen (z.B. über die Mailingliste), welche
+Branches integriert und wann neue Releases erstellt werden. 
+
+Jedes Projekt hat eigene Anforderungen an den Release-Ablauf.
+Nachfolgend einige generelle Tipps, wie Sie die Entwicklung überwachen
+und den Release-Prozess teilweise automatisieren können.footnote:[Weitere Anregungen finden Sie im
+  Kapitel 6 des Buches 'Open Source Projektmanagement' von Michael
+  Prokop (Open Source Press, München, 2010).]
+
+[[sec.release-check-branches]]
+==== Aufgaben sondieren ==== 
+
+Der Maintainer einer Software muss einen guten Überblick über die
+Features haben, die aktiv entwickelt und bald integriert werden
+sollen. In den meisten Entwicklungsmodellen 'graduieren' Commits
+von einem Branch auf den nächsten -- im oben vorgestellten Modell
+zunächst aus den `pu`-Branches nach `next` und dann
+nach `master`.
+
+indexterm:[branch,--merged]
+indexterm:[Branch,unnötige löschen]
+Zunächst sollten Sie Ihre lokalen Branches immer aufräumen, um nicht
+den Überblick zu verlieren. Dabei hilft besonders das Kommando
+`git branch --merged master`, das alle Branches auflistet,
+die schon vollständig in `master` (oder einen
+anderen Branch) integriert sind. Diese können Sie in der Regel
+löschen.
+
+indexterm:[git,show-branch]
+indexterm:[show-branch]
+indexterm:[Branch,show-branch]
+Um einen groben Überblick zu erhalten, welche Aufgaben anstehen,
+empfiehlt es sich, `git show-branch` einzusetzen. Ohne weitere
+Argumente listet es alle lokalen Branches auf, jeden mit einem
+Ausrufezeichen (`!`) in eigener Farbe. Der aktuelle Branch
+erhält einen Stern (`*`). Unterhalb der Ausgabe werden alle
+Commits ausgegeben sowie für jeden Branch in der jeweiligen Spalte ein
+Plus (`+`) bzw.  ein Stern (`*`), wenn der Commit Teil
+des Branches ist. Ein Minus (`-`) signalisiert Merge-Commits.
+
+
+
+[subs="macros,quotes"]
+--------
+$ *git show-branch*
+! [for-hjemli] initialize buf2 properly
+ * [master] Merge branch \'stable'
+  ! [z-custom] silently discard "error opening directory" messages
+---
++   [for-hjemli] initialize buf2 properly
+--  [master] Merge branch \'stable'
++*  [master\^2] Add advice about scan-path in cgitrc.5.txt
++*  [master\^2\^] fix two encoding bugs
++*  [master\^] make enable-log-linecount independent of -filecount
++*  [master\~2] new_filter: correctly initialise ... for a new filter
++*  [master\~3] source_filter: fix a memory leak
+  + [z-custom] silently discard "error opening directory" messages
+  + [z-custom^] Highlight odd rows
+  + [z-custom\~2] print upstream modification time
+  + [z-custom\~3] make latin1 default charset
+&#43;*&#43; [master~4] CGIT 0.9
+--------
+
+
+Es werden nur so viele Commits gezeigt, bis eine gemeinsame
+Merge-Basis aller Commits gefunden wird (im Beispiel:
+`master~4`). Wollen Sie nicht alle Branches
+gleichzeitig untersuchen, sondern z.B. nur die Branches unter
+`pu/`, dann geben Sie dies explizit als Argument an. 
+`--topics <branch>` bestimmt `<branch>` als
+Integrations-Zweig, dessen Commits nicht explizit angezeigt werden.
+
+Das folgende Kommando zeigt Ihnen also alle Commits aller
+`pu`-Branches und deren Relation zu `master`:
+
+[subs="macros,quotes"]
+--------
+$ *git show-branch --topics master "pu/&#42;"*
+--------
+
+
+indexterm:[Alias,todo]
+
+[TIP]
+========
+Es lohnt sich, die Kommandos, die Sie zum Release-Management
+verwenden, zu dokumentieren (so dass andere Ihre Aufgaben eventuell
+weiterführen können). Außerdem sollten Sie gängige Schritte durch
+Aliase abkürzen.
+
+Das o.g. Kommando könnten Sie wie folgt in ein Alias `todo`
+  umwandeln:
+
+[subs="macros,quotes"]
+--------
+$ *git config --global alias.todo \*
+  *"!git rev-parse --symbolic --branches | \*
+  *xargs git show-branch --topics master"*
+--------
+========
+
+
+indexterm:[cherry-pick]
+Das Kommando `git show-branch` erkennt allerdings nur
+'gleiche', das heißt identische Commits. Wenn Sie einen Commit
+per `git cherry-pick` in einen anderen Branch übernehmen, sind
+die Änderungen fast die gleichen, `git show-branch` würde dies
+aber nicht erkennen, da sich die SHA-1-Summe des Commits ändert.
+
+indexterm:[cherry]
+indexterm:[git,cherry]
+indexterm:[Commit,nach Cherry-Pick]
+indexterm:[git,patch-id]
+indexterm:[patch-id]
+Für diese Fälle ist das Tool `git cherry` zuständig.  Es
+verwendet intern das kleine Tool `git-patch-id`, das einen
+Commit auf seine bloßen Änderungen reduziert. Dabei werden
+Whitespace-Änderungen sowie die kontextuelle Position der Hunks
+(Zeilennummern) ignoriert. Das Tool liefert also für Patches, die
+essentiell die gleiche Änderung einbringen, die gleiche ID.
+
+In der Regel wird `git cherry` eingesetzt, wenn sich die Frage
+stellt: Welche Commits wurden schon in den Integrations-Branch
+übernommen? Dafür wird das Kommando `git cherry -v <upstream>
+  <topic>` verwendet: Es listet alle Commits auf `<topic>` auf,
+und stellt ihnen ein Minus (`-`) voran, wenn sie schon in
+`<upstream>` sind, ansonsten ein Plus (`+`).  Das sieht z.B.
+so aus:
+
+[subs="macros,quotes"]
+--------
+$ *git cherry --abbrev=7 -v master z-custom*
++ ae8538e guess default branch from HEAD
+- 6f70c3d fix two encoding bugs
+- 42a6061 Add advice about scan-path in cgitrc.5.txt
++ cd3cf53 make latin1 default charset
++ 95f7179 Highlight odd rows
++ bbaabe9 silently discard "error opening directory" messages
+--------
+
+
+Zwei der Patches wurden schon nach `master` übernommen. Das
+erkennt `git cherry`, obwohl sich die Commit-IDs  dabei geändert
+haben.
+
+
+
+
+
+[[sec.release-create]]
+==== Release erstellen ==== 
+
+Git bietet die folgenden zwei nützlichen Werkzeuge, um ein Release
+vorzubereiten:
+
+indexterm:[archive]
+indexterm:[git,archive]
+indexterm:[shortlog]
+indexterm:[git,shortlog]
+
+`git shortlog`:: Fasst die Ausgabe von `git log` zusammen.
+
+`git archive`:: Erstellt automatisiert ein Quellcode-Archiv.
+
+
+
+indexterm:[Changelog]
+Zu einem guten Release gehört ein sogenanntes 'Changelog', also
+eine Zusammenfassung der wichtigsten Neuerungen inklusive 
+Danksagungen an Personen, die Hilfe beigesteuert haben. Hier kommt
+`git shortlog` zum Einsatz. Das Kommando zeigt die jeweiligen
+Autoren, wie viele Commits jeder gemacht hat und die Commit-Messages
+der einzelnen Commits. So ist sehr gut ersichtlich, wer was gemacht
+hat.
+
+[subs="macros,quotes"]
+--------
+$ *git shortlog HEAD~3..*
+Georges Khaznadar (1):
+      bugfix: 3294518
+
+Kai Dietrich (6):
+      delete grammar tests in master
+      updated changelog and makefile
+      in-code version number updated
+      version number in README
+      version number in distutils setup.py
+      Merge branch \'prepare-release-0.9.3'
+
+Valentin Haenel (3):
+      test: add trivial test for color transform
+      test: expose bug with ID 3294518
+      Merge branch \'fix-3294518'
+--------
+
+
+Mit der Option `--numbered` bzw. `-n` wird die
+Ausgabe, statt alphabetisch, nach der Anzahl der Commits sortiert. Mit
+`--summary` bzw. `-s` fallen die Commit-Nachrichten
+weg.
+
+Sehen Sie aber im Zweifel davon ab, einfach die Ausgabe von
+`git log` oder `git shortlog` in die Datei
+`CHANGELOG` zu schreiben. Gerade bei vielen, technischen
+Commits ist das Changelog dann nicht hilfreich (wen diese
+Informationen interessieren, der kann immer im Repository
+nachschauen). Sie können aber die Ausgabe als Grundlage nehmen,
+unwichtige Änderungen löschen und die restlichen zu sinnvollen
+Gruppen zusammenfassen.
+
+indexterm:[git,describe]
+indexterm:[describe]
+indexterm:[Commit,Position beschreiben]
+
+[TIP]
+========
+Oft stellt sich für den Maintainer die Frage, was sich seit dem
+letzten Release verändert hat. Hier hilft
+`git-describe` (siehe <<sec.tags>>), das in
+Verbindung mit `--abbrev=0` das erste erreichbare Tag vom
+`HEAD` aus ausgibt:
+
+[subs="macros,quotes"]
+--------
+$ *git describe*
+wiki2beamer-0.9.2-20-g181f09a
+$ *git describe --abbrev=0*
+wiki2beamer-0.9.2
+--------
+
+In Kombination mit `git shortlog` lässt sich die gestellte
+Frage sehr einfach beantworten:
+
+[subs="macros,quotes"]
+--------
+$ *git shortlog -sn $(git describe --abbrev=0)..*
+    15  Kai Dietrich
+     4  Valentin Haenel
+     1  Georges Khaznadar
+--------
+========
+
+indexterm:[archive]
+indexterm:[Zip-Archiv]
+indexterm:[Tar-Archiv]
+indexterm:[Code,Archiv]
+Das Kommando `git archive` hilft beim Erstellen eines
+Quellcode-Archivs. Das Kommando beherrscht sowohl das Tar- als auch
+das Zip-Format. Zusätzlich können Sie mit der Option
+`--prefix=` ein Präfix für die zu speichernden Dateien
+setzen. Die oberste Ebene des Repositorys wird dann unterhalb dieses
+Präfix abgelegt, üblicherweise der Name und die Versionsnummer der
+Software:
+
+[subs="macros,quotes"]
+--------
+$ *git archive --format=zip --prefix=wiki2beamer-0.9.3/ HEAD \*
+    *&gt; wiki2beamer-0.9.3.zip*
+$ *git archive --format=tar --prefix=wiki2beamer-0.9.3/ HEAD \*
+    *| gzip &gt; wiki2beamer-0.9.3.tgz*
+--------
+
+indexterm:[HEAD,als Archiv packen]
+Als zwingendes Argument erwartet das Kommando einen Commit (bzw. einen
+Tree), der als Archiv gepackt werden soll. Im o.g. Beispiel ist das
+`HEAD`.  Es hätte aber auch eine Commit-ID, eine Referenz
+(Branch oder Tag) oder direkt ein Tree-Objekt sein können.footnote:[Jeder Commit referenziert
+genau einen Tree. Allerdings verhält sich `git archive`
+verschieden, je nachdem, ob Sie einen Commit (der einen Tree
+referenziert) oder einen Tree direkt angeben: Der Zeitpunkt der
+letzten Modifikation, der im Archiv aufgenommen wird, ist bei Trees
+die Systemzeit -- bei einem Commit allerdings wird der Zeitpunkt des
+Commits gesetzt.]
+
+Auch hier können Sie `git describe` einsetzen, nachdem Sie
+einen Release-Commit getaggt haben. Bei einem geeigneten Tag-Schema
+`<name>-<X.Y.Z>` wie oben reicht dann folgendes Kommando:
+
+[subs="macros,quotes"]
+--------
+$ *version=$(git describe)*
+$ *git archive --format=zip --prefix=$version/ HEAD &gt; $version.zip*
+--------
+
+
+Es kann sein, dass nicht alle Dateien, die Sie in Ihrem Git-Repository
+verwalten, auch in den Quellcode-Archiven vorkommen sollten, z.B.
+die Projekt-Webseite.  Sie können zusätzlich noch Pfade angeben -- um
+also das Archiv auf das Verzeichnis `src` und die Dateien
+`LICENSE` und `README` zu beschränken, verwenden Sie:
+
+[subs="macros,quotes"]
+--------
+$ *version=$(git describe)*
+$ *git archive --format=zip --prefix=$version/ HEAD src LICENSE README \*
+    *&gt; $version.zip*
+--------
+
+
+Git speichert, sofern Sie einen Commit als Argument angeben, die
+SHA-1-Summe mit im Archiv ab. Im Tar-Format wird dies als
+'Pax-Header-Eintrag' mit eingespeichert, den Git mit dem Kommando
+`git get-tar-commit-id` wieder auslesen kann:
+
+[subs="macros,quotes"]
+--------
+$ *zcat wiki2beamer-0.9.3.tgz | git get-tar-commit-id*
+181f09a469546b4ebdc6f565ac31b3f07a19cecb
+--------
+
+In Zip-Dateien speichert Git die SHA-1-Summe einfach im Kommentarfeld:
+
+[subs="macros,quotes"]
+--------
+$ *unzip -l wiki2beamer-0.9.3.zip | head -5*
+Archive:  wiki2beamer-0.9.3.zip
+181f09a469546b4ebdc6f565ac31b3f07a19cecb
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  05-06-2011 20:45   wiki2beamer-0.9.3/
+--------
+
+[TIP]
+========
+Ein Problem, das Sie bedenken sollten, ist, dass zum Beispiel
+`.gitignore`-Dateien automatisch mit gepackt werden. Da sie aber
+außerhalb eines Git-Repositorys keine Bedeutung haben, lohnt es sich,
+sie mit dem Git-Attribut (siehe <<sec.attributes>>) `export-ignore`
+auszuschließen.  Das geschieht durch einen Eintrag `.gitignore
+export-ignore` in `.git/info/attributes`.
+
+Auch können Sie vor dem Einpacken des Archivs automatische
+Keyword-Ersetzungen vornehmen (siehe
+<<sec.smudge-clean-keywords>>).
+========
+
+
+// vim:set tw=72 ft=asciidoc:
