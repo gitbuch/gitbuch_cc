@@ -1,0 +1,28 @@
+Form und Funktionalität
+=======================
+
+* Screenshots und Diagramme
+    -> Bilder werden momentan falsch eingebunden (fehlendes Präfix)
+    -> Farbige Versionen referenzieren statt S/W
+    -> Bilder in HTML einbetten? (Inline-base64)
+    -> Seitenbreite festlegen oder Bilder absolut skalieren?
+* Referenzlinks erscheinen als [ch.intro] statt „Kapitel 1“
+* Styling
+    -> Kursiv gesetztes sieht aus wie Links, sollte nicht farbig sein
+* Fußnoten sollten nicht nach unten springen, sondern lieber eine Art Popup
+  produzieren oder in einer Randspalte dargestellt werden
+* Kommandos indextermsee:[] et al scheinen nicht zu funktionieren
+    -> Weitere Kommandos die fehlen?
+* AsciiDoc-Templates anschauen: Idealerweise eine HTML-Seite pro Kapitel – mit
+  dem gesamten Inhaltsverzeichnis am Rand. Außerdem einen “one-pager”.
+
+
+Inhaltlich
+==========
+
+* „Vorwort zur CC-Ausgabe“
+* Errata seit Druck der zweiten Auflage korrigieren
+* gitbu.ch entsprechend umbauen
+    -> Einleitender Text auf der Startseite, mit dem Inhaltsverzeichnis schon am Rand
+    -> Guidelines und Hilfetexte wie man mitmachen kann
+    -> Hinweis: eBook möglich, aber das KnowHow fehlt
