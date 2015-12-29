@@ -1,0 +1,42 @@
+Git
+===
+:subtitle: Verteilte Versionskontrolle für Code und Dokumente
+:doctype: book
+:revnumber: 3.0
+:lang: de
+
+[preface]
+include::vorwort.txt[]
+
+[[part01]]
+= Grundlagen =
+
+include::erste_schritte.txt[]
+
+include::grundlagen.txt[]
+
+include::praxis.txt[]
+
+include::remote.txt[]
+
+include::workflows.txt[]
+
+[[part02]]
+= Advanced =
+
+include::server.txt[]
+
+include::automatisierung.txt[]
+
+include::zusammenspiel.txt[]
+
+include::shell.txt[]
+
+include::github.txt[]
+
+[appendix]
+include::installation.txt[]
+
+include::gitdir.txt[]
+
+// vim:set tw=72 ft=asciidoc:
