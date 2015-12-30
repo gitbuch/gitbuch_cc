@@ -1,4 +1,5 @@
-all: git.html git.chunked
+default: git.chunked
+all: git.chunked git.html
 
 git.txt: advanced.txt automatisierung.txt erste_schritte.txt gitdir.txt \
     github.txt grundlagen.txt installation.txt praxis.txt remote.txt \
