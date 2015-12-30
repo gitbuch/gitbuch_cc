@@ -8,9 +8,6 @@ Git
 [preface]
 include::vorwort.txt[]
 
-[[part01]]
-= Grundlagen =
-
 include::erste_schritte.txt[]
 
 include::grundlagen.txt[]
@@ -22,9 +19,6 @@ include::advanced.txt[]
 include::remote.txt[]
 
 include::workflows.txt[]
-
-[[part02]]
-= Advanced =
 
 include::server.txt[]
 
@@ -39,6 +33,7 @@ include::github.txt[]
 [appendix]
 include::installation.txt[]
 
+[appendix]
 include::gitdir.txt[]
 
 // vim:set tw=72 ft=asciidoc:
