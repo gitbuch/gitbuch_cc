@@ -32,10 +32,10 @@ Commit auf Basis eines anderen Knotens aufgebaut wird.  Die
 nachfolgenden Grafiken veranschaulichen die Funktionsweise:
 
 .Vor dem Rebase
-image::rebase-vorher.png[id="fig.rebase-vorher-dia",width="90%"]
+image::bilder_ebook/rebase-vorher.png[id="fig.rebase-vorher-dia",width="90%"]
 
 .{empty}...und danach
-image::rebase-nachher.png[id="fig.rebase-nachher-dia",width="90%"]
+image::bilder_ebook/rebase-nachher.png[id="fig.rebase-nachher-dia",width="90%"]
 
 In der einfachsten Form lautet das Kommando `git rebase
   <referenz>` (im o.g. Diagramm: `git rebase master`).  Damit
@@ -91,7 +91,7 @@ zweigt vom Commit ``fixed a bug...'' ab. Der
 Release 1.4.2 ist erschienen.
 
 .Vor dem Rebase
-image::screenshot-rebase-vorher.png[id="fig.screenshot-rebase-vorher",width="90%"]
+image::bilder_ebook/screenshot-rebase-vorher.png[id="fig.screenshot-rebase-vorher",width="90%"]
 
 Nun wird `sqlite-support` ausgecheckt und neu auf
 `master` aufgebaut:
@@ -112,7 +112,7 @@ Rebase wendet die drei Änderungen, die durch Commits aus dem Branch
 folgt aus:
 
 .Nach Rebase
-image::screenshot-rebase-nachher.png[id="fig.screenshot-rebase-nachher",width="90%"]
+image::bilder_ebook/screenshot-rebase-nachher.png[id="fig.screenshot-rebase-nachher",width="90%"]
 
 [[sec.rebase-extended]]
 ==== Erweiterte Syntax und Konflikte ==== 
@@ -409,7 +409,7 @@ Branches umsetzen, quasi ``transplantieren'' möchten?
 Betrachten Sie folgende Situation:
 
 .Vor dem `rebase --onto`
-image::rebase-onto-vorher.png[id="fig.rebase-onto-vorher-dia",width="90%"]
+image::bilder_ebook/rebase-onto-vorher.png[id="fig.rebase-onto-vorher-dia",width="90%"]
 
 indexterm:[rebase,--onto]
 indexterm:[Rebase,Onto]
@@ -448,7 +448,7 @@ $ *git rebase --onto master topic bugfix*
 Das Ergebnis sieht aus wie erwartet:
 
 .Nach einem `rebase --onto`
-image::rebase-onto-nachher.png[id="fig.rebase-onto-nachher-dia",width="90%"]
+image::bilder_ebook/rebase-onto-nachher.png[id="fig.rebase-onto-nachher-dia",width="90%"]
 
 [[sec.rebase-onto-ci-amend]]
 ==== Einen Commit verbessern ==== 
@@ -953,7 +953,7 @@ das grafische Tool `git gui blame` (hierfür müssen Sie
 gegebenenfalls das Paket `git-gui` installieren).
 
 .Ein Stück Code, das aus einer anderen Datei verschoben wurde
-image::git-gui-blame.png[id="fig.git-gui-blame",width="100%"]
+image::bilder_ebook/git-gui-blame.png[id="fig.git-gui-blame",width="100%"]
 
 Wenn Sie eine Datei per `git gui blame <datei>` untersuchen,
 werden die unterschiedlichen Blöcke, die aus verschiedenen Commits
@@ -1492,7 +1492,7 @@ ein Stash in Gitk als Dreieck angezeigt, was im ersten Moment etwas
 verwirrend ist:
 
 .Ein Stash in Gitk
-image::stash-screenshot.png[id="fig.gitk-stash",width="90%"]
+image::bilder_ebook/stash-screenshot.png[id="fig.gitk-stash",width="90%"]
 
 indexterm:[Alias,tree]
 Mit dem Alias `git tree` (siehe <<rev-list>>) sieht das so aus:
