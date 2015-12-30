@@ -896,7 +896,7 @@ eigentlich vor einer bestimmten Änderung aussah. Dafür bietet das
 grafische Blame-Tool die folgende Möglichkeit, in der
 Versionsgeschichte zurückzugehen: Klicken Sie mit der rechten
 Maustaste auf die Commit-ID eines Code-Blocks und wählen Sie im
-Kontextmenü menu:[Blame Parent Commit] aus – nun wird der
+Kontextmenü 'Blame Parent Commit' aus – nun wird der
 Vorgänger dieser Änderung angezeigt. Sie können auf diese Weise
 mehrere Schritte zurückgehen. Über den grünen Pfeil links oben können
 Sie wieder in die Zukunft springen.

@@ -815,7 +815,7 @@ in 1.0 seconds automatically...
 --------
 
 Sie können das Kommando natürlich während dieser Zeit mit
-key:[Strg,C] abbrechen.
+'Strg+C' abbrechen.
 
 
 // vim:set tw=72 ft=asciidoc:

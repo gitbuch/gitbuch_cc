@@ -2401,12 +2401,12 @@ folgendes Shell-Alias an: `alias gik='gitk --all'`
 
 Viele Nutzer lassen `gitk` während der Arbeit offen. Dann ist
 es wichtig, von Zeit zu Zeit die Anzeige zu aktualisieren, damit auch
-aktuellere Commits erscheinen. Mit key:[F5] ('Update') laden
+aktuellere Commits erscheinen. Mit 'F5' ('Update') laden
 Sie alle neuen Commits und erneuern die Darstellung der Referenzen.
 Manchmal, wenn Sie z.B. einen Branch löschen, reicht dies jedoch
 nicht aus. Zwar wird der Branch nicht mehr angezeigt, aber evtl. sind
 unerreichbare Commits weiterhin quasi als Artefakte in der GUI
-vorhanden. Mit der Tastenkombination key:[Strg,F5]
+vorhanden. Mit der Tastenkombination 'Strg+F5'
 ('Reload') wird das Repository vollständig neu eingelesen, was
 das Problem beseitigt.
 

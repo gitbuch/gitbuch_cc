@@ -355,7 +355,7 @@ immer mitgeliefert.
 ========
 Die Z-Shell verfügt über ein sehr nützliches Feature, um Man-Pages
 aufzurufen: die `run-help` Funktion. Sie wird im Emacs-Modus
-standardmäßig mit key:[Esc,H] aufgerufen und zeigt für das
+standardmäßig mit 'Esc+H' aufgerufen und zeigt für das
 Kommando, das bereits auf der Kommandozeile steht, die Man-Page an:
 
 [subs="macros,quotes"]

@@ -242,7 +242,7 @@ Stage this hunk[y,n,q,a,d,/,s,e,?]?
 --------
 
 Die Optionen sind jeweils nur einen Buchstaben lang und schwierig zu
-merken. Eine kleine Erinnerung erhalten Sie immer durch key:[?].
+merken. Eine kleine Erinnerung erhalten Sie immer durch '[?]'.
 Die wichtigsten Optionen haben wir im Folgenden
 zusammengefasst.
 
