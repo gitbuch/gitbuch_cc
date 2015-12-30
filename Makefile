@@ -5,10 +5,10 @@ git.txt: advanced.txt automatisierung.txt erste_schritte.txt gitdir.txt \
     github.txt grundlagen.txt installation.txt praxis.txt remote.txt \
     server.txt shell.txt vorwort.txt workflows.txt zusammenspiel.txt
 
-git.html: git.txt
+git.html: git.txt asciidoc.conf
 	asciidoc -a numbered -a data-uri -a toclevels=3 $<
 
-git.chunked: git.txt styles
+git.chunked: git.txt styles asciidoc.conf
 	a2x -f chunked --resource styles --stylesheet=gitbuch.css \
 	  --xsltproc-opts="--stringparam chunk.section.depth 0 --stringparam chunker.output.indent yes" $<
 
