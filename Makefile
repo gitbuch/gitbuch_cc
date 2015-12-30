@@ -12,3 +12,6 @@ git.chunked: git.txt
 
 clean:
 	rm -rf git.html git.chunked
+
+wipdeploy:
+	 rsync -r --info=progress2 --delete --chmod=a+r git.chunked/ noam:www/plenz.com/gitbuch-wip

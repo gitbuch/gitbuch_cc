@@ -33,3 +33,8 @@ Inhaltlich
     -> Guidelines und Hilfetexte wie man mitmachen kann
     -> Hinweis: eBook möglich, aber das KnowHow fehlt
     -> Schulungsmaterialien auch unter CC veröffentlichen
+
+Aufräumen
+=========
+
+* "wipdeploy" Makefile-Target löschen
