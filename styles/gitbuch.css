@@ -54,6 +54,14 @@ div.sidebar p.title
   margin-bottom: 0.2em;
 }
 
+div.tip {
+    /* we need !important to override the hardcoded style="..." */
+    margin-left: 5% !important;
+    margin-right: 5% !important;
+    padding: .2em 1em;
+    border: 1px solid #c0c0c0;
+}
+
 body h1 {
   margin: .0em 0 0 -4%;
   line-height: 1.3;
@@ -135,7 +143,7 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
 } 
 
 body pre {
-  margin: 0.5em 10% 0.5em 1em;
+  margin: 0.5em 1em 0.5em 1em !important;
   line-height: 1.0;
   color: navy;
 }
