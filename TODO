@@ -2,10 +2,6 @@ Form und Funktionalität
 =======================
 
 * Screenshots und Diagramme
-    -> Bilder werden momentan falsch eingebunden (fehlendes Präfix)
-    -> Farbige Versionen referenzieren statt S/W
-    -> Bilder in HTML einbetten? (Inline-base64)
-       [http://www.methods.co.nz/asciidoc/chunked/ch21.html#X66]
     -> Seitenbreite festlegen oder Bilder absolut skalieren?
 * Referenzlinks erscheinen als [ch.intro] statt „Kapitel 1“
 * Styling
@@ -18,6 +14,16 @@ Form und Funktionalität
   dem gesamten Inhaltsverzeichnis am Rand. Außerdem einen “one-pager”.
   Stichwort: Chunked HTML via a2x.
 
+Archäologie
+===========
+
+* Quelldaten finden für folgende Bilder (und dann farbige Version):
+    ‘bilder_ebook/git-branches-neu-crop.png’
+    ‘bilder_ebook/git-convert-refs-after-neu.png’
+    ‘bilder_ebook/git-convert-refs-before-neu.png’
+    ‘bilder_ebook/git-svn-merge-demo-neu.png’
+    ‘bilder_ebook/svn_dcommit-neu.png’
+    ‘bilder_ebook/svn_rebase-neu.png’
 
 Inhaltlich
 ==========
