@@ -38,7 +38,7 @@ Caching von CGit, <<sec.cgit-cache>>).
 
 
 .Die wichtigsten Einträge in `.git`
-image::git-dir-crop.png[id="fig.git-dir-listing",width="20%"]
+image::bilder_ebook/git-dir-crop.png[id="fig.git-dir-listing",width="20%"]
 
 
 `logs/`:: Protokoll der Veränderungen an Referenzen; zugänglich über

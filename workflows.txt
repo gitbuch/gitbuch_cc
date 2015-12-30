@@ -204,7 +204,7 @@ indexterm:[Feature Graduation]
 indexterm:[Bugfix,auf maint-Branch]
 
 .Branch-Modell gemäß `gitworkflows (7)`
-image::branch-model.png[id="fig.branch-model",width="90%"]
+image::bilder_ebook/branch-model.png[id="fig.branch-model",width="90%"]
 
 . Neue Topic-Branches entstehen von
   wohldefinierten Punkten, z.B. getaggten Releases, auf dem

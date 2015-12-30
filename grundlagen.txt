@@ -52,7 +52,7 @@ löschen diese wieder; erst das Kommando `commit` überträgt die
 Datei, wie sie im Index vorgehalten wird, in das Repository (<<fig.index>>).
 
 .Kommandos `add`, `reset` und `commit`
-image::index.png[id="fig.index",width="90%"]
+image::bilder_ebook/index.png[id="fig.index",width="90%"]
 
 Im Ausgangszustand, das heißt wenn `git status` die Nachricht
 `nothing to commit` ausgibt, sind Working Tree und Index mit
@@ -1107,7 +1107,7 @@ untersucht wird, mit dem Befehl `git clone
 git://github.com/gitbuch/objektmodell-beispiel.git` herunterladen.]
 
 .Hello World!-Programm in Python
-image::objektmodell-programm-crop.png[id="fig.objektmodell-program-crop",width="25%"]
+image::bilder_ebook/objektmodell-programm-crop.png[id="fig.objektmodell-program-crop",width="25%"]
 
 Das Projekt besteht aus der Datei `hello.py` sowie einer
 `README`-Datei und einem Verzeichnis `test`. Führt man
@@ -1159,7 +1159,7 @@ Diese Eigenschaft wird als 'Kollisionssicherheit' bezeichnet.
 
 
 .SHA-1-Algorithmus
-image::sha.png[id="fig.sha",width="90%"]
+image::bilder_ebook/sha.png[id="fig.sha",width="90%"]
 
 
 Allen Bemühungen der Kryptologen zum Trotz wurden vor einigen Jahren
@@ -1240,7 +1240,7 @@ referenziert, die diese Unterverzeichnisse abbilden.
 
 
 .Git-Objekte
-image::objekte.png[id="fig.objekte",width="90%"]
+image::bilder_ebook/objekte.png[id="fig.objekte",width="90%"]
 
 
 indexterm:[Referenz,von Git-Objekten untereinander]
@@ -1328,7 +1328,7 @@ zeigen, illustriert.
 
 
 .Hierarchische Beziehung der Git-Objekte
-image::objekte-zusammenhang.png[id="fig.objekte-zusammenhang",width="65%"]
+image::bilder_ebook/objekte-zusammenhang.png[id="fig.objekte-zusammenhang",width="65%"]
 
 
 Jeder Commit referenziert den Top-Level Tree -- auch der Commit
@@ -1471,7 +1471,7 @@ gleichen.
 
 
 .Inhalt des Repositorys
-image::struktur.png[id="fig.struktur",width="80%"]
+image::bilder_ebook/struktur.png[id="fig.struktur",width="80%"]
 
 
 indexterm:[Content-Addressable File System]
@@ -1568,7 +1568,7 @@ wurde. Commit G ist ein einzelner Commit, der noch nicht in den
 Hauptentwicklungszweig integriert wurde.
 
 .Ein Commit-Graph
-image::graph.png[id="fig.graph",width="45%"]
+image::bilder_ebook/graph.png[id="fig.graph",width="45%"]
 
 indexterm:[Integrität,eines Repositorys]
 indexterm:[Repository,Integrität]
@@ -1623,5 +1623,5 @@ Branches `master`, `HEAD`, `feature` und  `bugfix`.
 Sowie den Tags  `v0.1` und `v0.2`.
 
 .Ein beispielhafter Commit-Graph mit Branches und Tags
-image::graph-mit-refs.png[id="fig.graph-mit-refs",width="75%"]
+image::bilder_ebook/graph-mit-refs.png[id="fig.graph-mit-refs",width="75%"]
 

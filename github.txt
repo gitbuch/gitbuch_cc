@@ -64,7 +64,7 @@ Mailinglisten -- dafür müssen Sie auf Alternativen ausweichen.
 
 
 .Github-Seite von Gollum
-image::github-gollum.png[id="fig.github-gollum",width="100%"]
+image::bilder_ebook/github-gollum.png[id="fig.github-gollum",width="100%"]
 
 
 In <<fig.github-gollum>> sehen Sie einen Ausschnitt der
@@ -92,7 +92,7 @@ Integration-Manager-Workflow (siehe
 <<fig.developer-public-workflow>>).
 
 .Workflow bei Github
-image::github-workflow.png[id="fig.github-workflow",width="70%"]
+image::bilder_ebook/github-workflow.png[id="fig.github-workflow",width="70%"]
 
 
 . Ein potentieller Contributor
@@ -142,7 +142,7 @@ eine grafische Darstellung der Forks mit noch ausstehenden Änderungen
 bereit, den sogenannten 'Network-Graph':
 
 .Der Github Network-Graph
-image::github-network.png[id="fig.github-network",width="100%"]
+image::bilder_ebook/github-network.png[id="fig.github-network",width="100%"]
 
 Github bietet Ihnen unter 'Graphs' noch weitere Visualisierungen.
 Unter 'Languages' wird angezeigt, welche Programmiersprachen das
@@ -188,7 +188,7 @@ Herunterladen.  Wie Sie in <<fig.github-downloads>>
 sehen, sowohl als `tar.gz` als auch als `.zip` Archiv.
 
 .Aus Tags erstellte Downloads
-image::github-download.png[id="fig.github-downloads",width="65%"]
+image::bilder_ebook/github-download.png[id="fig.github-downloads",width="65%"]
 
 
 
@@ -205,7 +205,7 @@ dargestellt, siehe <<fig.github-2up>>.  Auch Größenunterschiede sind
 ersichtlich.
 +
 .Modus '2-up'
-image::github-image-diff-2up.png[id="fig.github-2up",width="90%"]
+image::bilder_ebook/github-image-diff-2up.png[id="fig.github-2up",width="90%"]
 
 
 'Swipe':: Das Bild wird in der Mitte geteilt. Links sehen Sie die alte
@@ -213,7 +213,7 @@ Version und rechts die neue. Schieben Sie den Regler hin und her, um
 die Änderungen zu beobachten.  Siehe <<fig.github-swipe>>.
 +
 .Modus 'Swipe' 
-image::github-image-diff-swipe.png[id="fig.github-swipe",width="90%"]
+image::bilder_ebook/github-image-diff-swipe.png[id="fig.github-swipe",width="90%"]
 
 'Onion Skin':: Auch hier kommt ein Regler zum Einsatz, diesmal wird
 jedoch die neue Version eingeblendet, es entsteht also ein fließender
