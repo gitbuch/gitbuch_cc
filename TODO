@@ -3,16 +3,14 @@ Form und Funktionalität
 
 * Screenshots und Diagramme
     -> Seitenbreite festlegen oder Bilder absolut skalieren?
-* Referenzlinks erscheinen als [ch.intro] statt „Kapitel 1“
-* Styling
-    -> Kursiv gesetztes sieht aus wie Links, sollte nicht farbig sein
 * Fußnoten sollten nicht nach unten springen, sondern lieber eine Art Popup
   produzieren oder in einer Randspalte dargestellt werden
 * Kommandos indextermsee:[] et al scheinen nicht zu funktionieren
     -> Weitere Kommandos die fehlen?
-* AsciiDoc-Templates anschauen: Idealerweise eine HTML-Seite pro Kapitel – mit
-  dem gesamten Inhaltsverzeichnis am Rand. Außerdem einen “one-pager”.
-  Stichwort: Chunked HTML via a2x.
+* a2x -f chunked untersuchen:
+    -> Wie kann man etwas an der Seite einbinden?
+    -> Wie kann man die Dateinamen anpassen?
+    -> Buchteile sollten keine leere Seite erstellen. Auf [[part0/1]] verzichten?
 
 Archäologie
 ===========
