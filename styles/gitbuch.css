@@ -287,6 +287,22 @@ div.table p.title
   margin-bottom: 0.4em;
 }
 
+div.figure {
+    width: 117%;
+}
+
+div.figure p.title {
+    display: block;
+    text-align: none;
+    width: 14%;
+    float: right;
+    font-size: 75%;
+}
+
+div.figure div.figure-contents {
+    text-align: center;
+}
+
 div.calloutlist p
 {
   margin-top: 0em;
