@@ -17,6 +17,8 @@ include::grundlagen.txt[]
 
 include::praxis.txt[]
 
+include::advanced.txt[]
+
 include::remote.txt[]
 
 include::workflows.txt[]
