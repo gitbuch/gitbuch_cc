@@ -5,6 +5,7 @@ Form und Funktionalität
     -> Bilder werden momentan falsch eingebunden (fehlendes Präfix)
     -> Farbige Versionen referenzieren statt S/W
     -> Bilder in HTML einbetten? (Inline-base64)
+       [http://www.methods.co.nz/asciidoc/chunked/ch21.html#X66]
     -> Seitenbreite festlegen oder Bilder absolut skalieren?
 * Referenzlinks erscheinen als [ch.intro] statt „Kapitel 1“
 * Styling
@@ -15,6 +16,7 @@ Form und Funktionalität
     -> Weitere Kommandos die fehlen?
 * AsciiDoc-Templates anschauen: Idealerweise eine HTML-Seite pro Kapitel – mit
   dem gesamten Inhaltsverzeichnis am Rand. Außerdem einen “one-pager”.
+  Stichwort: Chunked HTML via a2x.
 
 
 Inhaltlich
@@ -26,3 +28,4 @@ Inhaltlich
     -> Einleitender Text auf der Startseite, mit dem Inhaltsverzeichnis schon am Rand
     -> Guidelines und Hilfetexte wie man mitmachen kann
     -> Hinweis: eBook möglich, aber das KnowHow fehlt
+    -> Schulungsmaterialien auch unter CC veröffentlichen
