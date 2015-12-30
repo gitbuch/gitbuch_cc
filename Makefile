@@ -9,7 +9,8 @@ git.html: git.txt
 	asciidoc -a numbered -a data-uri -a toclevels=3 $<
 
 git.chunked: git.txt
-	a2x -f chunked --xsltproc-opts="--stringparam chunk.section.depth 0 --stringparam chunker.output.indent yes" $<
+	a2x -f chunked --resource styles --stylesheet=gitbuch.css \
+	  --xsltproc-opts="--stringparam chunk.section.depth 0 --stringparam chunker.output.indent yes" $<
 
 clean:
 	rm -rf git.html git.chunked
