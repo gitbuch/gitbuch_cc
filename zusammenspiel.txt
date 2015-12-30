@@ -2,12 +2,10 @@
 == Zusammenspiel mit anderen Versionsverwaltungssystemen ==
 
 
-indexterm:[Schnittstelle,zu anderen VCS]
 Git verfügt über Schnittstellen zu anderen
 Versionsverwaltungssystemen, die für zwei grundsätzliche
 Anwendungsfälle von Bedeutung sind:
 
-indexterm:[Migration,von anderen VCS]
 
 'Bidirektionale Kommunikation':: Sie wollen lokal in einem
 Git-Repository entwickeln, die Veränderungen aber auch in ein externes
@@ -23,13 +21,6 @@ Folgende Schnittstellen bietet Git von Haus aus --
 alle erlauben beidseitige Kommunikation und vollständige Konvertierung:
 
 
-indexterm:[Subversion,Schnittstelle]
-indextermseealso:[svn,Subversion]
-indexterm:[CVS,Schnittstelle]
-indexterm:[cvsimport]
-indexterm:[cvsexportcommit]
-indexterm:[Perforce,Schnittstelle]
-indexterm:[p4]
 
 Subversion (`svn`):: Das Werkzeug `git-svn` bietet alle wesentlichen
 Subkommandos um mit Subversion-Repositories umzugehen und wird in
@@ -49,7 +40,6 @@ Perforce (`p4`):: Mit `git p4` sprechen Sie Repositories des
 proprietären Systems Perforce an.
 
 
-indexterm:[Mercurial,Schnittstelle]
 Für das Zusammenspiel mit anderen VCS gibt es zudem eine Vielzahl
 zusätzlicher Werkzeuge und Scripte, die die genannten Kommandos
 verbessern, erweitern und zum Teil ersetzen.  Aber auch Schnittstellen
@@ -68,8 +58,6 @@ erstellt. Für eine detaillierte Beschreibung inklusive Beispiel siehe
 [[sec.subversion]]
 === Subversion === 
 
-indexterm:[Subversion]
-indextermseealso:[Subversion,git-svn]
 Im Folgenden geht es um die Handhabung von `git-svn`.  Wir
 zeigen Ihnen, wie Sie Subversion-Repositories konvertieren und wie Sie
 es einsetzen, um Änderungen zwischen einem Subversion-Repository und
@@ -78,7 +66,6 @@ Git auszutauschen.
 [[sec.git-svn-convert]]
 ==== Konvertierung ==== 
 
-indexterm:[Subversion,Konvertierung]
 
 Ziel ist es, die Versionsgeschichte aus einem Subversion-Repository in
 ein Git-Repository zu übertragen. Bevor Sie starten, müssen Sie
@@ -98,7 +85,6 @@ Folgende Informationen sollten Sie zur Hand haben:
 . Sollen Metadaten zu der Subversion-Revision in den Git-Commits
   abgelegt werden?  
 
-indexterm:[svn,clone]
 Später werden Sie das Kommando `git svn clone` aufrufen. Die
 Antworten auf die oben genannten Fragen entscheiden, mit welchen
 Optionen und Argumenten Sie dies tun.
@@ -114,7 +100,6 @@ Sie bspw.  `rsvndump`
 nutzen.footnote:[http://rsvndump.sourceforge.net/]
 ================
 
-indexterm:[Authors-Datei]
 Subversion nutzt weniger umfangreiche Metadaten zu Autoren als Git;
 Revisionen werden lediglich mit einem Subversion-Benutzernamen
 gekennzeichnet, und es gibt keinen Unterschied zwischen Autor und
@@ -172,8 +157,6 @@ image::bilder_ebook/svn-stdlayout-crop.png[id="fig.svn-stdlayout",width="20%"]
 [[sec.git-svn-metadata]]
 ===== SVN-Metadaten =====  
 
-indexterm:[git-svn,--no-metadata]
-indexterm:[Metadaten,von SVN bei Konvertierung]
 Das Argument `--no-metadata` verhindert, dass zusätzliche
 Metadaten in die Commit-Message einfließen. Inwieweit das für Ihren
 Anwendungsfall sinnvoll ist, müssen Sie selbst entscheiden. Aus
@@ -189,7 +172,6 @@ Commit-Nachricht auf und haben die folgende Form:
 git-svn-id: <URL>@<Revision> <UUID>
 --------
 
-indexterm:[UUID]
 `<URL>` ist die URL des Subversion-Repositorys,
 `<Revision>` die Subversion-Revision und `<UUID>`
 ('Universally Unique Identifier') eine Art
@@ -252,7 +234,6 @@ Ein SVN-Repository ohne Branches oder Tags klonen Sie einfach über die
 URL des Projektverzeichnisses und verzichten dabei vollständig auf
 `--stdlayout`:
 
-indexterm:[svn,clone]
 [subs="macros,quotes"]
 --------
 $ *git svn clone &lt;pass:quotes[http://svn.example.com/projekt]&gt; -A authors.txt \*
@@ -273,7 +254,6 @@ würden. Wie Sie Projekte aus unterschiedlichen Git-Repositories miteinander
 Ist `git svn clone` durchgelaufen, müssen Sie das Repository
 meist noch ein wenig nachbearbeiten.
 
-indexterm:[.gitignore]
 
 [TIP]
 ========
@@ -292,8 +272,6 @@ Die `.gitignore`-Dateien werden nur erzeugt und dem Index
 hinzugefügt – Sie müssen diese noch einchecken.
 ========
 
-indexterm:[Subversion,Tracking-Branch]
-indexterm:[Trunk (SVN)]
 Git erzeugt für den Subversion-Trunk sowie die Subversion-Branches und
 -Tags spezielle Git-Branches unter `remotes/origin`. Sie haben
 große Ähnlichkeit mit den Remote-Tracking-Branches, da sie den Zustand
@@ -332,7 +310,6 @@ werden zum Beispiel mit der Anweisung `--prefix=svn/` alle
 konvertierten Referenzen unter `remotes/svn/` statt unter
 `remotes/origin` abgelegt.
 
-indexterm:[Tag,Git vs. SVN]
 Wie schon erwähnt, erzeugt `git-svn` für Subversion-Tags
 'keine' Git-Tags. Das liegt daran, dass sich Subversion-Tags aus
 technischer Sicht kaum von Subversion-Branches unterscheiden. Sie
@@ -398,8 +375,6 @@ Das Script nimmt an, dass das Repository mit der Option
   entspricht, wird ein ``echter'' lokaler Git-Branch erzeugt
   (z.B.{empty}{nbsp}`refs/remotes/svn/bugfix` -> `refs/heads/bugfix`).
 
-indexterm:[for-each-ref]
-indexterm:[update-ref]
 Das Script nutzt die Plumbing-Kommandos `git for-each-ref`, das
 auf den angegebenen Ausdruck passende Referenzen zeilenweise ausgibt,
 und `git update-ref`, das Referenzen umschreibt und
@@ -429,7 +404,6 @@ image::bilder_ebook/git-convert-refs-before-neu.png[id="fig.git-convert-refs-bef
 image::bilder_ebook/git-convert-refs-after-neu.png[id="fig.git-convert-refs-after",width="90%"]
 
 
-indexterm:[Tag,aus SVN verschieben]
 Nachdem Sie die Subversion-Branches und Tags umgeschrieben haben,
 werden Sie feststellen, dass alle Git-Tags auf ganz kurzen
 Abzweigungen ``sitzen'' (siehe Tag `v1.0` in der
@@ -497,7 +471,6 @@ verschieden sind).
 .Tag `v1.0` wurde umgeschrieben
 image::bilder_ebook/git-svn-tag-fix-after.png[id="fig.git-svn-tag-fix-after",width="90%"]
 
-indexterm:[git-svn-abandon]
 
 [TIP]
 ========
@@ -525,7 +498,6 @@ Eventuell befinden sich nach der Konvertierung noch Git-Branches in
 dem Repository, die bereits in den `master` gemergt wurden.
 Entfernen Sie diese mit folgendem Kommando:
 
-indexterm:[branch,--merged]
 [subs="macros,quotes"]
 --------
 $ *git checkout master*
@@ -546,7 +518,6 @@ Sie sind dann bereit, die konvertierte Geschichte in ein
 Remote-Repository hochzuladen, um es mit anderen Entwicklern gemeinsam
 zu benutzen.
 
-indexterm:[push,--mirror]
 [subs="macros,quotes"]
 --------
 $ *git remote add &lt;example&gt; &lt;pass:quotes[git@git.example.com]:projekt1.git&gt;*
@@ -556,8 +527,6 @@ $ *git push &lt;example&gt; --mirror*
 [[sec.git-svn-merges]]
 ===== Subversion-Merges =====  
 
-indexterm:[Merge,und Subversion]
-indexterm:[Subversion,Merges]
 Subversion-Merges werden von `git-svn` anhand der
 `svn:mergeinfo`-Properties erkannt und als Git-Merges übersetzt
 -- allerdings nicht immer. Es kommt darauf an, welche
@@ -606,8 +575,6 @@ und auch `svn-fe`{empty}footnote:[Im Git-via-Git Repository unter
 [[sec.git-svn-conduit]]
 ==== Bidirektionale Kommunikation ==== 
 
-indexterm:[git-svn,als Subversion-Client]
-indexterm:[Subversion,via Git bedienen]
 Das Werkzeug `git-svn` kann nicht nur ein Subversion-Repository
 konvertieren, es taugt vor allem auch als besserer Subversion-Client.  Das heißt, Sie
 haben lokal alle Vorzüge von Git (einfaches und flexibles Branching,
@@ -626,11 +593,6 @@ einige Feinheiten zu beachten.
 Zunächst eine Zusammenfassung der wichtigsten
 `git-svn`-Befehle:
 
-indexterm:[git svn,init]
-indexterm:[git svn,fetch]
-indexterm:[git svn,clone]
-indexterm:[git svn,dcommit]
-indexterm:[git svn,rebase]
 
 `git svn init`:: Git-Repository zum Verfolgen eines
 Subversion-Repositorys anlegen.
@@ -697,8 +659,6 @@ benutzt werden, weil sonst die Metadaten der Form `git-svn-id:`
 aus der Commit-Message verschwinden und Git die Commits und Revisionen
 nicht mehr zuordnen könnte.
 
-indexterm:[.git/config,und git-svn]
-indexterm:[svn-remote.svn]
 Der Aufruf von `git-svn` erzeugt diverse Einträge in der
 Konfigurationsdatei `.git/config`. Zunächst ein Eintrag
 `svn-remote.svn`, der, ähnlich einem Eintrag `remote`
@@ -780,12 +740,6 @@ Zusätzlich bietet `git-svn` noch einige Kommandos zum
 Untersuchen der Geschichte sowie anderer Eigenschaften des
 Repositorys:
 
-indexterm:[git svn,log]
-indexterm:[git svn,blame]
-indexterm:[blame,für SVN]
-indexterm:[git svn,info]
-indexterm:[git svn,proplist]
-indexterm:[git svn,propget]
 
 `git svn log`:: Eine Kreuzung aus `svn log` und `git log`. Das
 Subkommando produziert Output, der `svn log` nachempfunden ist,
@@ -834,8 +788,6 @@ abfragen, aber weder erstellen, modifizieren noch löschen.
 [[sec.git-svn-austausch]]
 ===== Commits austauschen =====  
 
-indexterm:[Commit,austauschen]
-indexterm:[git svn,fetch]
 Analog zu `git fetch` laden Sie mit `git svn fetch` neue
 Commits aus dem Subversion-Repository herunter.  Dabei lädt
 `git-svn` alle neuen Subversion-Revisionen herunter, übersetzt
@@ -862,8 +814,6 @@ kann das Tool keine lokalen Git-Merges auf Subversion-Merges abbilden
 -- daher sollten ausschließlich lineare Verläufe per `git svn
   dcommit` hochgeladen werden.
 
-indexterm:[git svn,rebase]
-indexterm:[rebase,in git-svn]
 Um diese Linearisierung zu erleichtern, gibt es das Kommando
 `git svn rebase`. Es lädt zuerst alle neuen Commits aus dem
 Subversion-Repository herunter und baut danach via `git rebase`
@@ -889,7 +839,6 @@ Commit D&#39; kann nun hochgeladen werden.
 .`git svn rebase` integriert die neu hinzugekommene Subversion-Revision als Commit  `C` – vor `D`, was dadurch zu `D'` wird.
 image::bilder_ebook/svn_rebase-neu.png[id="fig.git-svn-rebase",width="90%"]
 
-indexterm:[git svn,dcommit]
 Mit `git svn dcommit` laden Sie das Changeset eines Git-Commits
 als Revision in das Subversion-Repository hoch. Als Teil der Operation
 wird die Revision erneut als Git-Commit, diesmal aber mit
@@ -911,8 +860,6 @@ mit `git rebase` oder `git commit --amend` verändern.
 [[sec.git-svn-branches-tags]]
 ===== Subversion-Branches und -Tags =====  
 
-indexterm:[git svn,branch]
-indexterm:[git svn,tag]
 Mit den Subkommandos `git svn branch` und `git svn tag`
 erzeugen Sie Subversion-Branches und -Tags. Zum Beispiel:
 
@@ -929,8 +876,6 @@ Subversion-Tracking-Branch (`remotes/origin/tags/v2.0`). Mit der
 Option `-m` übergeben Sie optional eine Nachricht. Wenn nicht,
 setzt `git-svn` die Nachricht `Create tag <tag>`.
 
-indexterm:[Merge,von Subversion]
-indexterm:[Subversion,Merges]
 Git Version 1.7.4 führte ein Feature ein, mit dem Sie
 Subversion-Merges durchführen können.  Das Feature ist über die Option
 `--mergeinfo` für `git svn dcommit` verfügbar und
@@ -1024,7 +969,6 @@ https://git.wiki.kernel.org/index.php/Git-p4_Usage
 [[sec.fast-import]]
 === Eigene Importer === 
 
-indexterm:[fast-import]
 Git bietet über das Subkommando `fast-import` einen einfachen
 und zugleich komfortablen Weg, eine irgendwie geartete
 Versionsgeschichte in ein Git-Repository zu verwandeln.  Das
@@ -1120,7 +1064,6 @@ Mit diesen simplen Komponenten wollen wir anhand eines kleinen
 Shell-Scripts demonstrieren, wie man alte Release-Tar-Balls in ein
 Git-Archiv verwandelt.
 
-indexterm:[Vim]
 Zunächst laden wir alte Releases des Editors 'Vim' herunter:
 
 [subs="macros,quotes"]

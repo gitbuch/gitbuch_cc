@@ -17,25 +17,6 @@ vielleicht auch unter anderem Namen.
 
 
 
-indexterm:[Versionskontrollsystem,Definition]
-indextermsee:[VCS,Versionskontrollsystem]
-indextermsee:[SCM,Versionskontrollsystem]
-indexterm:[Repository,Definition]
-indexterm:[Working Tree,Definition]
-indextermsee:[Working Directory,Working Tree]
-indexterm:[Commit,Definition]
-indexterm:[HEAD,Definition]
-indexterm:[SHA-1]
-indextermsee:[Secure Hash Algorithm,SHA-1]
-indexterm:[Commit-ID]
-indexterm:[Objektmodell,Definition]
-indexterm:[Index,Definition]
-indextermsee:[Staging Area,Index]
-indextermsee:[Cache,Index]
-indexterm:[Clone,Definition]
-indexterm:[Branch,Definition]
-indexterm:[master,Definition]
-indexterm:[Tag,Definition]
 
 'Versionskontrollsystem' ('Version Control System', VCS):: Ein System
 zur Verwaltung und Versionierung von Software oder anderer digitaler
@@ -153,8 +134,6 @@ darin einen Einzeiler, ein ``Hello, World!''-Programm in Perl.
 Damit Git einen Commit einem Autor zuordnen kann, müssen Sie Ihren
 Namen und Ihre E-Mail-Adresse hinterlegen:
 
-indexterm:[user.name]
-indexterm:[user.email]
 
 
 [subs="macros,quotes"]
@@ -191,8 +170,6 @@ Es empfiehlt sich generell, den Umgang mit Git zunächst lokal zu üben
 und erst später in die dezentralen Eigenschaften und Funktionen von
 Git einzutauchen.
 
-indexterm:[git,init]
-indexterm:[Initialisierung,eines Repositories]
 
 
 [subs="macros,quotes"]
@@ -201,7 +178,6 @@ $ *git init beispiel*
 Initialized empty Git repository in /home/esc/beispiel/.git/
 --------
 
-indexterm:[git,status]
 Zunächst erstellt Git das Verzeichnis `beispiel/`, falls es
 noch nicht existiert. Danach initialisiert Git ein leeres Repository
 in diesem Verzeichnis und legt dafür ein Unterverzeichnis
@@ -277,7 +253,6 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 --------
 
-indexterm:[git,add]
 Zwar steht der erste Commit noch bevor, aber Git registriert, dass
 sich nun bereits Dateien in diesem Verzeichnis befinden, die dem System
 allerdings nicht bekannt sind -- Git nennt solche Dateien
@@ -331,7 +306,6 @@ Alles ist bereit für den ersten Commit mit dem Kommando
 Option `-m` mit einer Commit-Nachricht ('Commit Message'),
 in der wir den Commit beschreiben:
 
-indexterm:[git,commit]
 
 
 
@@ -383,7 +357,6 @@ Versionsgeschichte von Projekten zu untersuchen.
 Zunächst erlaubt `git show` die Untersuchung eines einzelnen
 Commits – ohne weitere Argumente ist das der aktuellste:
 
-indexterm:[git,show]
 
 
 [subs="macros,quotes"]
@@ -477,7 +450,6 @@ $ *git commit -m "Kommentar-Zeile"*
  1 file changed, 1 insertion(+)
 --------
 
-indexterm:[git,log]
 Nun zeigt Ihnen `git log` die beiden Commits:
 
 
@@ -500,7 +472,6 @@ Date:   Tue Nov 16 00:40:54 2010 +0100
 [[chap.git-config]]
 === Git konfigurieren === 
 
-indexterm:[Konfiguration]
 Wie die meisten textbasierten Programme bietet Git eine Fülle an
 Konfigurationsoptionen. Es ist daher jetzt an der Zeit, einige
 grundlegende Einstellungen vorzunehmen. Dazu gehören Farbeinstellungen,
@@ -508,9 +479,6 @@ die in neueren Versionen standardmäßig bereits eingeschaltet sind und
 die es Ihnen erleichtern, die Ausgabe von Git-Kommandos zu erfassen,
 sowie kleine Aliase (Abkürzungen) für häufig benötigte Kommandos.
 
-indexterm:[Konfiguration,aktuelles Repository]
-indexterm:[Konfiguration,global]
-indexterm:[git,config]
 Git konfigurieren Sie über das Kommando `git config`. Die
 Konfiguration wird einem Format ähnlich einer INI-Datei gespeichert.
 Ohne Angabe weiterer Parameter gilt die Konfiguration nur für das
@@ -525,8 +493,6 @@ entsprechend relativ zu Ihrer gesetzten Umgebungsvariable
 Wichtige Einstellungen, die Sie immer vornehmen sollten, sind Name
 und E-Mail-Adresse des Benutzers:
 
-indexterm:[user.name]
-indexterm:[user.email]
 
 
 [subs="macros,quotes"]
@@ -535,8 +501,6 @@ $ *git config --global user.name "Max Mustermann"*
 $ *git config --global user.email "max.mustermann@example.com"*
 --------
 
-indexterm:[.gitconfig]
-indexterm:[Leerzeichen,bei Wertzuweisung]
 Beachten Sie, dass Sie Leerzeichen im Wert der Einstellung schützen
 müssen (durch Anführungszeichen oder Backslashes). Außerdem folgt der
 Wert direkt auf den Namen der Option -- ein Gleichheitszeichen ist auch
@@ -564,8 +528,6 @@ natürlich ohne den Zusatz `--global`):
 $ *git config user.email pass:quotes[maintainer@project.example.com]*
 --------
 
-indexterm:[/etc/gitconfig]
-indexterm:[Konfiguration,systemweit]
 Bei der Abfrage einer Option geht Git so vor, dass es zuerst die
 Einstellung im aktuellen Repository nutzt, sofern vorhanden,
 andernfalls die aus der globalen `.gitconfig`; gibt es auch
@@ -579,7 +541,6 @@ zurückgegriffen.footnote:[Sofern vorhanden,
 `git-config`. Eine Liste aller gesetzten Einstellungen fragen
 Sie per `git config -l` ab.
 
-indexterm:[Konfiguration,Einstellung löschen]
 Sie können die Datei `.gitconfig` (bzw. im Repository
 `.git/config`) auch von Hand editieren. Gerade zum Löschen
 einer Einstellung ist das sinnvoll -- zwar bietet `git config`
@@ -601,8 +562,6 @@ Konfigurationsdateien entstehen.
 [[sec.git-alias]]
 ==== Git Aliase ==== 
 
-indextermsee:[Konfiguration Aliase,Aliase]
-indexterm:[Aliase]
 Git bietet Ihnen über 'Aliase' die Möglichkeit, einzelne
 Kommandos und sogar ganze Kommandosequenzen abzukürzen. Die Syntax lautet:
 
@@ -651,17 +610,12 @@ einige nützliche Abkürzungen:
 [[chap.color-defaults]]
 ==== Farbe einstellen ==== 
 
-indexterm:[Farbe,Ausgabe von Git]
-indexterm:[Konfiguration,Farbe]
-indexterm:[color.ui]
 Überaus hilfreich ist die Option `color.ui`, die prüft, ob Git
 die Ausgabe diverser Kommandos einfärben soll. So erscheinen gelöschte
 Dateien und Zeilen rot, neue Dateien und Zeilen grün, Commit-IDs 
 gelb usw. In neueren Git-Versionen (ab 1.8.4) ist diese Einstellung
 bereits automatisch gesetzt, Sie müssen also nichts tun.
 
-indexterm:[Farbe,Terminal vs. Pipe]
-indexterm:[Pager,wann wird aufgerufen]
 Die Option `color.ui` sollte auf `auto` gesetzt sein
 -- erfolgt die Ausgabe von Git in ein Terminal, werden Farben
 verwendet. Schreibt das Kommando stattdessen in eine Datei oder wird
@@ -679,12 +633,6 @@ $ *git config --global color.ui auto*
 [[chap.config-encoding]]
 ==== Zeichensätze einstellen ==== 
 
-indexterm:[Konfiguration,Zeichensätze]
-indexterm:[Zeichensätze,für Commits]
-indexterm:[Encoding,für Commits]
-indexterm:[Encoding,Commit vs. verwaltete Dateien]
-indexterm:[UTF-8,Default-Encoding]
-indexterm:[I18N]
 Sofern nicht anders eingestellt, nimmt Git für alle Texte, also vor
 allem für die Namen der Autoren und die Commit-Nachricht, UTF-8 als
 Zeichenkodierung an. Wollen Sie
@@ -708,7 +656,6 @@ Das Encoding der 'Dateien', die von Git verwaltet werden, spielt
 hier keine Rolle und wird von diesen Einstellungen nicht beeinflusst --
 Dateien sind nur Bit-Streams, die Git nicht interpretiert.
 
-indexterm:[less,LESSCHARSET]
 
 [TIP]
 ================
@@ -726,14 +673,11 @@ $ *git config core.pager \'env LESSCHARSET=iso8859 less'*
 [[sec.config-eol]]
 ==== Zeilenenden einstellen ==== 
 
-indexterm:[Zeilenenden]
-indexterm:[CR vs. CRLF]
 Da Git auf Windows-Systemen wie auf unixoiden Systemen läuft, muss es
 das Problem verschiedener Zeilenende-Konventionen lösen. (Das betrifft
 nur Text-Dateien -- Binärdateien, die Git als solche erkennt, werden
 von dieser Behandlung ausgenommen.)
 
-indexterm:[core.eol]
 Dafür ist im Wesentlichen die Einstellung `core.eol` relevant,
 die einen der Werte `lf`, `crlf` oder `native`
 annehmen kann. Die Standardeinstellung `native` lässt Git den
@@ -742,15 +686,12 @@ Windows: Carriage Return & Line Feed (`crlf`). Die Datei wird
 automatisch konvertiert, um nur Line Feeds zu erhalten, wird aber bei
 Bedarf mit CRLF ausgecheckt.
 
-indexterm:[Zeilenenden,Konvertierung bei Checkout]
-indexterm:[core.safecrlf]
 Zwischen den beiden Varianten kann Git bei einem Checkout der Datei
 konvertieren; wichtig ist aber, dass die beiden Typen nicht vermischt
 werden. Dafür bietet die Option `core.safecrlf` einen
 Mechanismus, den Nutzer zu warnen (Wert `warn`) oder gar den
 Commit zu verbieten (Wert `true`).
 
-indexterm:[core.autocrlf]
 Eine sichere Einstellung, die auch mit älteren Git-Versionen unter
 Windows-Systemen funktioniert, ist `core.autocrlf` auf
 `input` zu setzen: Dadurch wird automatisch beim
@@ -764,29 +705,17 @@ hinweg gleich ist (siehe dafür <<sec.attributes>>).
 [[chap.ext-tools]]
 ==== Editor, Pager und Browser einstellen ==== 
 
-indexterm:[Editor]
-indexterm:[Konfiguration,Editor]
-indexterm:[Pager]
-indexterm:[Konfiguration,Pager]
-indexterm:[Browser]
-indexterm:[Konfiguration,Browser]
 Git startet für bestimmte Aktionen automatisch einen Editor, Pager
 oder Browser. Meist werden vernünftige Defaults verwendet, wenn nicht,
 können Sie Ihr Wunschprogramm mit den folgenden
 Optionen konfigurieren:
 
-indexterm:[core.editor]
-indexterm:[core.pager]
-indexterm:[web.browser]
 
 * `core.editor`
 * `core.pager`
 * `web.browser`
 
 
-indexterm:[less,als Pager]
-indexterm:[Pager,less]
-indextermseealso:[Pager,less]
 Ein Wort zum Pager: Standardmäßig verwendet Git das Programm
 `less`, das auf den meisten Grundsystemen installiert ist.  Das
 Kommando wird 'immer' gestartet, sobald ein Git-Kommando eine
@@ -796,7 +725,6 @@ sich zu beenden, wenn die Ausgabe vollständig auf das Terminal passt.
 Falls ein Kommando also viel Ausgabe produziert, tritt `less`
 automatisch in den Vordergrund -- und bleibt sonst unsichtbar.
 
-indexterm:[cat,als Pager]
 Wird `core.pager` auf `cat` gesetzt, verwendet Git
 keinen Pager. Dieses Verhalten kann man aber auch von Kommando zu
 Kommando durch den Parameter `--no-pager` erreichen.
@@ -807,39 +735,30 @@ geleitet wird.
 [[chap.conf-env]]
 ==== Konfiguration über Umgebungsvariablen ==== 
 
-indexterm:[Konfiguration,über Umgebungsvariablen]
-indexterm:[Umgebungsvariablen,zur Konfiguration]
 Einige Optionen lassen sich auch durch Umgebungsvariablen
 überschreiben. Auf diese Weise können in einem Shell-Script oder in
 einem Alias Optionen lediglich für ein einzelnes Kommando gesetzt
 werden.
 
 
-indexterm:[GIT_EDITOR]
 
 `GIT_EDITOR`::  der Editor, den Git z.B. zum
   Erstellen der Commit-Nachricht startet. Alternativ
   greift Git auf die Variable `EDITOR` zurück.
 
-indexterm:[GIT_PAGER]
 
 `GIT_PAGER`::  der zu verwendende Pager. Der Wert
   `cat` schaltet den Pager aus.
 
-indexterm:[GIT_AUTHOR_EMAIL]
-indexterm:[GIT_COMMITTER_EMAIL]
 
 `GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_EMAIL`::
 verwendet die entsprechende E-Mail-Adresse für das Autor- bzw.
 Committer-Feld beim Erstellen eines Commits.
 
-indexterm:[GIT_AUTHOR_NAME]
-indexterm:[GIT_COMMITTER_NAME]
 
 `GIT_AUTHOR_NAME`, `GIT_COMMITTER_NAME`:: 
   analog der Name.
 
-indexterm:[GIT_DIR]
 
 `GIT_DIR`:: 
   Verzeichnis, in dem sich das Git-Repository befindet; nur sinnvoll,
@@ -857,7 +776,6 @@ Repositorys zugreifen wollen, ohne das Verzeichnis zu wechseln:
 $ *GIT_DIR="~/proj/example/.git" git log*
 --------
 
-indexterm:[git,-c]
 Alternativ können Sie über die Option `-c`{empty}{nbsp} 'vor dem Subkommando' eine
 Einstellung nur für diesen Aufruf überschreiben. So könnten Sie zum
 Beispiel Git anweisen, für den kommenden Aufruf die Option
@@ -871,8 +789,6 @@ $ *git -c core.trustctime=false status*
 [[chap.correct-errors]]
 ==== Automatische Fehlerkorrektur ==== 
 
-indexterm:[Fehlerkorrektur,automatisch]
-indexterm:[help.autocorrect]
 Der Wert der Option `help.autocorrect` bestimmt, was Git tun
 soll, wenn es das eingegebene Subkommando nicht findet, der
 Nutzer also z.B. versehentlich `git statsu` statt `git

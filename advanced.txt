@@ -14,10 +14,6 @@ Bug einführen ('Bisect').
 [[sec.rebase]]
 === Commits verschieben – Rebase === 
 
-indexterm:[Rebase]
-indexterm:[rebase]
-indextermsee:[git,rebase,rebase]
-indexterm:[Commit,verschieben]
 Im Abschnitt über die Interna von Git wurde bereits erwähnt, dass man
 Commits in einem Git-Repository (anschaulich: dem Graphen) beliebig
 verschieben und modifizieren kann. Möglich wird das in der Praxis vor
@@ -54,10 +50,6 @@ neue Commits in den Branch.
 Hierbei sind einige Punkte zu beachten:
 
 
-indexterm:[Ripple Effect]
-indexterm:[SHA-1,ändert sich (Rebase)]
-indexterm:[Metadaten,bei Rebase]
-indexterm:[Tag,Absicherung bei Rebase]
 
 * Weil der erste Knoten des +topic+-Branches (E) nun einen neuen Vorgänger (D) hat, ändern sich seine Metadaten und somit seine SHA-1-Summe (er wird zu E'). Der zweite Commit (F) hat dann ebenfalls einen anderen Vorgänger (E' statt E), dessen SHA-1-Summe ändert sich (er wird zu F') usw. – dies wird auch als 'Ripple Effect' bezeichnet. Insgesamt werden 'alle' kopierten Commits neue SHA-1-Summen haben – sie sind also im Zweifel gleich (was die Änderungen betrifft), aber nicht identisch.
 
@@ -163,11 +155,6 @@ To check out the original branch and stop rebasing, run "git rebase
 --------
 
 
-indexterm:[mergetool]
-indexterm:[Patch-Stacks]
-indextermsee:[rerere,Reuse Recorded Resolution]
-indexterm:[Reuse Recorded Resolution]
-indexterm:[rebase,--continue]
 Sie gehen vor wie bei einem regulären Merge-Konflikt (siehe
 <<sec.merge-conflicts>>) – `git mergetool` ist hier
 sehr hilfreich. Fügen Sie dann einfach die geänderte Datei per
@@ -179,15 +166,12 @@ sehr hilfreich. Fügen Sie dann einfach die geänderte Datei per
   korrigiert Konflikte automatisch, wenn schon eine Lösung gespeichert
   wurde, siehe auch <<sec.rerere>>.]
 
-indexterm:[rebase,--skip]
-indexterm:[Commit,überspringen (Rebase)]
 Alternativ lässt sich der problematische Commit auch überspringen, und
 zwar mit dem Kommando `git rebase --skip`. Der Commit ist
 dann aber verloren, sofern er nicht in einem anderen Branch irgendwo
 referenziert wird! Sie sollten diese Aktion also nur ausführen, wenn
 Sie sicher wissen, dass der Commit obsolet ist.
 
-indexterm:[rebase,--abort]
 Wenn das alles nicht weiterhilft (Sie z.B. den Konflikt nicht an
 der Stelle lösen können oder gemerkt haben, dass Sie gerade den
 falschen Baum umbauen), ziehen Sie die Notbremse: `git rebase
@@ -247,7 +231,6 @@ nutzen.
 [[sec.rebase-vs-merge]]
 ==== Wann Rebase 'nicht' sinnvoll ist – Rebase vs. Merge ==== 
 
-indexterm:[rebase,vs. merge]
 Das Konzept von Rebase ist zunächst etwas schwierig zu verstehen. Aber
 sobald Sie verstanden haben, was damit möglich ist, stellt sich die
 Frage: Wozu braucht man überhaupt noch ein simples Merge, wenn man
@@ -285,8 +268,6 @@ unterschiedliche Art und Weise) unübersichtlich.
 
 Generell fahren Sie mit den folgenden Faustregeln gut:
 
-indexterm:[merge,fast-forward]
-indexterm:[Fast-Forward]
 
 . Ein Feature wird, wenn es fertig wird, per 'Merge'
   integriert. Sinnvollerweise sollte vermieden werden, einen
@@ -333,8 +314,6 @@ Bearbeiten Sie mit dem Rebase-Kommando nur  unveröffentlichte Commits!
 ==================
 
 
-indexterm:[Proposed Updates]
-indextermsee:[pu,Proposed Updates]
 Ausnahmen bilden Konventionen wie persönliche Branches oder
 `pu`. Letzterer ist ein Kürzel für 'Proposed Updates' und
 ist in der Regel ein Branch, in dem neue, experimentelle Features auf
@@ -342,7 +321,6 @@ Kompatibilität getestet werden. Auf diesen Branch baut sinnvollerweise
 niemand seine eigene Arbeit auf, daher kann er ohne Probleme und
 vorherige Ankündigung umgeschrieben werden.
 
-indexterm:[Branch,privat]
 Eine weitere Möglichkeit bieten private Branches, also solche, die zum
 Beispiel mit `<user>/` starten. Trifft man die
 Vereinbarung, dass Entwickler auf diesen Branches eigene Entwicklung
@@ -369,8 +347,6 @@ verschiedenen Stellen im Commit-Graphen vorhanden.
 [[sec.rebase-ps]]
 ==== Patch-Stacks verwalten ==== 
 
-indexterm:[remote update]
-indexterm:[git,remote update]
 Es gibt Situationen, in denen es von einer Software eine
 Vanilla-Version (``einfachste Version'') gibt und außerdem
 eine gewisse Anzahl von Patches, die darauf angewendet werden, bevor
@@ -385,9 +361,6 @@ anwenden und die Software anschließend neu bauen.footnote:[Im letzteren Fall ma
   `origin/master` geladen) und bauen anschließend Ihren eigenen
   Branch von neuem auf `origin/master` auf. Siehe auch <<sec.verteilte_systeme>>.]
 
-indexterm:[TopGit]
-indexterm:[Stacked Git]
-indextermsee:[stg,Stacked Git]
 Um Patch-Stacks zu verwalten, gibt es einige Programme, die auf Git
 aufbauen, Ihnen aber den Komfort bieten, nicht direkt mit dem
 Rebase-Kommando arbeiten zu müssen. Beispielsweise erlaubt
@@ -411,8 +384,6 @@ Betrachten Sie folgende Situation:
 .Vor dem `rebase --onto`
 image::bilder_ebook/rebase-onto-vorher.png[id="fig.rebase-onto-vorher-dia",width="90%"]
 
-indexterm:[rebase,--onto]
-indexterm:[Rebase,Onto]
 Sie haben gerade auf dem Branch `topic` ein Feature entwickelt,
 als Ihnen ein Fehler aufgefallen ist; Sie haben einen Branch
 `bugfix` erstellt und noch einen Fehler gefunden. Rein
@@ -453,7 +424,6 @@ image::bilder_ebook/rebase-onto-nachher.png[id="fig.rebase-onto-nachher-dia",wid
 [[sec.rebase-onto-ci-amend]]
 ==== Einen Commit verbessern ==== 
 
-indexterm:[commit,--amend]
 Sie haben in <<sec.grundlagen>> das Kommando `commit
   --amend` kennengelernt, mit dem Sie einen Commit verbessern. Es
 bezieht sich aber immer nur auf den aktuellen (letzten) Commit. Mit
@@ -463,7 +433,6 @@ in der Vergangenheit liegen.
 Suchen Sie zunächst den Commit heraus, den Sie editieren wollen, und
 erstellen Sie einen Branch darauf:
 
-indexterm:[checkout,-b]
 [subs="macros,quotes"]
 --------
 $ *git checkout -b fix-master 21d8691*
@@ -509,8 +478,6 @@ Zuständig ist die Option `-p` bzw.
   Commit fehl, der schon in der Geschichte enthalten ist
   (Fehlermeldung: ``nothing to commit''); diese müssen dann stets mit einem `git rebase --continue` übersprungen werden.]
 
-indexterm:[rebase,-m / --merge]
-indexterm:[Merge,im Rebase-Prozess]
 Mit der Option `-m` bzw. `--merge` können Sie
 `git rebase` anweisen, Merge-Strategien zu verwenden (siehe
 dafür auch  <<sec.merge-strategies>>). Wenn Sie diese Strategien
@@ -519,7 +486,6 @@ anwenden, bedenken Sie, dass Rebase intern Commit für Commit per
 Rollen von `ours` und `theirs` vertauscht: `theirs`
 bezeichnet den Branch, den Sie auf eine neue Basis aufbauen!
 
-indexterm:[Merge,rekursiv]
 Ein interessanter Anwendungsfall ist daher die Strategie-Option
 `theirs` für die Merge-Strategie `recursive`: Falls
 Konflikte auftreten, wird den Änderungen aus dem Commit, der kopiert
@@ -538,21 +504,11 @@ $ *git rebase -m -Xtheirs master*
 
 
 
-indexterm:[recursive (Strategie),bei Rebase]
 In den Fällen, in denen die `recursive`-Strategie (Default) den
 Änderungen aus Commits aus `topic` den Vorzug gibt, werden Sie
 einen entsprechenden Hinweis `Auto-merging
   <Commit-Beschreibung>` finden.
 
-indexterm:[rebase,whitespace=fix]
-indexterm:[Whitespace,reparieren (Rebase)]
-indexterm:[Rebase,Probleme mit Whitespace]
-indexterm:[Whitespace,Probleme bei Rebase]
-indexterm:[Leerzeichen,Probleme bei Rebase]
-indexterm:[Zeilenenden,Probleme bei Rebase]
-indexterm:[ignore-space-change (Strategieoption)]
-indexterm:[ignore-all-space (Strategieoption)]
-indexterm:[ignore-space-at-eol (Strategieoption)]
 Eine kleine, sehr nützliche Option, die von Rebase direkt an
 `git apply` weitergeleitet wird, ist
 `--whitespace=fix`. Sie veranlasst Git, automatisch
@@ -566,11 +522,6 @@ erzeugen zu lassen (zum Beispiel durch Angabe von `-Xignore-space-change`).
 [[sec.rebase-i]]
 === Die Geschichte umschreiben – Interaktives Rebase === 
 
-indexterm:[rebase,-i / --interactive]
-indexterm:[Versionsgeschichte,umschreiben]
-indexterm:[Rebase,interaktiv]
-indexterm:[Commit,mehrere bearbeiten]
-indexterm:[Interaktiver Rebase]
 Rebase kennt einen interaktiven Modus; er ist zwar technisch gleich
 implementiert wie der normale Modus, allerdings ist der typische
 Anwendungsfall ein ganz anderer, denn der interaktive Rebase erlaubt
@@ -579,7 +530,6 @@ bearbeiten (und nicht nur zu verschieben).
 
 Im interaktiven Rebase können Sie
 
-indexterm:[Commit,löschen (Rebase)]
 
 * die Reihenfolge von Commits verändern
 
@@ -620,7 +570,6 @@ diese auch jeweils durch ihren Anfangsbuchstaben abkürzen, also z.B.
 `s` für `squash`.
 
 
-indexterm:[fixup]
 
 `pick`:: ``Commit verwenden'' (Default).  Entspricht der Behandlung
 von Commits im nicht-interaktive Rebase.
@@ -643,15 +592,12 @@ beendet, hält der Rebase an.
 
 
 
-indexterm:[rebase,pick]
-indexterm:[rebase,skip]
 Die Aktion `pick` ist die simpelste – sie besagt einfach, dass
 Sie den Commit verwenden wollen, Rebase soll diesen Commit so, wie er
 ist, übernehmen. Das Gegenteil von `pick` ist das simple
 Löschen einer kompletten Zeile. Der Commit geht dann verloren (wie
 `git rebase --skip`).
 
-indexterm:[Commit,Reihenfolge tauschen]
 Wenn Sie die Reihenfolge der Zeilen tauschen, dann wird Git die
 Commits in der neu definierten Reihenfolge anwenden. Zu Anfang sind
 die Zeilen in der Reihenfolge, in der sie später angewendet werden --
@@ -661,8 +607,6 @@ Vertauschung von Commits häufig zu Konflikten kommen, sofern die
 Commits auf den gleichen Dateien und an den gleichen Stellen
 Änderungen durchführen.
 
-indexterm:[rebase,reword]
-indexterm:[Commit,Nachricht ändern]
 Das Kommando `reword` ist praktisch, wenn Sie Tippfehler in
 einer Commit-Nachricht haben und diese korrigieren wollen (oder bisher
 keine ausführliche verfasst haben und dies nun nachholen wollen). Der
@@ -676,9 +620,6 @@ einpflegen und den Rebase-Prozess weiterlaufen lassen.
 [[sec.rebase-i-squash]]
 ==== Kleine Fehler korrigieren: Bug Squashing ==== 
 
-indexterm:[rebase,squash]
-indexterm:[rebase,fixup]
-indexterm:[Commit,verschmelzen]
 Die Kommandos `squash` bzw. `fixup` erlauben es, zwei
 oder mehr Commits miteinander zu verschmelzen. 
 
@@ -747,7 +688,6 @@ $ *git log --oneline master..feature*
 6329a8a implement feature 1
 --------
 
-indexterm:[Alias,fixup]
 [TIP]
 ========
 Oft kommt es vor, dass man eine kleine Änderung noch in den zuletzt
@@ -768,7 +708,6 @@ Wenn Sie die Commit-Nachricht mit `fixup!` bzw.
 `squash!` beginnen, gefolgt vom Anfang der Beschreibung des
 Commits, den Sie korrigieren wollen, können Sie das Kommando
 
-indexterm:[rebase,--autosquash]
 [subs="macros,quotes"]
 --------
 $ *git rebase -i --autosquash master*
@@ -788,8 +727,6 @@ bei Rebase-Aufrufen machen: Setzen Sie dafür die Einstellung
 [[sec.rebase-i-edit]]
 ==== Commits beliebig editieren ==== 
 
-indexterm:[Commit,editieren]
-indexterm:[rebase,edit]
 Wenn Sie einen Commit mit `edit` markieren, kann er beliebig
 editiert werden. Dabei geht Rebase wie in den anderen Fällen auch
 sequentiell die Commits durch. Bei den Commits, die mit `edit`
@@ -816,8 +753,6 @@ Einen häufigen Anwendungsfall beschreibt folgendes
 [[sec.rebase-split-cmmits]]
 ===== Commits aufteilen =====  
 
-indexterm:[Commit,aufteilen]
-indexterm:[Rebase,Commit aufteilen]
 Jeder Programmierer kennt das: Diszipliniert und penibel jede Änderung
 einzuchecken, ist anstrengend und unterbricht häufig den Arbeitsfluss.
 Das führt in der Praxis zu Commits, die groß und unübersichtlich sind.
@@ -838,7 +773,6 @@ Zunächst starten Sie den Rebase-Prozess und markieren den Commit, den
 Sie aufteilen wollen, mit `edit`. Rebase hält dort an,
 `HEAD` zeigt auf diesen Commit.
 
-indexterm:[reset]
 Anschließend setzen Sie den `HEAD` einen Commit zurück, ohne
 allerdings die Änderungen von `HEAD` (der aufzuteilende Commit)
 wegzuwerfen. Das passiert durch das Kommando `reset` (siehe
@@ -862,7 +796,6 @@ Nun können Sie einige Zeilen hinzufügen, einen Commit erstellen,
 weitere Zeilen hinzufügen und schließlich einen dritten Commit für
 die übrigen Zeilen erstellen:
 
-indexterm:[add,-p (Commit aufteilen)]
 [subs="macros,quotes"]
 --------
 $ *git add -p*
@@ -880,7 +813,6 @@ erstellen Sie einen neuen Commit, aufbauend auf dem jeweiligen
 `reset`-Aufruf weggeworfen haben) haben Sie nun drei kleinere
 Commits an dessen Stelle gesetzt.
 
-indexterm:[rebase,continue]
 Lassen Sie jetzt Rebase weiterlaufen (`git rebase
   --continue`) und die übrigen Commits von oben auf `HEAD`
 (der jetzt der neueste Ihrer drei Commits ist) aufbauen.
@@ -890,11 +822,6 @@ Lassen Sie jetzt Rebase weiterlaufen (`git rebase
 [[sec.blame]]
 === Wer hat diese Änderungen gemacht? – git blame ===  
 
-indexterm:[git,blame]
-indexterm:[blame]
-indextermsee:[annotate,blame]
-indexterm:[Commit,Zusammensetzung nachvollziehen]
-indexterm:[Commit,Blame]
 Wie andere Versionskontrollsysteme hat auch Git ein Kommando
 `blame` bzw. `annotate`, das alle Zeilen einer Datei mit
 Datum und Autor der letzten Änderung versieht.  So können Sie z.B.
@@ -945,9 +872,6 @@ eb9d47cf http.c 129) void end_url_with_slash(struct strbuf *buf, const
 [[sec.blame-gui]]
 ==== Blame grafisch ====  
 
-indexterm:[gui blame]
-indexterm:[blame,grafisch]
-indexterm:[git-gui]
 Eine bequeme Alternative zu `git blame` auf der Konsole bietet
 das grafische Tool `git gui blame` (hierfür müssen Sie
 gegebenenfalls das Paket `git-gui` installieren).
@@ -980,8 +904,6 @@ Sie wieder in die Zukunft springen.
 [[sec.ignore]]
 === Dateien ignorieren === 
 
-indexterm:[Datei,ignorieren]
-indexterm:[ignore]
 In fast jedem Projekt fallen Dateien an, die Sie nicht versionieren
 wollen. Sei es der binäre Output des Compilers, die autogenerierte
 Dokumentation im HTML-Format oder die Backup-Dateien, die Ihr Editor
@@ -995,7 +917,6 @@ ignorieren:
 * repositoryspezifische Einstellung, die mit eingecheckt wird
 
 
-indexterm:[.gitignore]
 Welche Option Sie wählen, hängt ganz von Ihrem Anwendungsfall ab. Die
 benutzerspezifischen Einstellungen sollten Dateien und Muster
 enthalten, die für den Benutzer relevant sind, beispielsweise
@@ -1017,7 +938,6 @@ HTML-Dokumentation. Diese Einstellung legen Sie in der Datei
 `.gitignore` ab, die Sie ganz normal einchecken und somit an
 alle Entwickler ausliefern.
 
-indexterm:[exclude]
 Zuletzt lässt sich die Datei `.git/info/exclude` für
 repositoryspezifische Einstellungen nutzen, die nicht mit einem
 Klon ausgeliefert werden sollen, also Einstellungen, die gleichzeitig
@@ -1027,7 +947,6 @@ projekt- und benutzerspezifisch sind.
 [[sec.muster]]
 ==== Syntax für Muster ==== 
 
-indexterm:[Muster,ignorieren (Datei)]
 Die Syntax für Muster ist der Shell-Syntax nachempfunden:
 
 * Leere Zeilen haben keinen Effekt und können zum Gliedern
@@ -1088,10 +1007,6 @@ pass:quotes[\*.*~]
 [[sec.nachtraeglich-ignorieren]]
 ==== Nachträglich ignorieren oder versionieren ==== 
 
-indexterm:[rm]
-indextermseealso:[git,rm,rm]
-indextermsee:[remove,rm]
-indexterm:[ignore,nachträglich]
 Dateien, die bereits versioniert sind, werden nicht automatisch
 ignoriert. Um eine solche Datei trotzdem zu ignorieren, weisen Sie Git
 explizit an, die Datei zu ``vergessen'':
@@ -1113,9 +1028,6 @@ $ *git rm --cached documentation.pdf*
 
 
 
-indexterm:[Versionierung,nachträglich]
-indexterm:[add]
-indexterm:[ignore,aufheben]
 Dateien, die bereits ignoriert werden, erscheinen in der Ausgabe von
 `git status` nicht. Außerdem weigert sich `git add`, die
 Datei zu übernehmen; mit der Option `--force` bzw.
@@ -1134,12 +1046,6 @@ $ *git add -f documentation.pdf*
 [[sec.git-clean]]
 ==== Ignorierte und unbekannte Dateien löschen ==== 
 
-indexterm:[clean] indexterm:[clean,für ignorierte Dateien]
-indexterm:[clean,-n / --dry-run]
-indexterm:[clean,-f / --force]
-indexterm:[clean,-d (directories)]
-indexterm:[clean,-x / -X]
-indextermseealso:[git,clean,clean]
 Das Kommando `git clean` löscht ignorierte sowie unbekannte
 (sog. 'untracked') Dateien. Da evtl. Dateien unwiederbringlich
 verlorengehen könnten, verfügt das Kommando über die Option
@@ -1164,9 +1070,6 @@ $ *git clean -dfx*
 [[sec.stash]]
 === Veränderungen auslagern – git stash === 
 
-indexterm:[stash]
-indexterm:[Stash]
-indextermseealso:[git,stash,stash]
 Der Stash (Lager) ist ein Mechanismus, der dazu dient, noch nicht
 gespeicherte Veränderungen am Working Tree kurzfristig auszulagern.
 Ein klassischer Anwendungsfall: Ihr Chef bittet Sie, so schnell wie
@@ -1194,7 +1097,6 @@ HEAD is now at b529e34 new spec how the script should behave
 --------
 
 
-indexterm:[stash,keep-index]
 Mit der Option `--keep-index` bleibt der Index intakt. Das heißt, alle
 Veränderungen die bereits im Index sind, bleiben im Working Tree und im Index
 vorhanden und werden zusätzlich im Stash gespeichert.
@@ -1205,7 +1107,6 @@ Branch.  Um den gespeicherten Zustand wieder herzustellen, also um den
 gespeicherten Patch auf dem aktuellen Working Tree anzuwenden und
 gleichzeitig den Stash zu löschen, verwenden Sie:
 
-indexterm:[stash,pop]
 [subs="macros,quotes"]
 --------
 $ *git stash pop*
@@ -1219,8 +1120,6 @@ Repository beliebig verändern, z.B. den Branch wechseln, Commits
 machen usw. Der Stash wird immer auf den aktuellen Working Tree
 angewendet.
 
-indexterm:[stash,apply]
-indexterm:[stash,drop]
 Das Kommando `git stash pop` ist eine Abkürzung für die
 zwei Kommandos `git stash apply` (Stash anwenden) und
 `git stash drop` (Stash verwerfen):
@@ -1238,8 +1137,6 @@ in den Working Tree ein, der Zustand des Index wird nicht wieder
 hergestellt. Mit der Option `--index` stellen Sie auch den
 abgespeicherten Zustand des Index wieder her.
 
-indexterm:[Stash,interaktiv]
-indexterm:[stash,-p / --patch]
 
 [TIP]
 ========
@@ -1261,8 +1158,6 @@ Die Konfigurationseinstellung `interactive.singlekey` (siehe
 [[sec.stash-konflikte]]
 ==== Konflikte lösen ==== 
 
-indexterm:[stash,Konflikt lösen]
-indexterm:[Konflikt,Stash]
 Es kann zu Konflikten kommen, wenn Sie einen Stash auf einem anderen
 Commit anwenden als dem, auf dem er entstanden ist:
 
@@ -1378,8 +1273,6 @@ HEAD is now at b529e34 new spec how the script should behave
 [[sec.multi-stash]]
 ==== Stashes einsehen ==== 
 
-indexterm:[Reflog,Syntax für Stashes]
-indexterm:[Stash,Syntax]
 Git verwaltet alle Stashes als Stack, d.h. aktuellere Zustände
 liegen oben auf und werden zuerst verarbeitet. Die Stashes sind mit
 einer Reflog-Syntax (siehe auch <<sec.reflog>>) benannt:
@@ -1400,7 +1293,6 @@ Geben Sie keinen expliziten Stash an, beziehen sich die Kommandos
 `apply`, `drop` und `show` auf den neuesten, also
 `stash@{0}`.
 
-indexterm:[stash,show]
 Um einzelne Stashes einzusehen, verwenden Sie `git stash show`.
 Standardmäßig druckt dieses Kommando eine Bilanz der hinzugefügten und
 entfernten Zeilen aus (wie `git diff --stat`):
@@ -1438,7 +1330,6 @@ pass:quotes[\+++] b/git-stats.sh
 Das Kommando `git stash list` gibt eine Liste der derzeit
 angelegten Stashes aus:
 
-indexterm:[stash,list]
 [subs="macros,quotes"]
 --------
 $ *git stash list*
@@ -1449,9 +1340,6 @@ stash@{1}: WIP on master: b1ee2cf start and end date in one place only
 [[sec.stash-delete]]
 ==== Stashes löschen ==== 
 
-indexterm:[Stash,löschen]
-indexterm:[stash,drop]
-indexterm:[stash,clear]
 Einzelne Stashes löschen Sie mit dem Kommando `git stash drop`,
 alle mit `git stash clear`.  Sollten Sie versehentlich einen
 Stash löschen, finden Sie diesen nicht über die üblichen
@@ -1459,8 +1347,6 @@ Reflog-Mechanismen wieder! Jedoch gibt folgender Befehl die ehemaligen
 Stashes aus:{empty}footnote:[Das Kommando sucht zuerst alle Commit-Objekte heraus, die nicht mehr erreichbar sind, und schränkt die Liste dann auf diejenigen ein, die Merge-Commits sind und deren Commit-Message die Zeichenkette `WIP` enthält -- die Eigenschaften, die ein Commit-Objekt aufweist, das als Stash erstellt wurde, vgl.
 <<sec.stash-implementation>>.]
 
-indexterm:[Stash,wiederherstellen]
-indexterm:[git,fsck]
 [subs="macros,quotes"]
 --------
 $ *git fsck --unreachable | grep commit | cut -d" "  -f3 | \*
@@ -1483,7 +1369,6 @@ nach einiger Zeit gelöscht und nicht dauerhaft vorgehalten.
 [[sec.stash-implementation]]
 ==== Wie ist der Stash implementiert? ==== 
 
-indexterm:[Stash,Implementierung]
 Git erzeugt für jeden Stash zwei Commit-Objekte, eines für die
 Veränderungen am Working Tree und eines für die Veränderungen am
 Index. Beide haben den aktuellen `HEAD` als Vorfahren, das
@@ -1494,7 +1379,6 @@ verwirrend ist:
 .Ein Stash in Gitk
 image::bilder_ebook/stash-screenshot.png[id="fig.gitk-stash",width="90%"]
 
-indexterm:[Alias,tree]
 Mit dem Alias `git tree` (siehe <<rev-list>>) sieht das so aus:
 
 --------
@@ -1523,11 +1407,6 @@ gelöscht.
 [[sec.notes]]
 === Commits annotieren – git notes === 
 
-indexterm:[Git,Notes]
-indexterm:[git,notes]
-indexterm:[Notes]
-indextermsee:[Notiz,Notes]
-indexterm:[Commit,Notiz anheften]
 In der Regel ist es nicht ohne Weiteres möglich, Commits, die einmal
 veröffentlicht wurden, noch einmal zu ändern oder zu erweitern.
 Manchmal wünscht man sich jedoch, man könnte Commits im Nachhinein
@@ -1619,9 +1498,6 @@ ein (siehe auch <<sec.git-fetch>>):
 [[sec.multi-root]]
 === Mehrere Root-Commits === 
 
-indexterm:[Root-Commit,mehrere]
-indexterm:[Commit,mehrere Root-Commits]
-indexterm:[Repository,mehrere Root-Commits]
 Bei der Initialisierung eines Repositorys wird der erste Commit, der
 sogenannte 'Root-Commit', erstellt. Dieser Commit ist in der
 Regel der einzige im ganzen Repository, der keinen Vorgänger hat.
@@ -1667,8 +1543,6 @@ Sie können aber auch, anstatt ein anderes Repository zu importieren,
 einen komplett abgekoppelten Branch neu erstellen, also einen zweiten
 Root-Commit. Dafür reichen die folgenden beiden Kommandos aus:
 
-indexterm:[rm,--cached]
-indexterm:[checkout,--orphan]
 [subs="macros,quotes"]
 --------
 $ *git checkout --orphan &lt;newroot&gt;*
@@ -1688,9 +1562,6 @@ Root-Commit hinzufügen und ihn dann mit `git commit` erzeugen.
 [[sec.bisect]]
 === Regressionen finden – git bisect === 
 
-indextermseealso:[git,bisect,bisect]
-indexterm:[bisect]
-indexterm:[Regression]
 Eine Regression bezeichnet in der Softwareentwicklung den Zeitpunkt,
 ab dem ein bestimmtes Feature eines Programms nicht mehr funktioniert.
 Das kann nach einem Update von Bibliotheken sein, nach der Einführung
@@ -1767,7 +1638,6 @@ Fehlersuche können Sie jederzeit abbrechen per `git bisect
 [[sec.bisect-run]]
 ==== Automatisierung ==== 
 
-indexterm:[bisect,automatisieren]
 Idealerweise können Sie automatisiert testen, ob der Fehler auftritt
 -- mit einem Test, der erfolgreich laufen muss, wenn die Regression
 nicht auftritt.

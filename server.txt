@@ -17,7 +17,6 @@ einem Server von denen eines normalen Nutzers? Und wie tauscht Git die
 [[sec.protokolle]]
 ==== Das Git-Protokoll ==== 
 
-indexterm:[Packfile]
 Git ist auf dezentrale Verwaltung der Repositories ausgelegt; die
 kleinste Einheit, um Änderungen zwischen Repositories
 auszutauschen, sind Commits. Da sich aber zwischen zwei Versionen
@@ -30,10 +29,6 @@ werden auch verwendet, um (ältere) Commits auf der Festplatte
 platzsparend zu lagern (`git gc` bzw. `git repack`,
 siehe <<sec.gc>>).
 
-indexterm:[git,Protokoll]
-indexterm:[git,Port]
-indexterm:[Port]
-indexterm:[Übertragung]
 Diese Packfiles werden in der Regel über das Git-Protokoll
 übertragen, das standardmäßig auf Port 9418/TCP läuft. Das
 Git-Protokoll ist vom Design her bewusst sehr einfach gehalten und
@@ -43,9 +38,6 @@ sowie eine Möglichkeit für Sender- und Empfängerseite, sich auf die
 kleinstmögliche Datenmenge zu einigen, die übertragen werden muss, um
 beide Seiten zu synchronisieren.
 
-indexterm:[SSH]
-indexterm:[Authentifizierung]
-indextermsee:[Secure Shell,SSH]
 Das Git-Protokoll enthält daher 'keine' Möglichkeit der
 Authentifizierung. Stattdessen verwendet Git eine bereits vorhandene,
 sichere und einfache Authentifizierungsstruktur: SSH, die 'Secure
@@ -56,11 +48,6 @@ anonymen 'Lesezugriff' uneingeschränkt verwendet werden kann,
 funktioniert ein Schreiben bzw. Hochladen über das Git-Protokoll nur,
 wenn dies über SSH erfolgt.
 
-indexterm:[HTTP(S)]
-indexterm:[FTP(S)]
-indexterm:[Rsync]
-indexterm:[update-server-info]
-indexterm:[git,update-server-info]
 Des Weiteren unterstützt Git auch den Transport über HTTP(S), FTP(S),
 sowie Rsync. Zwar gilt die Unterstützung für letzteres mittlerweile
 als 'deprecated', es sollte also nicht mehr benutzt werden; für
@@ -74,8 +61,6 @@ an.
 [[sec.git-pack-same-machine]]
 ==== Repositories auf dem gleichen Rechner ==== 
 
-indexterm:[Repository,lokal synchronisieren]
-indexterm:[Remote,auf dem gleichen Rechner]
 Wollen Sie Änderungen an Repositories auf dem gleichen Rechner
 synchronisieren, muss dies nicht über Umwege erfolgen: Git
 kommuniziert direkt über Unix-Pipes mit der Gegenseite, handelt eine
@@ -87,8 +72,6 @@ hat.)
 [[sec.bare-repos]]
 ==== Bare Repositories – Repositories ohne Working Tree ====
 
-indexterm:[Repository,bare]
-indexterm:[bare]
 Bisher haben Sie vermutlich größtenteils mit Git-Repositories
 gearbeitet, die Working Tree und Repository in einem waren: Die
 repositoryinternen Daten werden in einem Unterverzeichnis
@@ -101,7 +84,6 @@ Repository, hat keinen zugeordneten Working Tree. Es enthält nur die
 Dateien und Verzeichnisse, die in einem ``regulären''
 Repository unterhalb von `.git` gespeichert sind.
 
-indexterm:[init,--bare]
 Ein solches Bare Repository erstellen Sie durch `git init
   --bare`. Schauen Sie sich den Unterschied zwischen den beiden
 Möglichkeiten an:
@@ -121,7 +103,6 @@ $ *ls -AF*
 branches/  config  description  HEAD  hooks/  info/  objects/  refs/
 --------
 
-indexterm:[push,--all]
 Um ein Backup eines Ihrer normalen Repositories anzulegen, können Sie
 (z.B. auf einem USB-Stick) ein neues Bare Repository erstellen und
 alle Ihre Referenzen (und damit alle Ihre Commits) hochladen:
@@ -136,9 +117,6 @@ $ *git push --all /mnt/usb/repo-backup/*
 [[sec.permissions]]
 ==== Zugriffsrechte eines Repositorys ==== 
 
-indexterm:[Zugriffsrechte]
-indexterm:[Repository,Zugriffsrechte]
-indexterm:[init,--shared]
 Bei `git init` werden die Dateien in der Regel mit Lese-
 und Schreibberechtigung entsprechend der gesetzten `umask`
 angelegt. Für den Endanwender ist dies auch eine günstige Wahl.
@@ -174,9 +152,6 @@ explizit will via `git push -f`).
 [[sec.git-shell]]
 ==== Zugriff per SSH: Die Git-Shell ==== 
 
-indexterm:[Shell]
-indexterm:[Git-Shell]
-indexterm:[git,shell]
 In der Regel kann der Schreib-Zugriff auf Git-Repositories, die auf
 einem anderen Rechner liegen, nur per SSH erfolgen. Allerdings ist es
 im Allgemeinen nicht wünschenswert, einem Nutzer, der Zugriffsrechte
@@ -191,7 +166,6 @@ Ausführung anderer Kommandos verweigert die Shell, sofern Sie nicht den
 ``Interaktiven Modus'' der Shell explizit aktivieren -- siehe dafür
 die Man-Page `git-shell(1)`.
 
-indexterm:[chsh]
 Wenn Sie einen neuen Benutzer anlegen und ihm z.B. per
 `chsh <user>` die Git-Shell zuweisen, kann er sich nicht
 per SSH einloggen, aber auf alle Git-Repositories, auf denen er
@@ -201,7 +175,6 @@ Schreibberechtigung hat, Commits hochladen.
 [[sec.ssh-pubkey]]
 ==== Zugriff per SSH: Öffentliche Schlüssel ==== 
 
-indexterm:[SSH,Vorteil von Public Keys]
 Es ist ein wesentlicher Vorteil, dass Git SSH als verschlüsselten und
 authentifizierten Transportkanal verwendet, denn die meisten Nutzer
 haben bereits ein Schlüsselpaar (öffentlich/privat), mit dem sie sich
@@ -288,7 +261,6 @@ Unix-Gruppen zu regeln, ist eher unflexibel.
 [[sec.gitolite]]
 === Gitolite: Git einfach hosten === 
 
-indexterm:[Gitolite]
 Die oben beschriebene Art und Weise, Nutzer zu verwalten, bringt einige
 wesentliche Nachteile. Namentlich:
 
@@ -306,7 +278,6 @@ Installation und Konfiguration bezieht sich auf Gitolite in Version 3.6. Seit
 Gitolite Version 1.5, das in der ersten Auflage dieses Buches
 beschrieben wurde, gab es einige inkompatible Änderungen, die Sie hier nachlesen können: http://gitolite.com/gitolite/migr.html]
 
-indexterm:[Gitosis]
 Gitolite ist aus dem Projekt 'Gitosis' hervorgegangen, das
 mittlerweile als veraltet angesehen wird. Die Idee: Auf dem Server
 wird lediglich 'ein' Unix-Benutzer (z.B.{empty}{nbsp}`git`)
@@ -338,7 +309,6 @@ wesentliche Vorteile:
 [[sec.gitolite-install]]
 ==== Gitolite installieren ==== 
 
-indexterm:[Gitolite,Installation]
 Die Installation von Gitolite ist einfach. Sie müssen dafür nur Ihren
 Public-Key bereithalten, um sich als Administrator eintragen zu können.
 Root-Rechte benötigen Sie nicht, es
@@ -418,7 +388,6 @@ Server aktualisiert automatisch die Einstellungen.
 [[sec.gitolite-config]]
 ==== Gitolite-Konfiguration ==== 
 
-indexterm:[Gitolite,Konfiguration]
 Im Gitolite-Admin-Verzeichnis befinden sich zwei Unterverzeichnisse,
 `conf` und `keydir`. Um Gitolite einen neuen Nutzer
 vorzustellen, müssen Sie dessen SSH-Schlüssel unter
@@ -444,7 +413,6 @@ außerdem die Commits durch `git push` hochladen.
 Danach können Sie diesem Nutzernamen in der Konfigurationsdatei
 `conf/gitolite.conf` Berechtigungen zuweisen.
 
-indexterm:[Gitolite,Makro]
 Über sogenannte 'Makros' können Sie sich viel administrativen
 Aufwand bzw. Tipparbeit sparen. Sie können Gruppen (von Nutzern oder
 Repositories) zusammenfassen, z.B.
@@ -542,8 +510,6 @@ geschieht auf dem Server, wo Gitolite installiert ist, in der Datei
 [[sec.zugriffdateiebene]]
 ==== Zugriffsrechte auf Datei- oder Branch-Ebene ==== 
 
-indexterm:[ACL]
-indexterm:[Gitolite,Zugriffsrechte]
 Gerade in Firmenumgebungen müssen die Zugriffsrechte häufig noch
 feiner differenziert werden als ein bloßes ``hat Zugriff'' und
 ``darf nicht zugreifen''. Dafür bietet Gitolite
@@ -567,7 +533,6 @@ repo Projekt
     R           = @developers
 --------
 
-indexterm:[Branch,Zugriffsrechte]
 Hier wird ein ``Entwicklungs-Namespace'' geschaffen: Die
 Gruppe der Entwickler kann beliebig mit Branches unterhalb von
 `dev/` verfahren, also z.B.{empty}{nbsp}`dev/feature` erstellen
@@ -575,8 +540,6 @@ oder auch wieder löschen. Den Branch `master` können die
 Entwickler allerdings nur lesen, nicht aber verändern -- das ist den
 Maintainern vorbehalten.
 
-indexterm:[Regulärer Ausdruck]
-indexterm:[PCRE]
 Der Teil zwischen den 'Flags' (`RW+`) und dem
 Gleichzeichen ist ein sogenannter Perl-kompatibler regulärer Ausdruck
 ('Perl-Compatible Regular Expression', kurz PCRE). Sofern er
@@ -586,7 +549,6 @@ o.g. Beispiel können also beliebige Referenzen 'unterhalb' von
 `refs/heads/dev/` modifiziert werden -- nicht aber der Branch
 `dev` selbst oder `irgendwas-dev`!
 
-indexterm:[Release Candidate]
 Beginnt ein solcher Ausdruck aber explizit mit einem `refs/`,
 kann man beliebige Referenzen verwalten. Auf die folgende Weise
 richtet man ein, dass alle Maintainer 'Release-Candidate'-Tags{empty}footnote:[Ein 'Release Candidate' einer Software
@@ -627,8 +589,6 @@ passt der Nutzername nicht. Keine Zeile bleibt übrig
 [[sec.personal-namespace]]
 ==== Persönliche Namespaces ==== 
 
-indexterm:[Namespace]
-indexterm:[Branch,Namespace]
 Etwas flexibler ist das Konzept persönlicher Namespaces. So erhält
 jeder Entwickler seine eigene Hierarchie von Branches, die er
 verwalten kann.
@@ -652,8 +612,6 @@ lesend darauf zugreifen.
 [[sec.file-level-acl]]
 ==== Zugriffsregelung auf Dateiebene ==== 
 
-indexterm:[Datei,Zugriffsrechte (Gitolite)]
-indexterm:[Referenz,virtuell (Gitolite)]
 Gitolite erlaubt auch Zugriffsbeschränkungen auf Datei- und
 Verzeichnisebene. Zuständig dafür ist die virtuelle Referenz `VREF/NAME`.
 So können Sie beispielsweise dem Dokumentations-Team nur den
@@ -699,14 +657,12 @@ verändern, und somit wird die Aktion verboten.
 [[sec.gl-deny]]
 ==== Aktionen explizit verbieten ==== 
 
-indexterm:[fallthru]
 Bisher wurde ein Nutzer nur abgewiesen, wenn er durch alle Regeln
 durchgefallen war (`fallthru`), ihm also keine Rechte zugewiesen
 wurden.  Allerdings lässt sich durch das Flag `-` (statt
 `RW`) explizit der Zugriff einschränken. Auch hier werden die
 Regeln wieder von oben nach unten durchgegangen.
 
-indexterm:[VREF/NAME (Gitolite)]
 --------
 repo Projekt
     -   VREF/NAME/Makefile   = @developers
@@ -745,8 +701,6 @@ erlaubt wurde).
 [[sec.enforce-policy]]
 ==== Sollte man Policies forcieren? ==== 
 
-indexterm:[Policy,forcieren?]
-indexterm:[Branch,Policy]
 Mit den hier vorgestellten Mitteln und weiteren, die Sie der
 Dokumentation{empty}footnote:[Die Dokumentation findet sich unter http://gitolite.com/.
     Der Autor hat außerdem das Buch ``Gitolite Essentials''
@@ -771,8 +725,6 @@ und gerade diese Flexibilität macht das Branching in Git so praktisch.
 [[sec.git-daemon]]
 === Git-Daemon: Anonymer, lesender Zugriff === 
 
-indexterm:[Git-Daemon]
-indexterm:[Repository,exportieren]
 Der Git-Daemon erlaubt unverschlüsselten, anonymen, lesenden Zugriff
 auf Git-Repositories über das Git-Protokoll. Er wird mit Git
 mitgeliefert und läuft in der Regel auf TCP-Port 9418 (und kann somit
@@ -799,8 +751,6 @@ können auch mehrere Pfade angegeben werden. Sofern Sie Gitolite schon
 wie oben aufgesetzt haben, ist `/var/git/repositories` ein
 sinnvoller Pfad.
 
-indextermsee:[git,daemon,Git-Daemon]
-indextermsee:[daemon,Git-Daemon]
 Zum Testen können Sie einen Git-Daemon auf einem einzigen Repository
 laufen lassen:
 
@@ -825,7 +775,6 @@ remote: Total 130 (delta 54), reused 0 (delta 0)
 --------
 
 
-indexterm:[git-daemon-export-ok]
 Der Git-Daemon exportiert ein Repository aber nur, wenn eine Datei
 `git-daemon-export-ok` im `.git`-Verzeichnis angelegt
 wird (wie oben geschehen; im Falle von 'Bare Repositories' muss
@@ -860,8 +809,6 @@ verwenden.
 [[sec.git-daemon-inetd]]
 ==== Git-Daemon und Inetd ==== 
 
-indexterm:[Inetd]
-indexterm:[Git-Daemon,und inetd]
 Im Regelfall soll der Git-Daemon eine große Anzahl von Repositories
 ständig ausliefern. Dafür läuft er ständig im Hintergrund oder wird
 für jede Anfrage neu gestartet. Letztere Aufgabe übernimmt
@@ -881,7 +828,6 @@ lesend zugreifen kann. Das kann `root` sein, weil der Inetd
 normalerweise mit Root-Rechten läuft, sollte aber sinnvollerweise
 `git` oder ein ähnlich unprivilegierter Account sein.
 
-indexterm:[xinetd]
 Die Konfiguration für den `xinetd` ist analog, aber selbsterklärender. Sie wird z.B. unter
 `/etc/xinet.d/git-daemon` abgelegt:
 
@@ -909,9 +855,6 @@ starten.footnote:[In manchen Distributionen, wie
 [[sec.git-daemon-sv]]
 ==== Der Debian-Weg: Git-Daemon sv ==== 
 
-indexterm:[git-daemon-run]
-indexterm:[sv]
-indexterm:[Git-Daemon,und sv]
 Debian bietet ein Paket `git-daemon-run` an, das
 Konfigurationsdateien für `sv`{empty}footnote:[Das Programm `sv` ist Teil des
   Init-Frameworks 'runit'
@@ -1020,8 +963,6 @@ existieren, in dem sich exportierbare Repositories befinden.
 [[sec.gitoliteexport]]
 ==== Über Gitolite exportierbare Repositories festlegen ==== 
 
-indexterm:[Gitolite,und Git-Daemon]
-indexterm:[Repository,Export erlauben (daemon)]
 Gitolite kennt einen speziellen Nutzernamen, `daemon`. Für alle
 Repositories, auf denen dieser Nutzer Leseberechtigung hat, wird
 automatisch die Datei `git-daemon-export-ok` angelegt. Sie
@@ -1043,9 +984,6 @@ Berechtigung vergeben.
 [[sec.gitweb]]
 === Gitweb: Das integrierte Web-Frontend === 
 
-indexterm:[Gitweb]
-indexterm:[Snapshot,als Tar-Archiv]
-indexterm:[Tag,als Tar-Archiv (Gitweb)]
 Git kommt mit einem integrierten, browserbasierten Frontend, genannt
 'Gitweb'. Über das Frontend lässt sich die gesamte
 Versionsgeschichte eines Projekts durchsuchen: Jeder Commit kann mit
@@ -1054,15 +992,10 @@ oder Branches ebenso wie alle Log-Nachrichten. Außerdem kann jeder
 Snapshot individuell als Tar-Archiv heruntergeladen werden (das ist
 besonders für Git-Neulinge praktisch).
 
-indexterm:[git,instaweb]
-indexterm:[instaweb]
 Um einen Überblick über die Funktionalität zu erhalten, können Sie mit
 dem Kommando `git instaweb` ohne weitere Konfiguration einen
 temporären Webserver mit Gitweb aufsetzen.
 
-indexterm:[webrick]
-indexterm:[Webserver,webrick]
-indexterm:[Git-Daemon,--httpd]
 Git bringt keinen eigenen Webserver mit. Über die Option
 `--httpd=<webserver>` können Sie festlegen, welchen Webserver
 Git verwenden soll, um die Seite auszuliefern. Um Gitweb lediglich
@@ -1160,8 +1093,6 @@ $export_ok = "git-daemon-export-ok";
 ==== Gitweb und Apache ==== 
 
 
-indexterm:[Apache,und Gitweb]
-indexterm:[Gitweb,und Apache]
 
 Ausgehend davon, dass Sie das CGI-Script unter `/usr/lib/cgi-bin` und die Bild- und CSS-Dateien unter `/usr/share/gitweb` installiert haben (wie es z.B. auch das
 Debian-Paket `gitweb` macht), konfigurieren Sie Apache wie
@@ -1200,8 +1131,6 @@ Konfiguration neu laden lassen:
 [[sec.gitweb-lighty]]
 ==== Gitweb und Lighttpd ==== 
 
-indexterm:[Gitweb,und Lighttpd]
-indexterm:[Lighttpd,und Gitweb]
 Je nachdem, wie Sie virtuelle Hosts in Lighttpd realisieren, sieht die
 Konfiguration möglicherweise anders aus. Wichtig sind drei Dinge: Dass
 Sie Aliase für die global installierten Gitweb-Dateien machen, die
@@ -1246,8 +1175,6 @@ image::bilder_ebook/gitweb-commitdiff.png[id="fig.gitweb-commitdiff",width="90%"
 [[sec.cgit]]
 === CGit – CGI for Git === 
 
-indexterm:[CGit]
-indextermsee:[CGI,für Git,CGit]
 CGit (``CGI für Git'') ist ein alternatives Webfrontend. Im
 Gegensatz zu Gitweb, das komplett in Perl geschrieben ist, ist CGit in
 C geschrieben und arbeitet, wo möglich, mit Caching. Dadurch ist es
@@ -1258,7 +1185,6 @@ Es wird die aktuelle Git-Version benötigt, um auf Routinen aus dem
 Git-Quellcode zurückzugreifen. Dafür muss das bereits konfigurierte
 Submodul initialisiert und der Code heruntergeladen werden:
 
-indexterm:[Submodule,für CGit]
 
 [subs="macros,quotes"]
 --------
@@ -1299,9 +1225,6 @@ image::bilder_ebook/cgit-overview.png[id="fig.cgit-overview",width="90%"]
 [[sec.cgit-integration]]
 ==== CGit und Apache und Lighttpd ==== 
 
-indexterm:[CGit,Einbindung]
-indexterm:[Apache,und CGit]
-indexterm:[Lighttpd,und CGit]
 Die Einbindung in Apache und Lighttpd erfolgt ähnlich. Da CGit
 allerdings ``hübschere'' URLs verwendet (wie z.B. `http://git.example.com/dwm/tree/dwm.c` für die Datei
 `dwm.c` aus dem `dwm`-Repository), muss ein wenig
@@ -1324,7 +1247,6 @@ laufen:
 --------
 
 
-indexterm:[virtual-root (CGit)]
 Für Lighttpd muss man ein wenig tricksen. Sie dürfen nicht vergessen,
 `virtual-root=/` zu konfigurieren (s.u. -- diese Einstellung
 ist auch für Apache nicht schädlich).
@@ -1355,8 +1277,6 @@ Eine Liste der unterstützten Optionen finden Sie in der Datei
 Programm keine sonstige Dokumentation mit). Die wichtigsten sind
 nachfolgend aufgeführt:
 
-indexterm:[scan-path (CGit)]
-indexterm:[Diff,Side-by-Side (CGit)]
 
 `clone-prefix`::  URL, unter der der Quellcode (bevorzugt per
 Git-Protokoll) heruntergeladen werden kann (analog zu
@@ -1441,7 +1361,6 @@ image::bilder_ebook/cgit-commitdiff.png[id="fig.cgit-commitdiff",width="90%"]
 ==== Einzelne Repositories speziell konfigurieren ====
 
 
-indexterm:[Repository,einzelne (CGit)]
 Durch die oben erläuterte Option `scan-path` ist es in
 Kombination mit Gitolite in der Regel nicht nötig, Repositories
 einzeln hinzuzufügen und zu konfigurieren. Wollen Sie dies aber tun
@@ -1468,8 +1387,6 @@ verschiedenen Sektionen gruppieren (Option
 [[sec.cgit-cache]]
 ==== Caching ausnutzen ==== 
 
-indexterm:[CGit,Caching]
-indexterm:[Caching]
 CGit ist im Vergleich zu Gitweb besonders schnell, weil es in C
 geschrieben ist und außerdem Caching unterstützt. Das ist vor allem
 dann notwendig, wenn Sie viele Repositories und/oder viele
@@ -1507,8 +1424,6 @@ Minuten gesetzt, bis auf `scanrc` (15).
 
 
 
-indexterm:[Agefile]
-indexterm:[Hook,Agefile anlegen (CGit)]
 Ein weiterer wichtiger Faktor, der beeinflusst, wie schnell sich die
 Index-Seite aufbaut, ist die Verwendung von sogenannten
 'Agefiles'. Die Spalte 'Idle' (``untätig'') wird

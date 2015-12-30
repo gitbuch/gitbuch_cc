@@ -5,8 +5,6 @@ Form und Funktionalität
     -> Seitenbreite festlegen oder Bilder absolut skalieren?
 * Fußnoten sollten nicht nach unten springen, sondern lieber eine Art Popup
   produzieren oder in einer Randspalte dargestellt werden
-* Kommandos indextermsee:[] et al scheinen nicht zu funktionieren
-    -> Weitere Kommandos die fehlen?
 * a2x -f chunked untersuchen:
     -> Wie kann man etwas an der Seite einbinden?
     -> Wie kann man die Dateinamen anpassen?

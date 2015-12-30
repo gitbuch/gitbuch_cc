@@ -1,9 +1,6 @@
 [[sec.github]]
 == Github ==
 
-indexterm:[Github]
-indexterm:[Hosting]
-indexterm:[Git,Hosting]
 Es gibt derzeit mehrere Hosting-Websites, die kostenfreies Git-Hosting
 für Open-Source-Projekte anbieten. Die mit Abstand bekannteste von
 allen ist
@@ -43,8 +40,6 @@ erlauben, zugriffsbeschränkte Repositories ('Private
   Repositories') anzulegen und zu nutzen. Großen Unternehmen bietet
 Github eine Lösung namens 'GitHub Enterprise' an.
 
-indexterm:[Gollum]
-indexterm:[Wiki]
 Github bietet alle wesentlichen Features, die Sie von einer
 Projekt-Hosting-Plattform erwarten, darunter auch Projekt-Wiki und
 Issue-Tracker. Das besondere daran ist aber, dass das Wiki-System
@@ -136,7 +131,6 @@ auf, in dem Sie Ihre Veränderungen sowie eine Commit-Message
 eintragen.  Danach werden Sie automatisch auf die Pull-Request Seite
 weitergeleitet.
 
-indexterm:[Github,Network-Graph]
 Da Sie bei vielen Forks schnell den Überblick verlieren, stellt Github
 eine grafische Darstellung der Forks mit noch ausstehenden Änderungen
 bereit, den sogenannten 'Network-Graph':
@@ -169,13 +163,11 @@ sehr schnell bekannt werden, wenn eine kritische Anzahl an
 // die Leute werden mitarbeiten." Dieses Phänomen wird als 
 // 'Github-Effect' bezeichnet.
 
-indexterm:[Gist]
 Github bietet auch einen Pastebin-Dienst an, den 'Gist'
 (Kernaussage).  Im Gegensatz jedoch zu anderen Pastebin-Diensten ist
 bei Github jeder Gist ein vollwertiges Git-Repository. Besonders für
 Code-Schnipsel ist dies eine interessante Neuerung.
 
-indexterm:[Github,Service Hook]
 Auch bei der Anbindung an externe Dienste leistet Github ganze Arbeit.
 Es gibt 50 sogenannte 'Service Hooks', mit denen Sie Nachrichten
 bzgl. eines Repositorys an externe Dienste weiterleiten. Dabei sind

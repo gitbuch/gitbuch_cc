@@ -15,7 +15,6 @@ deutlich leichter von der Hand gehen.
 [[sec.grundlagen]]
 === Git-Kommandos === 
 
-indexterm:[Kommandos]
 Die Kommandos, die Sie zum Einstieg kennengelernt haben (vor allem
 `add` und `commit`), arbeiten auf dem Index. Im
 Folgenden werden wir uns genauer mit dem Index auseinandersetzen und
@@ -24,8 +23,6 @@ die erweiterte Benutzung dieser Kommandos behandeln.
 [[sec.index]]
 ==== Index ==== 
 
-indexterm:[Index]
-indexterm:[Working Tree,vs. Index]
 Der Inhalt von Dateien liegt für Git auf drei Ebenen, dem
 'Working Tree', dem 'Index' und dem 'Repository'.  Der
 Working Tree entspricht den Dateien, wie sie auf dem Dateisystem Ihres
@@ -33,8 +30,6 @@ Arbeitsrechners liegen -- wenn Sie also Dateien mit einem Editor
 bearbeiten, mit `grep` darin suchen etc., operieren Sie immer
 auf dem Working Tree.
 
-indexterm:[Repository,vs. Index]
-indexterm:[Versionsgeschichte,als Summe aller Commits]
 Das Repository ist der Sammelbehälter für Commits, also Änderungen,
 versehen mit Angaben zu Autor, Datum und Beschreibung. Die Commits
 ergeben zusammen die 'Versionsgeschichte'.
@@ -66,7 +61,6 @@ wird durch `add` in den Index übernommen und schließlich per
 `commit` im Repository abgespeichert.
 
 
-indexterm:[Diff,zwischen Working Tree, Index und Repository]
 Sie können sich die Unterschiede zwischen diesen drei Ebenen jeweils
 durch das `diff`-Kommando anzeigen lassen.  Ein simples
 `git diff` zeigt die Unterschiede zwischen Working Tree und
@@ -74,8 +68,6 @@ Index an -- also die Unterschiede zwischen den (tatsächlichen) Dateien
 auf Ihrem Arbeitssystem und den Dateien, wie sie eingecheckt würden,
 wenn Sie `git commit` aufrufen würden.
 
-indexterm:[diff,--staged]
-indextermsee:[Staging Area,Index]
 Das Kommando `git diff --staged` zeigt hingegen die
 Unterschiede zwischen Index (der auch 'Staging Area' genannt
 wird) und Repository an, also die Unterschiede, die ein Commit ins
@@ -83,9 +75,6 @@ Repository übertragen würde. Im Ausgangszustand, wenn Working Tree und Index
 mit `HEAD` synchron sind, erzeugen weder `git diff` noch
 `git diff --staged` eine Ausgabe.
 
-indexterm:[add,-u / --update]
-indexterm:[commit,-a / --all]
-indexterm:[git,commit]
 Wollen Sie alle
 Änderungen an allen Dateien übernehmen, gibt es zwei
 Abkürzungen: Zunächst die Option `-u` bzw. `--update`
@@ -105,9 +94,6 @@ die Flexibilität.
 [[sec.diff-color-words]]
 ===== Diff auf Wortbasis =====  
 
-indexterm:[Word-Diff]
-indexterm:[diff,--word-diff]
-indexterm:[Diff,für Fließtext]
 Ein alternatives Ausgabeformat für `git diff` ist das
 sog. 'Word-Diff', das über die Option
 `--word-diff` zur Verfügung steht.  Statt der entfernten
@@ -164,7 +150,6 @@ $ *git config --global alias.dw "diff --word-diff"*
 [[sec.add-p]]
 ==== Commits schrittweise erstellen ==== 
 
-indexterm:[Commit,schrittweise]
 Warum aber sollte man Commits schrittweise erstellen -- will man nicht
 immer alle Änderungen auch einchecken?
 
@@ -196,7 +181,6 @@ vorigen Kapitel illustrieren.  Zur Erinnerung der Inhalt der Datei
 print "Hello World!\n";
 --------
 
-indexterm:[Shebang-Zeile]
 Nun präparieren wir die Datei so, dass sie mehrere unabhängige
 Veränderungen hat, die wir 'nicht' in einem einzelnen Commit
 zusammenfassen wollen. Zunächst fügen wir eine 'Shebang'-Zeile
@@ -216,10 +200,6 @@ use strict;
 print "Hello World!\n";
 --------
 
-indexterm:[add,-p / --patch]
-indexterm:[add,interaktiv]
-indexterm:[git,add]
-indexterm:[Staging,hunkweise]
 Mit einem einfachen `git add hello.pl` würden alle neuen Zeilen
 dem Index hinzugefügt -- der Stand der Datei im Index wäre also der
 gleiche wie im Working Tree. Stattdessen verwenden wir die Option
@@ -251,7 +231,6 @@ pass:quotes[\+++ b/hello.pl]
 Stage this hunk [y,n,q,a,d,/,s,e,?]?
 --------
 
-indexterm:[Hunk]
 Hier zeigt Git alle Änderungen an, da sie im Code sehr nah
 beieinander liegen. Bei weit auseinanderliegenden oder auf
 verschiedene Dateien verteilten Veränderungen werden sie getrennt
@@ -262,7 +241,6 @@ Zeilen im Quellcode. Wir haben an dieser Stelle unter anderem folgende Optionen:
 Stage this hunk[y,n,q,a,d,/,s,e,?]?  
 --------
 
-indexterm:[Hunk,Optionen für Bearbeitung]
 Die Optionen sind jeweils nur einen Buchstaben lang und schwierig zu
 merken. Eine kleine Erinnerung erhalten Sie immer durch key:[?].
 Die wichtigsten Optionen haben wir im Folgenden
@@ -300,8 +278,6 @@ Split into 2 hunks.
  # Hello World! in Perl
 --------
 
-indexterm:[diff,--staged]
-indexterm:[diff]
 Git bestätigt, dass der Hunk erfolgreich geteilt werden konnte, und
 bietet uns nun ein Diff an, das nur die Shebang-Zeile
 enthält.footnote:[Sie können Hunks in der Regel
@@ -349,12 +325,6 @@ pass:quotes[\+++ b/hello.pl]
 --------
 
 
-indexterm:[Index,zurücksetzen]
-indexterm:[reset,HEAD]
-indexterm:[reset,vs. add]
-indextermseealso:[git reset,reset]
-indextermseealso:[git add,add]
-indexterm:[add]
 An dieser Stelle könnten wir einen Commit erzeugen, wollen zur
 Demonstration aber noch einmal von vorn beginnen. Darum setzen wir
 mit `git reset HEAD` den Index zurück.
@@ -369,8 +339,6 @@ M   hello.pl
 Git bestätigt und nennt die Dateien, in denen sich Veränderungen
 befinden; in diesem Fall ist es nur die eine.
 
-indexterm:[reset]
-indexterm:[reset,--hard]
 Das Kommando `git reset` ist gewissermaßen das Gegenstück zu
 `git add`: Statt Unterschiede aus dem Working Tree in den Index
 zu übertragen, überträgt `reset` Unterschiede aus dem
@@ -389,7 +357,6 @@ Veränderungen im Index aufgezeichnet haben und diese nicht verlieren
 möchten, Sie also einen bestimmten Hunk aus dem Index entfernen, ohne
 die anderen Hunks anfassen zu wollen.
 
-indexterm:[reset,-p / --patch]
 Analog zu `git add -p` gibt es daher den Befehl `git
   reset -p`, der einzelne Hunks wieder aus dem Index entfernt. Um das
 zu demonstrieren, übernehmen wir zunächst alle Veränderungen mit
@@ -450,9 +417,6 @@ $ *git config --global interactive.singlekey true*
 --------
 =================
 
-indexterm:[Enter,nach Option vermeiden]
-indexterm:[Konfiguration,Enter nach Option sparen]
-indexterm:[interactive.singlekey]
 
 
 Ein Wort der Warnung:
@@ -470,17 +434,11 @@ via Bisect (siehe <<sec.bisect>>) ein Problem dar.
 [[sec.commit]]
 ==== Commits erstellen ==== 
 
-indexterm:[Commit,erstellen]
-indexterm:[commit]
-indextermseealso:[git commit,commit]
 Sie wissen nun, wie Sie Änderungen zwischen Working Tree, Index und
 Repository austauschen. Wenden wir uns nun dem Kommando `git
   commit` zu, mit dem Sie Änderungen im Repository
 ``festschreiben''.
 
-indexterm:[log,--pretty=fuller]
-indexterm:[Status,Metainformationen abrufen]
-indexterm:[Metainformationen,in einem Commit]
 Ein Commit hält den Stand aller Dateien Ihres Projekts zu einem
 bestimmten Zeitpunkt fest und enthält zudem
 Metainformationen:footnote:[Sie können
@@ -494,8 +452,6 @@ Metainformationen:footnote:[Sie können
 * Commit-Datum
 
 
-indexterm:[Autor,vs. Committer]
-indexterm:[Committer,vs. Autor]
 Tatsächlich ist es so, dass der Name des Autors 'nicht' der Name
 des Committers (der den Commit einpflegt) sein muss.  Häufig werden
 Commits von Maintainern integriert oder bearbeitet (z.B.
@@ -508,10 +464,6 @@ Wenn Sie einen Commit erstellen, verwendet Git die im vorherigen
 Abschnitt konfigurierten Einstellungen `user.name` und
 `user.email`, um den Commit zu kennzeichnen.
 
-indexterm:[commit,ohne Argumente]
-indexterm:[Commit,Message]
-indexterm:[Rautezeichen,in Commit-Nachricht]
-indexterm:[commit,-v]
 Bei einem Aufruf von `git commit` ohne zusätzliche Argumente
 fasst Git alle Veränderungen im Index zu einem Commit zusammen und
 öffnet einen Editor, mit dem Sie eine Commit-Message erstellen.  Die
@@ -527,7 +479,6 @@ Sobald Sie den Editor beenden, erstellt Git den Commit. Geben Sie
 keine Commit-Nachricht an oder löschen den gesamten Inhalt der Datei,
 bricht Git ab und erstellt keinen Commit.
 
-indexterm:[commit,-m / --message]
 Wollen Sie nur eine Zeile schreiben, bietet sich die Option
 `--message` oder kurz `-m` an, mit der Sie direkt auf
 der Kommandozeile die Nachricht angeben und so den Editor umgehen:
@@ -540,8 +491,6 @@ $ *git commit -m "Dies ist die Commit-Nachricht"*
 [[sec.ci-amend]]
 ===== Einen Commit verbessern =====  
 
-indexterm:[Commit,nachträglich verbessern]
-indexterm:[commit,--amend]
 Wenn Sie vorschnell `git commit` eingegeben haben, den Commit aber noch geringfügig verbessern wollen, hilft die
 Option `--amend` (``berichtigen''). Die Option
 veranlasst Git, die Änderungen im Index dem eben getätigten Commit
@@ -570,7 +519,6 @@ $ *git config --global alias.fixup "commit --amend --no-edit"*
 [[sec.commit-msg]]
 ===== Gute Commit-Nachrichten =====  
 
-indexterm:[Commit-Nachricht,Format]
 Wie sollte eine Commit-Nachricht aussehen?  An der äußeren Form lässt
 sich nicht viel ändern: Die Commit-Nachricht muss mindestens eine
 Zeile lang sein, die am besten aber maximal 50 Zeichen umfasst. Das
@@ -585,7 +533,6 @@ eines Projekts. Möglicherweise gibt es Konventionen, wie zum Beispiel
 Referenzen zum Bugtracking- oder Ticket-System oder ein Link zur
 entsprechenden API-Dokumentation.
 
-indexterm:[Commit-Nachricht,Regeln]
 Beachten Sie die folgenden Punkte beim Verfassen einer
 Commit-Beschreibung:
 
@@ -653,12 +600,6 @@ ausführlichen Beschreibungen voran.
 [[sec.git-mv-rm]]
 ==== Dateien verschieben und löschen ==== 
 
-indexterm:[Dateien,verschieben]
-indexterm:[Dateien,löschen]
-indextermseealso:[git rm,rm]
-indextermseealso:[git mv,mv]
-indexterm:[rm]
-indexterm:[mv]
 Wenn Sie Dateien, die von Git verwaltet werden, löschen oder
 verschieben wollen, dann verwenden Sie dafür `git rm` bzw.
 `git mv`. Sie wirken wie die regulären Unix-Kommandos,
@@ -669,9 +610,6 @@ nächsten Commit einfließt.footnote:[Durch
   vollständig, also auch aus der Versionsgeschichte, löscht, ist in
   <<sec.fb-censor>> nachzulesen.]
 
-indexterm:[rm,-rf]
-indexterm:[rm,-n / --dry-run]
-indexterm:[mv,-n / --dry-run]
 Analog zu den Standard-Unix-Kommandos akzeptiert `git rm` auch
 die Optionen `-r` und `-f`, um rekursiv zu löschen bzw.
 das Löschen zu erzwingen. Auch `git mv` bietet eine Option
@@ -680,9 +618,6 @@ und überschrieben werden soll. Beide Kommandos akzeptieren die Option
 `-n` bzw. `--dry-run`, die bewirkt, dass der Vorgang
 simuliert wird, Dateien also nicht modifiziert werden.
 
-indexterm:[rm,--cached]
-indexterm:[Datei,nur aus Index löschen]
-indexterm:[Index,Datei nur aus Index löschen]
 
 [TIP]
 ================
@@ -704,8 +639,6 @@ Sie dann die neue Datei hinzu: `git add <neuer-name>`.
 Überprüfen Sie anschließend per `git status`, ob die Datei als
 ``umbenannt'' gekennzeichnet ist.
 
-indexterm:[Rename Detection]
-indexterm:[log,--follow]
 
 [TIP]
 ================
@@ -775,17 +708,11 @@ $ *git config alias.ack &#39;!git -c color.grep.filename="green bold" \*
 [[sec.git-log]]
 ==== Die Projektgeschichte untersuchen ==== 
 
-indexterm:[Versionsgeschichte,untersuchen]
-indexterm:[log]
-indexterm:[git,log]
-indextermseealso:[git log,log]
-indexterm:[show,Optionen wie log]
 Mit `git log` untersuchen Sie die Versionsgeschichte des
 Projekts. Die Optionen dieses Kommandos (die großteils auch für
 `git show` funktionieren) sind sehr umfangreich, wir werden im
 Folgenden die wichtigsten vorstellen.
 
-indexterm:[log,ohne Argumente]
 Ohne weitere Argumente gibt `git log` für jeden Commit Autor,
 Datum, Commit-ID sowie die komplette Commit-Nachricht aus.  Das ist
 dann praktisch, wenn Sie einen schnellen Überblick benötigen, wer wann
@@ -814,13 +741,11 @@ nichts angeben, verwendet Git automatisch `HEAD`. Abgesehen von einzelnen
 Commits versteht das Kommando allerdings auch sog. 'Commit-Ranges' (Reihe
 von Commits), siehe <<sec.commit-ranges-intro>>.
 
-indexterm:[log,-p / --patch]
 Die Option `-p` (`--patch`) fügt den vollen Patch im
 Unified-Diff-Format unter der Beschreibung an. Damit ist also ein
 `git show <commit>` von der Ausgabe äquivalent zu `git
   log -1 -p <commit>`.
 
-indexterm:[log,--oneline]
 Wollen Sie die Commits in komprimierter Form anzeigen, empfiehlt sich
 die Option `--oneline`: Sie fasst jeden Commit mit seiner
 abgekürzten SHA-1-Summe und der ersten Zeile der Commit-Nachricht
@@ -838,7 +763,6 @@ $ *git log --oneline*
 *b312b41* exec_cmd: remove unused extern
 --------
 
-indexterm:[log,--pretty (Werte)]
 Die Option `--oneline` ist nur ein Alias für
 `--pretty=oneline`. Es gibt noch andere Möglichkeiten, die
 Ausgabe von `git log` anzupassen. Die möglichen Werte für die
@@ -904,11 +828,6 @@ $ git log -1 --oneline *--shortstat* 4868b2ea
 [[sec.git-log-dates]]
 ===== Zeitliche Einschränkungen =====  
 
-indexterm:[Commit,Liste zeitlich einschränken]
-indexterm:[log,--after]
-indexterm:[log,--since]
-indexterm:[log,--until]
-indexterm:[log,--before]
 Sie können die anzuzeigenden Commits zeitlich eingrenzen, und zwar mit
 den Optionen `--after` bzw. `--since` sowie
 `--until` bzw. `--before`. Die Optionen sind jeweils
@@ -952,9 +871,6 @@ Datei unterhalb von `Documentation/` vorgenommen wurden.
 [[sec.git-log-grep]]
 ===== grep für Commits =====  
 
-indexterm:[log,--author]
-indexterm:[log,--committer]
-indexterm:[log,--grep]
 Sie können auch im Stile von `grep` nach Commits suchen; hier
 stehen die Optionen `--author`, `--committer` und
 `--grep` zur Verfügung.
@@ -971,9 +887,6 @@ $ *git log --since=&#39;2010-01-01&#39; --author=&#39;Linus Torvalds&#39;*
 Hier können Sie auch nur Teile des Namens bzw. der E-Mail-Adresse angeben; die
 Suche nach `'Linus'` würde also dasselbe Ergebnis produzieren.
 
-indexterm:[Case Insensitive,log --grep]
-indexterm:[Commit-Nachricht,nach Schlagwörtern suchen]
-indexterm:[Grep,in Commit-Nachrichten]
 Mit `--grep` suchen Sie zum Beispiel nach Schlagwörtern oder
 Satzteilen in der Commit-Nachricht, etwa nach allen Commits, in denen
 das Wort ``fix'' vorkommt (ohne die Groß- und Kleinschreibung
@@ -984,14 +897,11 @@ zu beachten):
 $ *git log -i --grep=fix*
 --------
 
-indexterm:[Groß-/Kleinschreibung,beim Suchen nach Commits ignorieren]
-indexterm:[log,--regexp-ignore-case]
 Die Option `-i` (bzw. `--regexp-ignore-case`) bewirkt, dass
 `git log` die Groß- und Kleinschreibung des Musters ignoriert
 (funktioniert auch in Verbindung mit `--author` und
 `--committer`).
 
-indexterm:[Regulärer Ausdruck,Commit-Nachrichten durchsuchen]
 Alle drei Optionen behandeln die Werte -- wie `grep` auch --
 als reguläre Ausdrücke (siehe die Man-Page `regex(7)`). Durch
 `-E` und `-F` wird das Verhalten der
@@ -1000,14 +910,7 @@ erweiterte reguläre Ausdrücke zu verwenden bzw. nach dem literalen
 Suchterm (dessen spezielle Zeichen ihre Bedeutung verlieren) zu suchen.
 
 
-indexterm:[Pickaxe]
-indextermsee:[Grep,für Diffs,Pickaxe]
-indextermsee:[Patch,Grep im Patch,Pickaxe]
-indexterm:[log,-S]
-indexterm:[log,-G]
 
-indexterm:[log,--pickaxe-regex]
-indexterm:[log,--pickaxe-all]
 
 
 [TIP] 
@@ -1042,23 +945,16 @@ die Anzahl der Commits zu verringern.
 [[sec.commit-ranges-intro]]
 ==== Commit-Ranges ==== 
 
-indexterm:[Commit-Ranges]
 Bisher haben wir lediglich Kommandos betrachtet, die nur einen
 einzelnen Commit als Argument fordern, explizit identifiziert durch
 seine Commit-ID oder implizit durch den symbolischen Namen
 `HEAD`, der den jeweils aktuellsten Commit referenziert.
 
-indexterm:[show,Unterschied zu log]
-indexterm:[log,Unterschied zu show]
-indexterm:[git,log]
-indexterm:[git,show]
-indexterm:[Root-Commit]
 Das Kommando `git show` zeigt Informationen zu einem Commit an,
 das Kommando `git log` beginnt bei einem Commit, und geht dann
 so weit in der Versionsgeschichte zurück, bis der Anfang des
 Repositorys (der sogenannte 'Root-Commit') erreicht ist.
 
-indexterm:[.. (Commit-Range)]
 Ein wichtiges Hilfsmittel, um eine Reihe von Commits anzugeben, sind
 sogenannte Commit-Ranges der Form `<commit1>..<commit2>`.  Da
 wir bislang noch nicht mit mehreren Branches (Zweigen) arbeiten,
@@ -1070,14 +966,11 @@ dafür den Wert `HEAD` an.
 [[sec.git-diff]]
 ==== Unterschiede zwischen Commits ==== 
 
-indexterm:[diff]
-indextermseealso:[git,diff,diff]
 Das Kommando `git show` bzw. `git log -p` hat bisher
 immer nur den Unterschied zu dem jeweils vorherigen Commit ausgegeben.
 Wollen Sie die Unterschiede mehrerer Commits einsehen, hilft 
 das Kommando `git diff`.
 
-indexterm:[diff,--staged]
 Das Diff-Kommando erfüllt mehrere Aufgaben. Wie bereits gesehen,
 können Sie ohne weitere Angabe von Commits die Unterschiede zwischen
 Working Tree und Index bzw. mit der Option `--staged` die
@@ -1092,7 +985,6 @@ Commits angezeigt.
 [[sec.objektmodell]]
 === Das Objektmodell === 
 
-indexterm:[Objektmodell]
 Git basiert auf einem simplen, aber äußerst mächtigen Objektmodell. Es
 dient dazu, die typischen Elemente eines Repositorys (Dateien,
 Verzeichnisse, Commits) und die Entwicklung über die Zeit abzubilden.
@@ -1120,7 +1012,6 @@ wie erwartet den String `Hello World!` ausgeben.
 Das Repository für dieses Projekt besteht aus den folgenden vier
 Commits:
 
-indexterm:[log,--oneline]
 [subs="macros,quotes"]
 --------
 $ *git log --oneline*
@@ -1134,7 +1025,6 @@ b0400b0 Erste Version
 ==== SHA-1 – der sichere Hash-Algorithmus ==== 
 
 
-indexterm:[SHA-1]
 SHA-1 ist ein sicherer Hash-Algorithmus ('Secure Hash
   Algorithm'), der eine Prüfsumme digitaler Informationen berechnet:
 die SHA-1-Summe.  Der Algorithmus wurde 1995 vom amerikanischen
@@ -1146,7 +1036,6 @@ Signaturen Anwendung. Die Funktionsweise stellt <<fig.sha>> dar, wo wir die Prü
 berechnen.
 
 
-indexterm:[Kollisionssicherheit]
 Es handelt sich bei dem Algorithmus um eine mathematische
 Einwegfunktion, die eine Bit-Sequenz mit maximaler Länge 2^64^-1
 Bit (ca. 2{nbsp}Exbibyte) auf eine Prüfsumme der Länge 160{nbsp}Bit
@@ -1180,11 +1069,6 @@ Integrität eines Repositorys wird nämlich nicht vorrangig durch die
 Kollisionssicherheit eines Algorithmus geschützt, sondern dadurch,
 dass viele Entwickler identische Kopien des Repositorys haben.
 
-indexterm:[Git-Objekt,Prüfsummen]
-indexterm:[Commit-ID]
-indexterm:[show,und Commit-ID]
-indexterm:[diff,und Commit-ID]
-indexterm:[Kommandos,und Commit-ID]
 Der SHA-1-Algorithmus spielt bei Git eine zentrale Rolle, da er
 verwendet wird, um Prüfsummen von den im Git-Repository gespeicherten
 Daten, den 'Git-Objekten', zu bilden. Damit sind diese leicht und
@@ -1199,17 +1083,12 @@ ausreicht, um einen Commit eindeutig zu identifizieren.
 [[sec.objekte]]
 ==== Die Git-Objekte ==== 
 
-indexterm:[Git-Objekt]
 Alle in einem Repository gespeicherten Daten liegen als
 'Git-Objekte' vor. Man unterscheidet vier
 Typen:footnote:[Die technische Dokumentation
   bietet die Man-Page `gittutorial-2(7)`.]
 
 
-indexterm:[Blob]
-indexterm:[Tree]
-indexterm:[Commit]
-indexterm:[Tag]
 
 [[tab:cgit-options]]
 .Git-Objekte
@@ -1243,7 +1122,6 @@ referenziert, die diese Unterverzeichnisse abbilden.
 image::bilder_ebook/objekte.png[id="fig.objekte",width="90%"]
 
 
-indexterm:[Referenz,von Git-Objekten untereinander]
 Das Commit-Objekt enthält also genau 'eine' Referenz auf einen
 Tree, und zwar auf den Tree des Projekt-Inhalts -- dies ist ein
 Schnappschuss des Projekt-Zustands. Des weiteren enthält das
@@ -1251,9 +1129,6 @@ Commit-Objekt eine Referenz auf dessen direkten Vorfahren sowie die
 Metadaten ``Autor'' und ``Committer'' und die
 Commit-Nachricht.
 
-indexterm:[Argument,tree-ish und commit-ish]
-indexterm:[tree-ish]
-indexterm:[commit-ish]
 Viele Git-Kommandos erwarten als Argument einen Tree. Da aber z.B.
 ein Commit einen Tree referenziert, spricht man hier von einem sog.
 'tree-ish', d.h. Tree-'artigen' Argument. Gemeint ist
@@ -1269,10 +1144,6 @@ Objekte. Ein Commit wiederum referenziert 'einen' Tree.
 [[sec.od]]
 ==== Die Objektdatenbank ==== 
 
-indexterm:[Objektdatenbank]
-indexterm:[SHA-1-Summe,in Objektdatenbank]
-indexterm:[Loose Objects]
-indexterm:[Packfile]
 Alle Git-Objekte werden in der 'Objektdatenbank' gespeichert und
 sind durch ihre eindeutige SHA-1-Summe identifizierbar, d.h. Sie
 können ein Objekt, nachdem es gespeichert wurde, über seine
@@ -1306,7 +1177,6 @@ e4dc644 -> *tree*
 a347f5e -> *tree*
 --------
 
-indexterm:[Tree,Top-Level]
 Sie sehen zunächst die vier Commits, die das Repository ausmachen,
 unter anderem auch den in  <<fig.objekte>> gezeigten
 Commit `e2c67eb`.  Darauf folgen Trees und Blobs, jeweils mit
@@ -1343,9 +1213,6 @@ Objektdatenbank zu speichern.
 [[sec.explore-od]]
 ==== Die Objektdatenbank untersuchen ==== 
 
-indexterm:[Objektdatenbank,untersuchen]
-indexterm:[Plumbing-Kommandos]
-indexterm:[Porcelain-Kommandos]
 In einem kleinen Exkurs gehen wir darauf ein, wie man die
 Objektdatenbank von Git untersucht. Dafür stellt Git sogenannte
 'Plumbing'-Kommandos (``Klempner-Kommandos'') zur
@@ -1357,7 +1224,6 @@ Objektdatenbank vermitteln.  Für mehr Informationen siehe
 <<sec.scripting>>.
 
 
-indexterm:[show,--format=raw]
 Schauen wir uns zuerst den aktuellen Commit an. Wir verwenden dazu das
 Kommando `git show` mit der Option `--format=raw`,
 lassen uns also den Commit im Rohformat ausgeben, so dass alles, was
@@ -1384,8 +1250,6 @@ liefert zudem die Diff-Ausgabe zum vorherigen Commit  -- diese ist
 aber strenggenommen nicht Teil des Commits und wird daher hier
 ausgelassen.
 
-indexterm:[ls-tree]
-indexterm:[git,ls-tree]
 Als nächstes schauen wir uns den Tree an, der von diesem Commit
 referenziert wurde, und zwar mit `git ls-tree`, ein
 Plumbing-Kommando zum Auflisten der in einem Tree gespeicherten
@@ -1416,8 +1280,6 @@ $ *git ls-tree --abbrev=7 c37fd6f*
 100755 *blob* e92bf15  *test.sh*
 --------
 
-indexterm:[hash-object]
-indexterm:[git,hash-object]
 Zuletzt überzeugen wir uns noch davon, dass in dem Blob für
 `hello.py` auch wirklich unser ``Hello
   World!''-Programm enthalten ist und dass die SHA-1-Summe
@@ -1452,7 +1314,6 @@ nicht die Prüfsumme des Dateiinhalts, sondern des Blob-Objekts.
 [[sec.deduplication]]
 ==== Deduplication ==== 
 
-indexterm:[Deduplication]
 Die vier Commits, aus denen das Beispiel-Repository besteht, sind in
 <<fig.struktur>> nochmals dargestellt, doch auf andere
 Weise: Die gestrichelt umrandeten Tree- und Blob-Objekte bezeichnen
@@ -1474,7 +1335,6 @@ gleichen.
 image::bilder_ebook/struktur.png[id="fig.struktur",width="80%"]
 
 
-indexterm:[Content-Addressable File System]
 Mehr noch: Eine Datei, die zweimal existiert, existiert nur einmal in
 der Objektdatenbank. Der Inhalt dieser Datei liegt als Blob in der
 Objektdatenbank und wird an zwei Stellen von einem Tree
@@ -1499,8 +1359,6 @@ auflöst.footnote:[Intern kennt
   erkennen und diese platzsparend zu 'Packfiles'
   zusammenzuschnüren.]
 
-indexterm:[checkout]
-indexterm:[reset]
 Mit den Befehlen `git checkout` und `git reset` stellen
 Sie einen früheren Zustand so wieder her (siehe auch <<sec.undo>>): Sie geben die Referenz
 des entsprechenden Commits an, und Git sucht diesen aus der
@@ -1517,9 +1375,6 @@ damals mit dem Commit abgespeichert wurde, wiederhergestellt werden.
 [[sec.git-graph]]
 ==== Die Graph-Struktur ==== 
 
-indexterm:[Commit-Graph]
-indextermsee:[DAG,Commit-Graph]
-indexterm:[Commit,Graph-Struktur]
 Da jeder Commit seine direkten Vorfahren speichert, entsteht eine
 Graph-Struktur. Genauer gesagt erzeugt die Anordnung der Commits einen
 gerichteten, azyklischen Graphen ('Directed Acyclic Graph', DAG).
@@ -1570,8 +1425,6 @@ Hauptentwicklungszweig integriert wurde.
 .Ein Commit-Graph
 image::bilder_ebook/graph.png[id="fig.graph",width="45%"]
 
-indexterm:[Integrität,eines Repositorys]
-indexterm:[Repository,Integrität]
 Ein Resultat der Graph-Struktur ist die kryptographisch gesicherte
 'Integrität' eines Repositorys. Git referenziert durch die
 SHA-1-Summe eines Commits nicht nur die Inhalte der Projektdateien zu
@@ -1599,8 +1452,6 @@ nur eine Prüfsumme derselben.
 [[sec.graph-referenzen]]
 ===== Referenzen: Branches und Tags =====  
 
-indexterm:[Referenz,auf Commit]
-indexterm:[Commit,Referenz]
 Mit einem reinen Commit-Graphen kann man aber noch nicht viel
 anfangen. Um einen Knoten zu referenzieren (also damit zu arbeiten),
 muss man dessen Namen kennen, also die SHA-1-Summe des Commits.  Im
@@ -1608,8 +1459,6 @@ täglichen Umgang verwendet man aber selten direkt die SHA-1-Summe
 eines Commits, sondern stattdessen symbolische Namen, sog.
 'Referenzen', die Git auf die SHA-1-Summe auflösen kann.
 
-indexterm:[Branch,als Referenz]
-indexterm:[Tree,als Referenz]
 Git bietet im Wesentlichen zwei Typen von Referenzen an,
 'Branches' und 'Tags'. Das sind 'Zeiger' in einen
 Commit-Graphen, die verwendet werden, um bestimmte Knoten zu

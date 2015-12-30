@@ -48,8 +48,6 @@ Subkommandos und Optionen (noch) nicht verfügbar sind.
 [[sec.bash-integration]]
 === Git und die Bash === 
 
-indexterm:[Bash,Completion]
-indexterm:[Shell,Completion]
 Sowohl die Funktionalität für die Completion als auch die
 Status-Kommandos für das Prompt sind in einem Script namens
 `git-completion.bash` implementiert. Es wird zusammen mit den
@@ -188,9 +186,6 @@ eindeutig ist, zeigt die Bash die möglichen Vervollständigungen an.
 [[sec.bash-prompt]]
 ==== Prompt ==== 
 
-indexterm:[Bash,Prompt]
-indexterm:[Shell,Prompt]
-indexterm:[Prompt]
 Neben der Completion gibt es ein weiteres Script, um Infos über das
 Git-Repository im Prompt anzuzeigen. Dafür müssen Sie die Datei
 `contrib/completion/git-prompt.sh` laden (ggf. ist diese auch von Ihrer
@@ -353,7 +348,6 @@ GIT_PS1_SHOWUPSTREAM="legacy verbose git"
 [[sec.zsh-integration]]
 === Git und die Z-Shell === 
 
-indexterm:[Z-Shell]
 Sowohl Completion- als auch Prompt-Funktionen werden bei der Z-Shell
 immer mitgeliefert.
 
@@ -401,7 +395,6 @@ $ *autoload -Uz compinit &amp;&amp; compinit*
 
 Die Completion vervollständigt unter anderem:
 
-indexterm:[Z-Shell,Completion]
 
 
 Git-Subkommandos:: Subkommandos werden in der Z-Shell ebenfalls
@@ -539,8 +532,6 @@ Möglich wird dies durch die Completion-Funktionen der Z-Shell für
 [[sec.zsh-prompt]]
 ==== Prompt ==== 
 
-indexterm:[Z-Shell,Prompt]
-indexterm:[vcs_info]
 Die Z-Shell beinhaltet Funktionen, um das Prompt mit Git-Infos zu
 versehen. Die Funktionalität ist Teil des umfangreichen
 `vcs_info`-Systems, das neben Git circa ein
@@ -698,7 +689,6 @@ esc@creche ~/git-working/git (git)-[master*+] $
 --------
 
 
-indexterm:[vcs_info,Hook]
 Leider kann `vcs_info` standardmäßig die Existenz unbekannter
 Dateien und angelegter Stashes nicht signalisieren. Das System
 unterstützt aber ab Z-Shell Version 4.3.11 sogenannte

@@ -1,9 +1,6 @@
 [[sec.workflows]]
 == Workflows
 
-indexterm:[Workflow]
-indexterm:[Entwicklung,agile]
-indexterm:[Agile Software Development]
 Mit 'Workflows' (dt. 'Arbeitsabläufe') werden in der
 Software-Entwicklung in der Regel Strategien bezeichnet, die
 Arbeitsabläufe im Team definieren (z.B. die 'Agile
@@ -27,14 +24,6 @@ Aspekte wird im Folgenden eingegangen.
 Nachfolgend finden Sie eine Auflistung genereller
 Entwicklungsstrategien (ohne bestimmte Reihenfolge):
 
-indexterm:[Branch,Topic-Branch]
-indexterm:[Namespace]
-indexterm:[Branch,Namespace]
-indexterm:[Fast-Forward]
-indexterm:[Merge,Richtung beachten]
-indexterm:[Criss-Cross-Merge]
-indexterm:[Merge,Criss-Cross]
-indexterm:[Throw-Away-Integration]
 
 'Machen Sie möglichst kleine, eigenständige Commits':: Unterteilen Sie
 Ihre Arbeit in kleine, logische Schritte und tätigen Sie für jeden
@@ -118,16 +107,6 @@ und eine ältere Version von B in A integrieren.
 Gewisse Arbeitsschritte tauchen wieder und wieder auf. Im Folgenden
 ein paar allgemeine Lösungsstrategien:
 
-indexterm:[Bugfixing]
-indexterm:[Commit,korrigieren]
-indexterm:[commit,--amend]
-indexterm:[Rebase]
-indexterm:[branch,--no-merged]
-indexterm:[apply]
-indexterm:[cherry-pick,--no-commit]
-indexterm:[merge,--squash]
-indexterm:[Squash-Merge]
-indexterm:[Merge,Squash]
 
 'Einen kleinen Bug fixen':: Wenn Sie einen kleinen
     Bug bemerken, den Sie schnell korrigieren wollen, können Sie das
@@ -168,8 +147,6 @@ Index an, ohne einen Commit zu erzeugen.
 [[sec.branch-modell]]
 === Ein Branching-Modell === 
 
-indexterm:[Workflows,Branching-Modell]
-indexterm:[Branching-Modell]
 Der folgende Abschnitt stellt ein Branching-Modell vor, das an das in
 der Man-Page `gitworkflows(7)` beschriebene Modell
 angelehnt ist. Das Branching-Modell bestimmt, welcher Branch
@@ -177,9 +154,6 @@ welche Funktionen erfüllt, wann und wie Commits aus einem Branch übernommen
 werden, welche Commits als Releases getaggt werden sollen usw. Es ist flexibel,
 skaliert gut und kann bei Bedarf erweitert werden (s.u.).
 
-indexterm:[Proposed Updates]
-indexterm:[maint (Branch)]
-indexterm:[next (Branch)]
 In seiner Grundform besteht das Modell aus vier Branches:
 `maint`, `master`, `next`, und `pu`
 ('Proposed Updates'). Der `master`-Branch dient vor allem
@@ -200,8 +174,6 @@ einen bestimmten Commit schon enthält oder nicht.
 Das folgende Diagramm ist eine schematische Darstellung des zehn
 Punkte umfassenden Workflows, der unten detailliert erläutert wird.
 
-indexterm:[Feature Graduation]
-indexterm:[Bugfix,auf maint-Branch]
 
 .Branch-Modell gemäß `gitworkflows (7)`
 image::bilder_ebook/branch-model.png[id="fig.branch-model",width="90%"]
@@ -326,8 +298,6 @@ $ *git checkout maint*
 $ *git merge --ff-only master*
 --------
 
-indexterm:[Namespace]
-indexterm:[Branch,Namespace]
 Das Branching-Modell können Sie beliebig erweitern. Ein Ansatz, den
 man oft antrifft, ist die Verwendung von 'Namespaces' (siehe
 <<sec.branches>>) im Zusatz zu den
@@ -348,7 +318,6 @@ $ *git branch maint-v0.1.2*
 
 
 
-indexterm:[cherry-pick,von Bugfixes]
 Bedenken Sie aber, dass diese zusätzlichen Maintenance-Branches einen
 erhöhten Wartungsaufwand bedeuten, da jeder neue Bug-Fix geprüft
 werden muss. Ist er auch für eine ältere Version relevant, muss er per
@@ -362,8 +331,6 @@ getaggt und veröffentlicht werden.
 [[sec.releases-management]]
 === Releases-Management === 
 
-indexterm:[Release-Management]
-indexterm:[Integration Manager]
 Sobald ein Projekt mehr als nur ein, zwei Entwickler hat, ist es in
 der Regel sinnvoll, einen Entwickler mit dem Management der Releases
 zu beauftragen. Dieser 'Integration Manager' entscheidet nach
@@ -386,8 +353,6 @@ von einem Branch auf den nächsten -- im oben vorgestellten Modell
 zunächst aus den `pu`-Branches nach `next` und dann
 nach `master`.
 
-indexterm:[branch,--merged]
-indexterm:[Branch,unnötige löschen]
 Zunächst sollten Sie Ihre lokalen Branches immer aufräumen, um nicht
 den Überblick zu verlieren. Dabei hilft besonders das Kommando
 `git branch --merged master`, das alle Branches auflistet,
@@ -395,9 +360,6 @@ die schon vollständig in `master` (oder einen
 anderen Branch) integriert sind. Diese können Sie in der Regel
 löschen.
 
-indexterm:[git,show-branch]
-indexterm:[show-branch]
-indexterm:[Branch,show-branch]
 Um einen groben Überblick zu erhalten, welche Aufgaben anstehen,
 empfiehlt es sich, `git show-branch` einzusetzen. Ohne weitere
 Argumente listet es alle lokalen Branches auf, jeden mit einem
@@ -448,7 +410,6 @@ $ *git show-branch --topics master "pu/&#42;"*
 --------
 
 
-indexterm:[Alias,todo]
 
 [TIP]
 ========
@@ -469,18 +430,12 @@ $ *git config --global alias.todo \*
 ========
 
 
-indexterm:[cherry-pick]
 Das Kommando `git show-branch` erkennt allerdings nur
 'gleiche', das heißt identische Commits. Wenn Sie einen Commit
 per `git cherry-pick` in einen anderen Branch übernehmen, sind
 die Änderungen fast die gleichen, `git show-branch` würde dies
 aber nicht erkennen, da sich die SHA-1-Summe des Commits ändert.
 
-indexterm:[cherry]
-indexterm:[git,cherry]
-indexterm:[Commit,nach Cherry-Pick]
-indexterm:[git,patch-id]
-indexterm:[patch-id]
 Für diese Fälle ist das Tool `git cherry` zuständig.  Es
 verwendet intern das kleine Tool `git-patch-id`, das einen
 Commit auf seine bloßen Änderungen reduziert. Dabei werden
@@ -522,10 +477,6 @@ haben.
 Git bietet die folgenden zwei nützlichen Werkzeuge, um ein Release
 vorzubereiten:
 
-indexterm:[archive]
-indexterm:[git,archive]
-indexterm:[shortlog]
-indexterm:[git,shortlog]
 
 `git shortlog`:: Fasst die Ausgabe von `git log` zusammen.
 
@@ -533,7 +484,6 @@ indexterm:[git,shortlog]
 
 
 
-indexterm:[Changelog]
 Zu einem guten Release gehört ein sogenanntes 'Changelog', also
 eine Zusammenfassung der wichtigsten Neuerungen inklusive 
 Danksagungen an Personen, die Hilfe beigesteuert haben. Hier kommt
@@ -577,9 +527,6 @@ nachschauen). Sie können aber die Ausgabe als Grundlage nehmen,
 unwichtige Änderungen löschen und die restlichen zu sinnvollen
 Gruppen zusammenfassen.
 
-indexterm:[git,describe]
-indexterm:[describe]
-indexterm:[Commit,Position beschreiben]
 
 [TIP]
 ========
@@ -609,10 +556,6 @@ $ *git shortlog -sn $(git describe --abbrev=0)..*
 --------
 ========
 
-indexterm:[archive]
-indexterm:[Zip-Archiv]
-indexterm:[Tar-Archiv]
-indexterm:[Code,Archiv]
 Das Kommando `git archive` hilft beim Erstellen eines
 Quellcode-Archivs. Das Kommando beherrscht sowohl das Tar- als auch
 das Zip-Format. Zusätzlich können Sie mit der Option
@@ -629,7 +572,6 @@ $ *git archive --format=tar --prefix=wiki2beamer-0.9.3/ HEAD \*
     *| gzip &gt; wiki2beamer-0.9.3.tgz*
 --------
 
-indexterm:[HEAD,als Archiv packen]
 Als zwingendes Argument erwartet das Kommando einen Commit (bzw. einen
 Tree), der als Archiv gepackt werden soll. Im o.g. Beispiel ist das
 `HEAD`.  Es hätte aber auch eine Commit-ID, eine Referenz

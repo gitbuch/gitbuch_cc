@@ -10,8 +10,6 @@ Branches.
 [[sec.branches]]
 === Referenzen: Branches und Tags === 
 
-indexterm:[Branch]
-indexterm:[Referenz]
 ``Branch'' und ``Merge'' sind im CVS-/SVN-Umfeld für
 Neulinge oft ein Buch mit sieben Siegeln, für Könner regelmäßig Grund
 zum Haare raufen.  In Git sind das Abzweigen im Entwicklungszyklus
@@ -20,8 +18,6 @@ zum Haare raufen.  In Git sind das Abzweigen im Entwicklungszyklus
 kommt häufig vor, dass ein Entwickler an einem Tag mehrere Branches
 erstellt und mehrere Merges durchführt.
 
-indexterm:[Gitk,und Branches]
-indexterm:[gitk,--all]
 Das Tool Gitk ist hilfreich, um bei mehreren Branches nicht den
 Überblick zu verlieren. Mit 
 `gitk --all` zeigen Sie alle Branches an. Das Tool visualisiert den im vorigen Abschnitt
@@ -41,12 +37,10 @@ anderen verträgt? Führen Sie die beiden zusammen, testen Sie alles,
 und löschen Sie danach den Merge wieder und entwickeln weiter.  Das
 ist gängige Praxis unter Entwicklern, die Git einsetzen.
 
-indexterm:[Referenz,als symbolischer Namen für SHA-1-Summe]
 Zunächst wollen wir uns mit Referenzen generell auseinandersetzen.
 Referenzen sind nichts weiter als symbolische Namen für die schwierig
 zu merkenden SHA-1-Summen von Commits.
 
-indexterm:[.git/refs/]
 Diese Referenzen liegen in `.git/refs/`. Der Name einer
 Referenz wird anhand des Dateinamens, das Ziel anhand des Inhalts der
 Datei bestimmt. Der Master-Branch, auf dem Sie schon die ganze Zeit
@@ -58,9 +52,6 @@ $ *cat .git/refs/heads/master*
 89062b72afccda5b9e8ed77bf82c38577e603251
 --------
 
-indextermsee:[Referenz,gepackt,Packed Refs]
-indexterm:[Packed Refs]
-indexterm:[.git/packed-refs]
 
 [TIP]
 =================== 
@@ -73,8 +64,6 @@ Git-Kommandos suchen Branches und Tags in der Datei `.git/packed-refs`, wenn die
 `.git/refs/<name>` nicht existiert.
 =================== 
 
-indextermseealso:[.git/refs/heads/,Branch]
-indextermsee:[Heads,Branch]
 Unterhalb von `.git/refs/` gibt es verschiedene Verzeichnisse,
 die für die ``Art'' von Referenz stehen. Fundamental
 unterscheiden sich diese Referenzen aber nicht, lediglich darin, wann
@@ -90,9 +79,6 @@ der Versionsgeschichte.
 .Der Branch referenziert immer den aktuellsten Commit
 image::bilder_ebook/commit.png[id="fig.commit",width="80%"]
 
-indexterm:[Branch,Remote-Tracking-Branch]
-indexterm:[.git/refs/remotes/]
-indexterm:[.git/refs/tags/]
 Branches in Repositories anderer Entwickler (z.B. der Master-Branch
 des offiziellen Repositorys), sog.
 Remote-Tracking-Branches, werden unter `.git/refs/remotes/` abgelegt (siehe <<sec.remote_tracking_branches>>). Tags, statische
@@ -101,21 +87,16 @@ Referenzen, die meist der Versionierung dienen, liegen unter `.git/refs/tags/` (
 [[sec.branch-refs]]
 ==== HEAD und andere symbolische Referenzen ==== 
 
-indexterm:[HEAD]
 Eine Referenz, die Sie selten explizit, aber ständig implizit
 benutzen, ist `HEAD`. Sie referenziert meist den gerade
 ausgecheckten Branch, hier `master`:
 
-indexterm:[Symbolische Referenz,Syntax]
 [subs="macros,quotes"]
 --------
 $ *cat .git/HEAD*
 ref: refs/heads/master
 --------
 
-indexterm:[checkout]
-indexterm:[Detached-Head-Modus]
-indexterm:[HEAD,detached HEAD]
 `HEAD` kann auch direkt auf einen Commit zeigen, wenn Sie
 `git checkout <commit-id>` eingeben. Sie sind dann
 allerdings im sogenannten 'Detached-Head'-Modus, in dem Commits
@@ -128,9 +109,6 @@ welcher Commit per `git show` angezeigt wird etc.  Wenn wir
 hier von ``dem aktuellen Branch'' sprechen, dann ist damit
 technisch korrekt der `HEAD` gemeint.
 
-indexterm:[log,HEAD als erstes Argument]
-indexterm:[show,HEAD als erstes Argument]
-indexterm:[diff,HEAD als erstes Argument]
 Die simplen Kommandos `log`, `show` und `diff`
 nehmen ohne weitere Argumente `HEAD` als erstes Argument an.
 Die Ausgabe von `git log` ist gleich der von `git log HEAD` usw. -- dies gilt für die meisten Kommandos, die auf einem
@@ -160,10 +138,6 @@ also Tags immer ein eindeutiges Schema geben, um sie nicht mit
 Branches zu verwechseln. So können Sie Branches direkt über den Namen
 statt über `heads/<name>` ansprechen.
 
-indexterm:[Tilde,als relative Referenz (Suffix)]
-indexterm:[Caret,als relative Referenz (Suffix)]
-indexterm:[Relative Referenzen]
-indexterm:[Referenzen,relative]
 
 Besonders wichtig sind dafür die Suffixe `^` und `~<n>`. Die Syntax
 `<ref>^` bezeichnet den direkten Vorfahren von `<ref>`. Dieser muss
@@ -200,7 +174,6 @@ Die Syntax ist übrigens in der Man-Page `git-rev-parse(1)` im Abschnitt
 [[sec.branch-management]]
 ==== Branches verwalten ==== 
 
-indexterm:[Branch,verwalten]
 Ein Branch ist in Git im Nu erstellt.  Git muss lediglich den aktuell
 ausgecheckten Commit identifizieren und die SHA-1-Summe in der Datei
 `.git/refs/heads/<branch-name>` ablegen.
@@ -219,12 +192,6 @@ Vorfahren ableitbar.
 
 Hier eine Übersicht der wichtigsten Optionen:
 
-indextermseealso:[git branch,branch]
-indexterm:[branch,-v]
-indexterm:[branch,-M (forced move)]
-indexterm:[branch,-m (move)]
-indexterm:[branch,-d (delete)]
-indexterm:[branch,-D (forced delete)]
 
 `git branch [-v]`::  Listet lokale Branches auf.
   Dabei ist der aktuell ausgecheckte Branch mit einem Sternchen
@@ -300,11 +267,6 @@ $ *git branch*
 [[sec.branch-checkout]]
 ===== Branches wechseln: checkout =====  
 
-indexterm:[Branch,wechseln]
-indexterm:[Branch,erstellen und auschecken]
-indexterm:[checkout]
-indextermseealso:[git,checkout,checkout]
-indexterm:[checkout,-b]
 Branches wechseln Sie mit `git checkout <branch>`.  Wenn Sie
 einen Branch erstellen und direkt darauf wechseln
 wollen, verwenden Sie `git checkout -b <branch>`. Das Kommando
@@ -328,8 +290,6 @@ wird ein Checkout eher fehlschlagen als eventuell nicht abgespeicherte
 beiden Fällen:
 
 
-indexterm:[Fehlermeldung,local changes would be overwritten]
-indexterm:[Fehlermeldung,untracked file would be overwritten]
 
 * Der Checkout würde eine Datei im Working Tree
   überschreiben, in der sich Änderungen befinden. Git gibt folgende
@@ -361,12 +321,10 @@ welche Dateien Sie sich noch kümmern sollten.  Dabei steht `A`
 für hinzugefügt ('added'), `D` für gelöscht ('deleted')
 und `M` für geändert ('modified').
 
-indexterm:[checkout,-f]
 Wenn Sie ganz sicher sind, dass Sie Ihre Änderungen nicht mehr
 brauchen, können Sie per `git checkout -f` die Fehlermeldungen
 ignorieren und den Checkout trotzdem ausführen.
 
-indexterm:[stash]
 Wenn Sie sowohl die Änderungen behalten als auch den Branch wechseln
 wollen (Beispiel: Arbeit unterbrechen und auf einem anderen Branch
 einen Fehler korrigieren), dann hilft `git stash` (<<sec.stash>>).
@@ -374,7 +332,6 @@ einen Fehler korrigieren), dann hilft `git stash` (<<sec.stash>>).
 [[sec.branch-naming]]
 ===== Konventionen zur Benennung von Branches =====  
 
-indexterm:[Branch,benennen]
 Sie können Branches prinzipiell fast beliebig benennen. Ausnahmen sind
 aber Leerzeichen, einige Sonderzeichen mit spezieller Bedeutung für Git
 (z.B.{empty}{nbsp}`*`, `^`, `:`, `~`), sowie zwei aufeinanderfolgende Punkte
@@ -382,14 +339,11 @@ aber Leerzeichen, einige Sonderzeichen mit spezieller Bedeutung für Git
 Referenz auf Gültigkeit überprüft, können Sie bei Bedarf in der Man-Page
 `git-check-ref-format(1)` nachlesen.]
 
-indexterm:[.git/refs/heads/]
 Sinnvollerweise sollten Sie Branch-Namen immer komplett in
 Kleinbuchstaben angeben. Da Git Branch-Namen unter
 `.git/refs/heads/` als Dateien verwaltet, ist die Groß- und
 Kleinschreibung wesentlich.
 
-indexterm:[Branch,Namespace]
-indexterm:[Branch,privat]
 Sie können Branches in ``Namespaces'' gruppieren, indem Sie
 als Separator einen `/` verwenden. Branches, die mit der
 Übersetzung einer Software zu tun haben, können Sie dann z.B.{empty}{nbsp}`i18n/german`, `i18n/english` etc. nennen. Auch können
@@ -400,13 +354,6 @@ abgebildet, so dass dann unter `.git/refs/heads/` ein
 Verzeichnis `<username>/` mit der Branch-Datei `<topic>`
 erstellt wird.
 
-indexterm:[master]
-indexterm:[maint]
-indexterm:[Bugfix,in eigenem Branch]
-indexterm:[next]
-indexterm:[Release,im Branch next]
-indexterm:[Features,im Branch pu]
-indexterm:[pu]
 Der Hauptentwicklungszweig Ihres Projekts sollte immer `master`
 heißen. Bugfixes werden häufig auf einem Branch `maint` (kurz
 für ``maintenance'') verwaltet. Das nächste Release wird
@@ -425,7 +372,6 @@ Commits kennen jeweils einen oder mehrere Vorgänger. Daher kann man
 den Commit-Graphen ``gerichtet'', d.h. von neueren zu
 älteren Commits, durchlaufen, bis man an einem Wurzel-Commit ankommt.
 
-indexterm:[Commit-Graph,gerichtet]
 Andersherum geht das nicht: Wenn ein Commit seinen Nachfolger kennen
 würde, müsste diese Version irgendwo gespeichert werden. Dadurch würde
 sich die SHA-1-Summe des Commits ändern, worauf der Nachfolger den
@@ -435,8 +381,6 @@ müsste usw.  Git kann also die Commits nur von einer benannten
 Referenz aus (z.B.  ein Branch oder `HEAD`) in Richtung
 früherer Commits durchgehen.
 
-indexterm:[Commit,unreachable]
-indexterm:[unreachable]
 Wenn daher die ``Spitze'' eines Branches gelöscht wird, wird
 der oberste Commit nicht mehr referenziert (im Git-Jargon:
 'unreachable'). Dadurch wird der Vorgänger nicht mehr
@@ -448,8 +392,6 @@ Wenn Sie einen Branch löschen, werden die Commits auf diesem Branch
 also nicht gelöscht, sie gehen nur ``verloren''. Git findet
 sie einfach nicht mehr.
 
-indexterm:[Objektdatenbank,und Garbage Collection]
-indexterm:[Garbage Collection]
 In der Objektdatenbank sind sie allerdings noch eine Weile lang
 vorhanden.footnote:[Wie lange sie dort verweilen, bestimmen Sie
   mit entsprechenden Einstellungen für die 'Garbage Collection'
@@ -464,22 +406,17 @@ Deleted branch test (was e32bf29).
 $ *git branch test e32bf29*
 --------
 
-indexterm:[Reflog]
 Eine weitere Möglichkeit, gelöschte Commits wiederzufinden, ist das
 'Reflog' (siehe dafür <<sec.reflog>>).
 
 [[sec.tags]]
 ==== Tags – Wichtige Versionen markieren ==== 
 
-indexterm:[Tag]
-indextermseealso:[Tag,Referenz]
 SHA-1-Summen sind zwar eine sehr elegante Lösung, um Versionen
 dezentral zu beschreiben, aber semantikarm und für Menschen
 unhandlich. Im Gegensatz zu linearen Revisionsnummern sagen uns
 Commit-IDs allein nichts über die Reihenfolge der Versionen.
 
-indexterm:[Release,im Repository markieren]
-indexterm:[Release Candidate,im Repository markieren]
 Während der Entwicklung von Softwareprojekten müssen
 verschiedene ``wichtige'' Versionen so markiert
 werden, dass sie leicht in dem Repository zu finden sind. Die
@@ -492,7 +429,6 @@ hinzugefügt werden. Je nach Projekt und Entwicklungsmodell gibt es
 verschiedene Konventionen, um Releases zu bezeichnen, und Abläufe, wie
 sie vorbereitet und publiziert werden.
 
-indexterm:[Versionierung]
 Im Open-Source-Bereich haben sich zwei Versionierungsschemata
 durchgesetzt: die klassische 'Major/Minor/Micro-Versionierung'
 und neuerdings auch die 'datumsbasierte Versionierung'. Bei der
@@ -508,13 +444,6 @@ Version leicht ersichtlich ist.footnote:[Eine
   Kapitel 6 des Buches 'Open Source Projektmanagement' von Michael
   Prokop (Open Source Press, München, 2010).]
 
-indexterm:[Tag]
-indexterm:[Tag,als statisches Objekt]
-indexterm:[Tag,Annotated]
-indexterm:[Tag,Lightweight]
-indexterm:[refs/tags]
-indexterm:[packed-refs]
-indexterm:[Objekt,Tag]
 Git bietet Ihnen mit 'Tags' (``Etiketten'') die Möglichkeit,
 beliebige Git-Objekte -- meist Commits -- zu markieren, um markante
 Zustände in der Entwicklungsgeschichte hervorzuheben. Tags sind, wie
@@ -539,8 +468,6 @@ vergleichen Sie auch die anderen Git-Objekte, <<fig.objekte>>.
 .Das Tag-Objekt
 image::bilder_ebook/tags.png[id="fig.tag-objekt",width="90%"]
 
-indexterm:[Tagger]
-indexterm:[Metadaten,Tagger]
 Das gezeigte Tag-Objekt hat sowohl eine Größe (158 Byte) als auch eine
 SHA-1-Summe. Es enthält die Bezeichnung (`0.1`), den Objekt-Typ
 und die SHA-1-Summe des referenzierten Objekts sowie den Namen und
@@ -557,8 +484,6 @@ Sie Tags zwischen Repositories austauschen, beschreibt <<sec.remote-tags>>.
 [[sec.tags-verwalten]]
 ===== Tags verwalten =====  
 
-indexterm:[Tag,lokal verwalten]
-indexterm:[tag,-l]
 Tags verwalten Sie mit dem Kommando `git tag`. Ohne Argumente
 zeigt es alle vorhandenen Tags an. Je nach Projektgröße lohnt es sich,
 die Ausgabe mit der Option `-l` und einem entsprechenden Muster
@@ -584,7 +509,6 @@ v1.7.1.4
 
 Den Inhalt eines Tags liefert Ihnen `git show`:
 
-indexterm:[git,show]
 [subs="macros,quotes"]
 --------
 $ *git show 0.1 | head*
@@ -599,8 +523,6 @@ Author: Valentin Haenel &lt;pass:quotes[valentin.haenel@gmx.de]&gt;
 Date:   Sat Jan 8 20:30:58 2011 +0100
 --------
 
-indexterm:[Gitk,Darstellung von Tags]
-indexterm:[Tag,in Gitk]
 Gitk stellt Tags als gelbe, pfeilartige Kästchen dar, die sich
 deutlich von den grünen, rechteckigen Branches unterscheiden:
 
@@ -610,8 +532,6 @@ image::bilder_ebook/tag-screenshot.png[id="fig.tag-gitk",width="90%"]
 [[sec.lightweight-tags]]
 ===== Lightweight Tags =====  
 
-indexterm:[Tag,Lightweight]
-indextermsee:[Lightweight Tag,Tag]
 Um den `HEAD` mit einem Lightweight Tag zu versehen, übergeben
 Sie den gewünschten Namen an das Kommando (in diesem Beispiel, um einen
 wichtigen Commit zu markieren):
@@ -647,11 +567,6 @@ fatal: tag \'pre-regression' already exists
 [[sec.annotated-tags]]
 ===== Annotated Tags =====  
 
-indexterm:[Tag,Annotated]
-indextermsee:[Annotated Tag,Tag]
-indexterm:[Tag,mit Beschreibung]
-indexterm:[Metadaten,Tag-Beschreibung]
-indexterm:[tag,-a]
 Annotated Tags erzeugen Sie mit der Option `-a`. Wie bei
 `git commit` öffnet sich ein Editor, mit dem Sie die
 Tag-Message verfassen. Oder Sie übergeben die Tag-Message mit der
@@ -665,9 +580,6 @@ $ *git tag -m "Zweite Veröffentlichung" 0.2*
 [[sec.signierte-tags]]
 ===== Signierte Tags =====  
 
-indexterm:[Tag,signiert]
-indextermsee:[Signierter Tag,Tag]
-indexterm:[tag,-v (verify)]
 Um ein signiertes Tag zu überprüfen, verwenden Sie die Option
 `-v` ('verify'):
 
@@ -691,7 +603,6 @@ den Schlüssel des Signierenden bereits importiert haben.
 Um selbst Tags zu signieren, müssen Sie zunächst den dafür bevorzugten
 Key einstellen:
 
-indexterm:[user.signingkey]
 [subs="macros,quotes"]
 --------
 $ *git config --global user.signingkey &lt;GPG-Key-ID&gt;*
@@ -700,7 +611,6 @@ $ *git config --global user.signingkey &lt;GPG-Key-ID&gt;*
 Nun können Sie signierte Tags mit der Option `-s` ('sign')
 erstellen:
 
-indexterm:[tag,-s]
 [subs="macros,quotes"]
 --------
 $ *git tag -s -m "Dritte Veröffentlichung" 3.0*
@@ -709,10 +619,6 @@ $ *git tag -s -m "Dritte Veröffentlichung" 3.0*
 [[sec.tags-loeschen]]
 ===== Tags löschen und überschreiben =====  
 
-indexterm:[Tag,löschen]
-indexterm:[Tag,überschreiben]
-indexterm:[tag,-d]
-indexterm:[tag,-f]
 Mit den Optionen `-d` und `-f` löschen Sie Tags bzw.
 überschreiben sie:
 
@@ -732,7 +638,6 @@ sehen Sie hierzu auch <<sec.remote-tags>>.
 [[sec.tags-lightweight-vs-heavyweight]]
 ===== Lightweight vs. Annotated Tags =====  
 
-indexterm:[Tags,annotated vs. lightweight]
 Für die öffentliche Versionierung von Software sind allgemein
 Annotated Tags sinnvoller. Sie enthalten im Gegensatz zu Lightweight
 Tags Metainformationen, aus denen zu ersehen ist, wer wann ein Tag
@@ -752,9 +657,6 @@ wenn sie ihren Dienst erfüllt haben (s.o.).
 [[sec.non-commit-tags]]
 ===== Non-Commit Tags =====  
 
-indexterm:[Tag,Non-Commit]
-indexterm:[Tree,Tag auf einen Tree]
-indexterm:[Blob,Tag auf einen Blob]
 Mit Tags markieren Sie beliebige Git-Objekte, also nicht nur Commits,
 sondern auch Tree-, Blob- und sogar Tag-Objekte selbst! Das klassische
 Beispiel ist, den öffentlichen GPG-Schlüssel, der von dem Maintainer
@@ -764,7 +666,6 @@ hinterlegen.
 So zeigt das Tag `junio-gpg-pub` im Git-Repository von Git auf den
 Schlüssel von Junio C. Hamano:
 
-indexterm:[git,show]
 [subs="macros,quotes"]
 --------
 $ *git show junio-gpg-pub | head -5*
@@ -786,7 +687,6 @@ der Repository-Wartung gelöscht wird.footnote:[Um einen solchen getaggten Blob 
 
 Um den Schlüssel zu verwenden, gehen Sie wie folgt vor:
 
-indexterm:[GnuPG]
 [subs="macros,quotes"]
 --------
 $ *git cat-file blob junio-gpg-pub | gpg --import*
@@ -801,8 +701,6 @@ verifizieren.
 [[sec.git-describe]]
 ===== Commits beschreiben =====  
 
-indexterm:[describe]
-indexterm:[git,describe]
 Tags sind sehr nützlich, um beliebige Commits ``besser'' zu
 beschreiben.  Das Kommando `git describe` gibt eine
 Beschreibung, die aus dem aktuellsten Tag und dessen relativer
@@ -827,8 +725,6 @@ Die Ausgabe von `git describe` ist wie folgt formatiert:
 --------
 
  
-indexterm:[.. (Commit-Range)]
-indexterm:[describe,--tags]
 Das Tag ist `v1.7.1`; die Position besagt, dass sich sieben
 neue Commits zwischen dem Tag und dem beschriebenen Commit
 befinden.footnote:[Es handelt sich hierbei um die
@@ -866,12 +762,6 @@ nachvollziehen, aus welchem Commit die Version kompiliert wurde.
 [[sec.undo]]
 === Versionen wiederherstellen === 
 
-indexterm:[checkout]
-indexterm:[git,checkout]
-indexterm:[reset]
-indexterm:[git,reset]
-indexterm:[revert]
-indexterm:[git,revert]
 Ziel einer Versionskontrollsoftware ist es nicht nur, Änderungen
 zwischen Commits zu untersuchen. Wichtig ist vor allem auch, ältere
 Versionen einer Datei oder ganzer Verzeichnisbäume wiederherzustellen
@@ -900,7 +790,6 @@ explizit angeben, werden alle Dateien ausgecheckt.  Dabei werden
 Sie geben die Option `-f` an (s.o.). Außerdem wird
 `HEAD` auf den entsprechenden Commit (bzw. Branch) gesetzt.
 
-indexterm:[checkout,Dateien überschreiben?]
 Wenn Sie allerdings ein Muster angeben, dann überschreibt
 `checkout` diese Datei(en) ohne Nachfrage. Um also alle
 Änderungen an `<datei>` zu
@@ -928,8 +817,6 @@ ohne sie auszuchecken, nutzen Sie das folgende Kommando:
 $ *git show ce66692:&lt;datei&gt;*
 --------
 
-indexterm:[checkout,interaktiv]
-indexterm:[checkout,-p / --patch]
 
 [TIP]
 ==================
@@ -943,8 +830,6 @@ zurücksetzen.
 [[sec.detached-head]]
 ==== Detached HEAD ==== 
 
-indexterm:[Detached HEAD]
-indexterm:[HEAD,detached]
 Wenn Sie einen Commit auschecken, der nicht durch einen Branch
 referenziert wird, befinden Sie sich im sogenannten
 'Detached-HEAD'-Modus:
@@ -968,9 +853,6 @@ again. Example:
 HEAD is now at 3329661... Add LICENSE file
 --------
 
-indexterm:[advice.detachedHead]
-indexterm:[unreachable]
-indexterm:[Commit,unreachable]
 Wie die Erklärung, die Sie durch setzen der Option
 `advice.detachedHead` auf `false` ausblenden können,
 schon warnt, werden Änderungen, die Sie nun tätigen, im Zweifel
@@ -984,7 +866,6 @@ schon im Commit `3329661` aufgetaucht? Gab es zum
 Zeitpunkt von `3329661` eigentlich schon die Datei
 `README`?
 
-indexterm:[checkout,-b]
 
 [TIP] 
 ============ 
@@ -1007,9 +888,6 @@ dass diese verlorengehen.
 [[sec.revert]]
 ==== Commits rückgängig machen ==== 
 
-indexterm:[Commit,rückgängig machen]
-indexterm:[revert]
-indexterm:[git,revert]
 Wenn Sie alle Änderungen, die ein Commit einbringt, rückgängig machen
 wollen, hilft das Kommando `revert`. Es löscht aber keinen
 Commit, sondern erstellt einen neuen, dessen Änderungen genau dem
@@ -1065,8 +943,6 @@ nun sowohl der Commit als auch der Revert auftauchen. Sie machen also
 nur die 'Änderungen' rückgängig, löschen aber keine Informationen
 aus der Versionsgeschichte.
 
-indexterm:[revert,vs. reset]
-indexterm:[reset,vs. revert]
 Sie sollten daher `revert` nur einsetzen, wenn Sie eine
 Änderung, die bereits veröffentlicht wurde, rückgängig machen müssen.
 Entwickeln Sie allerdings lokal in einem eigenen Branch, ist es
@@ -1083,11 +959,6 @@ $ *git show -R 3329661 -- LICENSE | git apply --index*
 $ *git commit -m \'Revert change to LICENSE from 3329661'*
 --------
 
-indexterm:[show,-R]
-indexterm:[Unified Diff,reverse]
-indexterm:[Patch,reverse]
-indexterm:[apply]
-indexterm:[git,apply]
 Das Kommando `git show` gibt die Änderungen von Commit
 `3329661` aus, die sich auf die Datei `LICENSE`
 beziehen. Die Option `-R` sorgt dafür, dass das
@@ -1110,17 +981,12 @@ $ *git commit -m \'Reverting &lt;datei&gt; to resemble 3329661'*
 [[sec.reset]]
 ==== Reset und der Index ==== 
 
-indexterm:[Index,und reset]
-indexterm:[reset,und Index]
 Wenn Sie einen Commit gänzlich löschen, also nicht nur rückgängig
 machen, dann verwenden Sie `git reset`. Das Reset-Kommando
 setzt den `HEAD` (und damit auch den aktuellen Branch) sowie
 wahlweise auch Index und Working Tree auf einen bestimmten Commit.
 Die Syntax lautet `git reset [<option>] [<commit>]`.
 
-indexterm:[reset,--soft]
-indexterm:[reset,--mixed]
-indexterm:[reset,--hard]
 Die wichtigsten Reset-Typen sind die folgenden:
 
 `--soft`:: Setzt nur den `HEAD` zurück;
@@ -1178,7 +1044,6 @@ $ *git branch master HEAD^^*
 [[sec.reset-usage]]
 ===== reset benutzen =====  
 
-indexterm:[reset]
 Mit `reset` löschen Sie nicht beliebige Commits, sondern
 verschieben immer nur Referenzen. Dadurch gehen die nicht mehr
 referenzierten Commits verloren, werden also quasi gelöscht
@@ -1204,15 +1069,12 @@ $ *git reset --hard HEAD^^*
 $ *git checkout -b &lt;neues-feature&gt; ORIG_HEAD*
 --------
 
-indexterm:[reset,--hard]
 Eine häufige Anwendung von `reset` ist, testweise Änderungen zu
 verwerfen. Sie wollen einen Patch probieren? Ein bisschen
 Debugging-Output einbauen? Ein paar Konstanten ändern? Gefällt das
 Ergebnis nicht, löscht ein `git reset --hard` alle
 Änderungen am Working Tree.
 
-indexterm:[add,-p]
-indexterm:[Versionsgeschichte,verbessern]
 Auch können Sie mit Hilfe von `reset` Ihre Versionsgeschichte
 ``schön machen''. Wenn Sie beispielsweise ein paar Commits auf
 einem auf `master` aufbauenden Branch `<feature>`
@@ -1253,10 +1115,6 @@ $ *git reset --soft HEAD^*
 (weiterarbeiten)
 --------
 
-indexterm:[commit,--amend]
-indexterm:[Commit,nachträglich ändern]
-indexterm:[amend (Option)]
-indexterm:[stash]
 Das Kommando `git reset --soft HEAD^` setzt den
 `HEAD` einen Commit zurück, lässt allerdings den Index sowie
 den Working Tree unberührt. Alle Änderungen aus Ihrem temporären
@@ -1273,17 +1131,10 @@ wird.
 [[sec.merge]]
 === Branches zusammenführen: Merges === 
 
-indexterm:[Branch,zusammenführen]
-indexterm:[Branch,mergen]
-indextermsee:[Integration,Merge]
-indexterm:[Merge]
-indexterm:[Merge-Commit]
 Das Zusammenführen von Branches nennt man in Git 'mergen';
 der Commit, der zwei oder mehr Branches miteinander verbindet,
 heißt entsprechend 'Merge-Commit'.
 
-indextermseealso:[git,merge,merge]
-indexterm:[merge]
 Git stellt das Subkommando `merge` bereit, mit dem Sie einen
 Branch in einen anderen integrieren. Das bedeutet, dass alle
 Änderungen, die Sie auf dem Branch getätigt haben, in den aktuellen
@@ -1298,7 +1149,6 @@ integriert. Das Kommando benötigt also nur ein Argument:
 $ *git merge &lt;branch-name&gt;*
 --------
 
-indexterm:[Merge,Konflikt]
 Wenn Sie wohlüberlegt mit Ihren Branches hantieren, dürfte es
 keine Probleme beim Mergen geben. Wenn doch, dann stellen
 wir in diesem Abschnitt auch Strategien vor, wie Sie Merge-Konflikte
@@ -1314,8 +1164,6 @@ wollen, referenzieren jeweils den aktuellsten Commit in einer Kette
 von Commits (F und D), und diese beiden Commits wiederum einen Tree
 (entspricht dem obersten Verzeichnis Ihres Projekts).
 
-indexterm:[Merge,Basis]
-indexterm:[Basis (Merge)]
 Zunächst berechnet Git eine sogenannte 'Merge-Basis', also einen
 Commit, den beide zu verschmelzenden Commits als gemeinsamen Vorfahren
 haben. In der Regel gibt es mehrere solcher Basen -- im untenstehenden
@@ -1341,9 +1189,6 @@ verschmolzen werden.
 image::bilder_ebook/merge-base-commit.png[id="fig.merge-base-commit",width="70%"]
 
 
-indexterm:[resolve-Strategie,vs. recursive-Strategie]
-indexterm:[Merge,Strategien]
-indexterm:[Strategie,für Merge]
 Dafür geht Git so vor:footnote:[Die
   nachfolgende Beschreibung erläutert die Vorgehensweise der
   `resolve`-Strategie. Sie unterscheidet sich nur wenig von der
@@ -1353,7 +1198,6 @@ weiterer Tree oder ein Blob) in beiden Commits gleich ist, wird
 genau dieser Tree-Eintrag auch im Merge-Commit übernommen. Das
 passiert in zwei Fällen:
 
-indexterm:[cherry-pick]
 
 . Eine Datei wurde von keinem der beiden Commits geändert, oder ein Unterverzeichnis enthält keine geänderte Datei: Im ersten Fall ist die Blob-SHA-1-Summe dieser Datei in beiden Commits gleich, im zweiten Fall wird von beiden Commits das gleiche Tree-Objekt referenziert. Der referenzierte Blob bzw. Tree ist also derselbe wie der in der Merge-Basis referenzierte.
 
@@ -1381,7 +1225,6 @@ Wenn sich aber 'beide' Blobs von der Merge-Basis unterscheiden,
 könnte es möglicherweise zu Problemen kommen.  Zunächst versucht Git,
 die Änderungen beider Seiten zu übernehmen.
 
-indexterm:[Merge,Drei-Wege-Algorithmus]
 Dafür wird in der Regel ein '3-Wege-Merge'-Algorithmus verwendet.
 Im Gegensatz zum klassischen 2-Wege-Merge-Algorithmus, der eingesetzt
 wird, wenn Sie zwei unterschiedliche Versionen A und B einer Datei
@@ -1400,16 +1243,11 @@ Datei der Kontext direkt vor einer Änderung in Datei B geändert wurde,
 oder, schlimmer noch, Version A und B und C unterschiedliche Versionen
 einer Zeile aufweisen.
 
-indextermseealso:[Merge-Konflikt,Konflikt]
-indexterm:[Merge,Konflikt]
-indexterm:[Konflikt]
 Einen solchen Fall nennt man 'Merge-Konflikt'. Git führt
 alle Dateien so gut es geht zusammen und präsentiert dem Nutzer
 dann die in Konflikt stehenden Änderungen, damit dieser sie manuell
 verschmelzen (und damit den Konflikt lösen) kann (siehe dafür <<sec.merge-conflicts>>).
 
-indexterm:[Semantik,und Konflikte]
-indexterm:[Konflikt,und Semantik]
 Zwar ist es grundsätzlich möglich, mit einem speziell auf die
 jeweilige Programmiersprache ausgerichteten Algorithmus eine
 syntaktisch korrekte Auflösung zu erzeugen -- allerdings kann ein
@@ -1420,8 +1258,6 @@ Lösung in der Regel nicht sinnvoll.
 [[sec.merge-ff]]
 ==== Fast-Forward-Merges: Einen Branch vorspulen ==== 
 
-indexterm:[Merge,Fast-Forward]
-indextermsee:[Fast-Forward,Merge]
 Das Kommando `git merge` erzeugt nicht immer einen
 Merge-Commit. Ein trivialer Fall, der aber häufig vorkommt, ist der
 sogenannte 'Fast-Forward-Merge', also ein Vorspulen des Branches.
@@ -1432,7 +1268,6 @@ ist:
 .Vor dem 'Fast-Forward'-Merge
 image::bilder_ebook/ff-vorher.png[id="fig.merge-ff-before",width="90%"]
 
-indexterm:[merge,topic]
 Ein einfaches `git merge topic` im Branch `master` führt
 nun dazu, dass `master` einfach weitergerückt wird -- es wird
 kein Merge-Commit erzeugt.
@@ -1447,9 +1282,6 @@ Branches einer der beiden Branches selbst ist, in diesem Falle
 
 Dieses Verhalten ist häufig wünschenswert:
 
-indexterm:[pull]
-indexterm:[Upstream-Änderungen]
-indexterm:[Änderungen,übernehmen (per FF)]
 
 . Sie wollen Upstream-Änderungen, also Änderungen aus einem
   anderen Git-Repository, integrieren. Dafür verwenden Sie
@@ -1467,8 +1299,6 @@ indexterm:[Änderungen,übernehmen (per FF)]
   'Fast-Forward'.
 
 
-indexterm:[merge,--ff-only]
-indexterm:[merge,--no-ff]
 [TIP]
 ===============
 Mit den Optionen `--ff-only` und `--no-ff` können
@@ -1504,7 +1334,6 @@ dann integriert wurde. Da parallel nichts entwickelt wurde, wäre der
 Merge-Commit prinzipiell unnötig, allerdings macht er die Integration
 des Features deutlich.
 
-indexterm:[Alias,ffm / nfm]
 
 [TIP]
 ===============
@@ -1518,11 +1347,6 @@ ffm = merge --ff-only   #    ff-merge
 --------
 ===============
 
-indexterm:[revert,auf Merge-Commit]
-indexterm:[revert,-m 1]
-indexterm:[Merge,revert (rückgängig machen)]
-indexterm:[Merge,Richtung beachten]
-indexterm:[Mainline]
 
 
 Ein expliziter Merge-Commit ist auch hilfreich, weil Sie diesen mit
@@ -1547,9 +1371,6 @@ Merges, rückgängig gemacht würden.
 [[sec.merge-strategies]]
 ==== Merge-Strategien ==== 
 
-indexterm:[Merge,Strategien]
-indexterm:[Strategie (Merge)]
-indexterm:[merge,-s / --strategy]
 Git kennt fünf verschiedene Merge-Strategien, deren Verhalten
 teilweise noch durch Strategie-Optionen weiter angepasst werden
 kann. Die Strategie bestimmen Sie per `-s`, so dass ein
@@ -1563,19 +1384,6 @@ Manche dieser Strategien können nur zwei Branches zusammenführen,
 andere eine beliebige Anzahl.
 
 
-indexterm:[resolve (Strategie)]
-indexterm:[merge,resolve]
-indexterm:[merge,recursive]
-indexterm:[recursive (Strategie)]
-indexterm:[merge,octopus]
-indexterm:[octopus (Strategie)]
-indexterm:[Branch,mehrere Branches mergen]
-indexterm:[merge,ours]
-indexterm:[ours]
-indexterm:[merge,subtree]
-indexterm:[subtree (Strategie)]
-indexterm:[Merge,Subtree]
-indexterm:[Tree,Merge von Subtrees]
 
 `resolve`:: Die `resolve`-Strategie kann
     zwei Branches mit Hilfe einer 3-Wege-Merge-Technik zusammenführen.
@@ -1639,11 +1447,6 @@ Dieses Thema wird eingehender in <<sec.subprojects>> behandelt.
 [[sec.recursive-options]]
 ==== Optionen für die recursive-Strategie ==== 
 
-indexterm:[recursive,Optionen]
-indexterm:[merge,-X (Strategie-Optionen)]
-indexterm:[rebase,-X (Strategie-Optionen)]
-indexterm:[cherry-pick,-X (Strategie-Optionen)]
-indexterm:[revert,-X (Strategie-Optionen)]
 Die Default-Strategie `recursive` kennt mehrere Optionen, die das
 Verhalten besonders bezüglich der Konfliktlösung anpassen. Sie
 bestimmen sie über die Option `-X`; die Syntax lautet also:
@@ -1656,25 +1459,12 @@ Sofern Sie nur zwei Branches mergen, müssen Sie die
 `recursive`-Strategie nicht explizit per `-s recursive`
 angeben.
 
-indexterm:[ours,Definition]
-indexterm:[theirs,Definition]
-indexterm:[Konflikt,Zwei Seiten]
-indexterm:[Merge-Konflikt,Zwei Seiten]
 Da die Strategie nur zwei Branches zusammenführen kann, ist es
 möglich, von 'unserer' (engl. 'our') und 'deren' (engl.
 'theirs') Version zu sprechen: 'unsere' Version ist dabei
 der ausgecheckte Branch beim Merge-Vorgang, während 'deren'
 Version den Branch, den Sie integrieren wollen, referenziert.
 
-indexterm:[ours]
-indexterm:[theirs]
-indexterm:[Merge,Probleme mit Whitespace]
-indexterm:[Whitespace,Probleme bei Merge]
-indexterm:[Leerzeichen,Probleme bei Merge]
-indexterm:[Zeilenenden,Probleme bei Merge]
-indexterm:[ignore-space-change (Strategieoption)]
-indexterm:[ignore-all-space (Strategieoption)]
-indexterm:[ignore-space-at-eol (Strategieoption)]
 
 `ours`:: Wenn ein Merge-Konflikt auftritt, der
     normalerweise manuell gelöst werden müsste, wird stattdessen
@@ -1729,8 +1519,6 @@ verwenden.
 [[sec.merge-conflicts]]
 === Merge-Konflikte lösen === 
 
-indexterm:[Merge,Konflikte lösen]
-indexterm:[Konflikt,lösen]
 Wie bereits beschrieben, sind manche Konflikte nicht durch Algorithmen
 aufzulösen -- hier ist manuelle Nachbesserung nötig.  Gute
 Team-Koordination sowie schnelle Integrationszyklen können größere
@@ -1801,7 +1589,6 @@ Nun versucht Beatrice, ihre Änderungen auf Branch B in den
 Branch `master` zu übernehmen, auf dem Axel seine Änderungen
  schon integriert hat:
 
-indexterm:[Fehlermeldung,CONFLICT (merge conflict)]
 [subs="macros,quotes"]
 --------
 $ *git checkout master*
@@ -1811,7 +1598,6 @@ CONFLICT (content): Merge conflict in output.c
 Automatic merge failed; fix conflicts and then commit the result.
 --------
 
-indexterm:[Konflikt-Marker]
 In der Datei `output.c` platziert Git nun sogenannte
 'Konflikt-Marker', unten halbfett hervorgehoben, die anzeigen, wo
 sich Änderungen überschneiden. Es gibt zwei Seiten: Zum einen
@@ -1880,8 +1666,6 @@ In der Commit-Nachricht sollte unbedingt stehen, wie dieser Konflikt
 gelöst wurde. Auch mögliche Seiteneffekte auf andere Teile des
 Programms sollten nicht unerwähnt bleiben.
 
-indexterm:[Merge-Commit]
-indexterm:[Commit,Merge-Commit]
 Normalerweise sind Merge-Commits ``leer'', d.h. in
 `git show` erscheint keine Diff-Ausgabe (weil die Änderungen ja
 von anderen Commits verursacht wurden). Im Falle eines Merge-Commits,
@@ -1924,9 +1708,6 @@ pass:quotes[*+*] }
 
 
 
-indexterm:[Patch,kombiniertes Format]
-indexterm:[diff,--cc]
-indexterm:[Diff,combined]
 
 Diese 'kombinierte' Diff-Ausgabe unterscheidet sich vom üblichen
 Unidiff-Format: Es gibt nicht nur 'eine' Spalte mit den Markern für
@@ -1954,8 +1735,6 @@ Der Standard-Weg, wie oben gesehen, ist der folgende:
 . Konfliktlösungen per `git commit` einchecken
 
 
-indexterm:[Merge,Konfliktlösung abbrechen]
-indexterm:[Konflikt, ~lösung abbrechen]
 Wenn Sie ad hoc nicht wissen, wie der Konflikt zu lösen ist (und zum
 Beispiel den ursprünglichen Entwickler damit beauftragen wollen, eine
 konfliktfreie Version des Codes zu produzieren), können Sie per
@@ -1965,7 +1744,6 @@ war, bevor Sie den Merge-Vorgang angestoßen haben. Dieses Kommando
 bricht auch einen Merge ab, den Sie schon teilweise gelöst haben.
 Achtung: Dabei gehen alle nicht eingecheckten Änderungen verloren.
 
-indexterm:[log,--merge]
 
 [TIP]
 =====================
@@ -1981,9 +1759,6 @@ verwenden.  Git listet dann die Diffs von Commits auf, die seit der
 Merge-Basis Änderungen an `<datei>` vorgenommen haben.
 ======================
 
-indexterm:[Konflikt,Stages]
-indexterm:[Merge-Konflikt,Stages]
-indexterm:[Stages (Merge)]
 Wenn Sie sich in einem Merge-Konflikt befinden, liegt eine Datei mit
 Konflikten in drei Stufen ('Stages') vor: Stufe eins enthält die
 Version der Datei in der Merge-Basis (also die gemeinsame
@@ -2010,15 +1785,10 @@ und bietet Ihnen Möglichkeiten an, Änderungen hin- und herzuschieben.
 [[sec.mergetool]]
 ==== Hilfe beim Merge: mergetool ==== 
 
-indexterm:[Merge,Tool]
-indexterm:[git,mergetool]
-indexterm:[mergetool]
 Bei nicht-trivialen Merge-Konflikten empfiehlt sich ein Merge-Tool,
 das die drei Stufen einer Datei entsprechend visualisiert und dadurch
 die Lösung des Konflikts erleichtert.
 
-indexterm:[Vim,Konfliktlösung]
-indexterm:[Emacs,Konfliktlösung]
 Gängige IDEs und Editoren wie z.B. Vim und Emacs bieten einen
 solchen Modus an. Außerdem gibt es externe Tools, wie zum Beispiel
 'KDiff3'{wj}footnote:[http://kdiff3.sourceforge.net/]
@@ -2030,7 +1800,6 @@ Commits verändert hat.
 .Der Beispiel-Merge-Konflikt, im Merge-Tool ``Meld'' visualisiert
 image::bilder_ebook/meld-example.png[id="fig.meld",width="100%"]
 
-indexterm:[Vimdiff,Konfliktlösung]
 Sie starten ein solches Merge-Tool über `git mergetool`. Git wird alle
 Dateien, die Konflikte enthalten, durchgehen und jeweils (wenn Sie
 Eingabe drücken) in einem Merge-Tool anzeigen.  Per Default ist das
@@ -2062,7 +1831,6 @@ automatisch per `git add` dem Index hinzufügen. Wenn Sie also
 alle Dateien abarbeiten, müssen Sie schließlich nur noch einen
 Commit-Aufruf ausführen, um die Konfliktlösung zu besiegeln.
 
-indexterm:[merge.tool]
 Welches Tool Git auf der Datei startet, regelt die Option
 `merge.tool`. Die folgenden Kommandos sind bereits
 vorkonfiguriert, d.h. Git weiß bereits, in welcher Reihenfolge das
@@ -2076,7 +1844,6 @@ meld opendiff p4merge tkdiff tortoisemerge
 vimdiff vimdiff2 vimdiff3 xxdiff
 -------------------
 
-indexterm:[Merge,eigenes Tool]
 Um Ihr eigenes Merge-Tool zu verwenden, müssen Sie 
 `merge.tool` auf einen geeigneten Namen setzen, zum Beispiel
 `mymerge`, und anschließend zumindest die Option
@@ -2089,7 +1856,6 @@ Eigenschaften Ihres Merge-Kommandos weiter konfigurieren, siehe
 dafür die Man-Page `git-config(1)` im Abschnitt der
 `mergetool`-Konfiguration.
 
-indexterm:[mergetool,-t]
 [TIP]
 ================
 Wenn Sie sich zeitweise (nicht dauerhaft) für ein
@@ -2105,9 +1871,6 @@ sein.
 [[sec.rerere]]
 ==== rerere: Reuse Recorded Resolution ==== 
 
-indexterm:[rerere]
-indextermsee:[Reuse Recorded Resolution,rerere]
-indexterm:[rerere.enabled]
 Git besitzt ein relativ unbekanntes (und schlecht dokumentiertes),
 aber sehr hilfreiches Feature: Rerere, kurz für 'Reuse Recorded
   Resolution' (``gespeicherte Konfliktlösung
@@ -2116,9 +1879,6 @@ wiederverwenden''). Sie müssen die Option
 automatisch aufgerufen wird (beachten Sie das `d` am Ende von
 `enabled`).
 
-indexterm:[Preimage]
-indexterm:[Konflikt,Preimage]
-indexterm:[Merge-Konflikt,Preimage]
 Die Idee hinter Rerere ist simpel, aber effektiv: Sobald ein
 Merge-Konflikt auftritt, nimmt Rerere automatisch ein 'Preimage'
 auf, ein Abbild der Konfliktdatei inklusive Markern. Im Falle des
@@ -2219,10 +1979,6 @@ auftritt (um das Preimage aufzunehmen, möglicherweise auch um den
 Konflikt zu lösen) und wenn eine Konfliktlösung eingecheckt wird (um
 die Lösung abzuspeichern).
 
-indexterm:[.git/rr-cache/]
-indexterm:[rerere,Cache]
-indexterm:[gc]
-indexterm:[rerere,gc]
 Rerere legt Informationen wie Preimage und Lösung in
 `.git/rr-cache/` ab, eindeutig identifiziert durch eine
 SHA-1-Summe. Das Subkommando `git rerere` müssen Sie fast nie
@@ -2230,8 +1986,6 @@ aufrufen, da es von `merge` und `commit` schon erledigt
 wird. Sie können analog zu `git gc` auch `git rerere gc`
 verwenden, um sehr alte Lösungen zu löschen.
 
-indexterm:[rerere,forget]
-indexterm:[checkout,-m]
 Was passiert, wenn eine falsche Konfliktlösung eingecheckt wurde?
 Dann sollten Sie die Konfliktlösung löschen, andernfalls wird Rerere
 die Lösung, wenn Sie den konfliktbehafteten Merge wiederholen, erneut
@@ -2247,7 +2001,6 @@ Konflikt-Markern). Wollen Sie nur Letzteres bewirken, hilft auch ein
 [[sec.avoid-conflicts]]
 ==== Konflikte vermeiden ==== 
 
-indexterm:[Konflikte,vermeiden]
 Dezentrale Versionskontrollsysteme verwalten Merges generell
 wesentlich besser als zentrale. Das liegt vor allem daran,
 dass es bei dezentralen Systemen Usus ist, viele kleine Änderungen
@@ -2261,7 +2014,6 @@ bei einem Merge nicht nur auf den bloßen Inhalt von Dateien schauen
 müssen.
 
 
-indexterm:[Commit,möglichst kleine]
 Um Merge-Konflikte zu minimieren, ist Vorbeugung das beste Mittel.
 Machen Sie kleine Commits! Fassen Sie Ihre Änderungen so zusammen,
 dass der resultierende Commit als Einheit Sinn ergibt. Bauen Sie
@@ -2279,8 +2031,6 @@ unterschiedliche und sich gegenseitig beeinflussende Änderungen
 implementieren, wird das früher oder später sicher zu Konflikten
 führen.
 
-indexterm:[AsciiDoc]
-indexterm:[Branch,entkoppeln]
 Ein weiterer Faktor, der leider häufig zu unnötigen(!) Konflikten
 führt, sind autogenerierte Inhalte. Angenommen, Sie schreiben die
 Dokumentation einer Software in
@@ -2309,10 +2059,6 @@ Version auf einem separaten Branch vorzuhalten.footnote:[Das Repository des Git-
 [[sec.cherry-pick]]
 === Einzelne Commits übernehmen: Cherry-Pick === 
 
-indexterm:[cherry-pick]
-indextermseealso:[git,cherry-pick,cherry-pick]
-indexterm:[Commit,in Branch übernehmen]
-indexterm:[Branch,Commit übernehmen]
 Es wird vorkommen, dass Sie nicht direkt einen ganzen Branch
 integrieren wollen, sondern zunächst Teile, also einzelne Commits.
 Dafür ist das Git-Kommando `cherry-pick` (``die guten
@@ -2340,11 +2086,6 @@ was einem Merge gleichkommt. Wenn Sie Commits mit `cherry-pick`
 Commit-ID. Git kann danach 'nicht' ohne weiteres wissen, dass
 diese Commits eigentlich die gleichen sind.
 
-indexterm:[Rebase,und cherry-pick]
-indexterm:[cherry]
-indexterm:[git,cherry]
-indexterm:[patch-id]
-indexterm:[git,patch-id]
 Daher kann es, wenn Sie zwei Branches mergen, zwischen denen Sie
 Änderungen per Cherry-Pick ausgetauscht haben, zu Konflikten kommen.footnote:[Das liegt daran, dass das
   Merge-Kommando nicht jeden Commit einzeln untersucht. Stattdessen
@@ -2362,7 +2103,6 @@ und lässt die gedoppelten Commits aus. So können Sie einige Commits
 ``aus der Mitte'' übernehmen und dann den Branch, aus dem die
 Commits stammten, neu aufbauen.
 
-indexterm:[Strategie,für Cherry-Pick]
 Das `cherry-pick`-Kommando versteht außerdem selbst diese
 Merge-Strategie-Optionen: Wenn Sie einen Commit in den aktuellen Branch
 kopieren wollen, und im Konfliktfall dem neuen Commit recht geben
@@ -2372,7 +2112,6 @@ wollen, verwenden Sie:
 git cherry-pick -Xtheirs <commit>
 ------
 
-indexterm:[cherry-pick,-n / --no-commit]
 
 [TIP]
 ========
@@ -2397,12 +2136,9 @@ $ *git commit -m "Diverse kleine Änderungen"*
 [[sec.visualization]]
 === Visualisierung von Repositories === 
 
-indexterm:[Repository,visualisieren]
 Wenn Sie einige Branches erstellt und wieder zusammengeführt haben,
 werden Sie gemerkt haben: Man verliert leicht den Überblick.
 
-indexterm:[Repository,Topologie]
-indexterm:[gitk]
 Die Anordnung der Commits und ihre Beziehungen untereinander
 bezeichnet man als 'Topologie' eines Repositorys. Im Folgenden
 werden wir unter anderem das grafische Programm `gitk`
@@ -2449,7 +2185,6 @@ $ *git log --decorate --pretty=oneline --abbrev-commit --graph --all*
 * 4783886 initial commit
 --------
 
-indexterm:[Alias,tree]
 
 [TIP]
 ========
@@ -2484,8 +2219,6 @@ $ *git tree B*
 * 4783886 initial commit
 --------
 
-indexterm:[Root-Commit]
-indexterm:[Commit,Root-Commit]
 Wir erhalten alle Commits, die von B aus erreichbar sind. Ein
 Commit kennt jeweils nur seinen bzw. seine Vorgänger (mehrere dann,
 wenn Branches zusammengeführt werden).  ``Alle von B erreichbaren
@@ -2513,7 +2246,6 @@ $ *git tree 5b2c291*
 * 4783886 initial commit
 --------
 
-indexterm:[Caret,als Negation]
 Wird einer Referenz ein Caret (`^`) vorangestellt, so negiert das
 die Bedeutung.footnote:[Möglicherweise besitzt das Zeichen `^` in
 Ihrer Shell eine besondere Bedeutung (dies ist z.B.  in der Z-Shell
@@ -2548,7 +2280,6 @@ $ *git tree D ^A*
 * c937566 (*HEAD*, *D*) commit on branch D
 --------
 
-indexterm:[.. (Commit-Range)]
 Weil sich diese Frage häufig stellt, gibt es dafür eine andere,
 intuitivere Notation: `A..D` ist gleichbedeutend mit `D ^A`:
 
@@ -2571,8 +2302,6 @@ enthalten sind, genügt die Angabe `release..D`.
 
 //\label{sec:rev-symmetric}
 
-indexterm:[Differenz,symmetrische]
-indexterm:[... (symmetrische Differenz)]
 
 [TIP]
 ========
@@ -2589,7 +2318,6 @@ Alternativ stellt Git die 'symmetrische Differenz'{empty}{nbsp}`A...B` bereit. S
 [[rev-list-explained]]
 ===== Referenz vs. Liste von Referenzen =====  
 
-indexterm:[Referenz,vs. Liste]
 Im Beispiel werden mit A immer alle Commits bezeichnet, die von A
 erreichbar sind. Aber eigentlich ist ein Branch ja nur eine Referenz
 auf 'einen' Commit. Warum listet also `log` immer alle von
@@ -2597,7 +2325,6 @@ A erreichbaren Commits auf, während das Git-Kommando
 `show` mit dem Argument `A` nur diesen einen Commit
 anzeigt?
 
-indexterm:[show]
 Der Unterschied liegt darin, was die Kommandos als Argument erwarten:
 `show` erwartet ein 'Objekt', also eine Referenz auf
 'ein' Objekt, das dann angezeigt wird.footnote:[Dies ist nicht nötigerweise ein Commit -- das können auch Tags oder Blobs sein.] 
@@ -2608,7 +2335,6 @@ Liste von Commits um (traversieren die Liste bis zum Root-Commit).
 [[sec.gitk]]
 ==== Gitk ==== 
 
-indexterm:[Gitk]
 Gitk ist ein in Tcl implementiertes grafisches Programm, das in der
 Regel von Distributoren zusammen mit den eigentlichen Git-Kommandos
 paketiert wird -- Sie können sich also darauf verlassen, es auf fast
@@ -2620,7 +2346,6 @@ für Autor und Datum, unten eine Auflistung der Änderungen im
 Unified-Diff-Format sowie eine Liste von Dateien, um die angezeigten
 Änderungen einzuschränken.
 
-indexterm:[HEAD,in Gitk]
 Die Graph-Ansicht ist intuitiv: Verschiedene Farben helfen, die
 verschiedenen Versionsstränge zu unterscheiden. Commits sind jeweils
 blaue Punkte, mit zwei Ausnahmen: Der `HEAD` ist gelb markiert,
@@ -2635,8 +2360,6 @@ die Pfeilspitze bringt Sie zu der Weiterführung des Branches.
 Branches erscheinen als grüne Labels, der aktuell ausgecheckte Branch
 zusätzlich fett. Tags sind als gelbe Pfeile dargestellt.
 
-indexterm:[Gitk,Cherry-Picking]
-indexterm:[cherry-pick,in Gitk]
 Mit einem Rechtsklick auf einen Branch können Sie diesen löschen oder
 auschecken. Auf Commits öffnet ein Rechtsklick ein Menü, in dem Sie
 Aktionen mit dem markierten Commit ausführen können. Die einzige, die
@@ -2666,7 +2389,6 @@ Branches anzeigt.
 
 
 
-indexterm:[gitk,--all]
 
 [TIP]
 ========
@@ -2702,17 +2424,12 @@ verwenden.
 [[sec.reflog]]
 === Reflog === 
 
-indexterm:[Reflog]
-indextermsee:[Log,Reflog]
 Das 'Reference Log' ('Reflog') sind Log-Dateien, die Git für
 jeden Branch sowie `HEAD` anlegt. Darin wird gespeichert, wann
 eine Referenz von wo nach wo verschoben wurde. Das passiert vor allem
 bei den Kommandos `checkout`, `reset`, `merge`
 und `rebase`.
 
-indextermseealso:[.git/logs/refs/,Reflog]
-indexterm:[reflog,show]
-indextermseealso:[git,reflog,reflog]
 Diese Log-Dateien liegen unter `.git/logs/` und tragen den
 Namen der jeweiligen Referenz. Das Reflog für den
 `master`-Branch finden Sie also unter
@@ -2728,7 +2445,6 @@ ef51665 master@{1}: rebase -i (finish): refs/heads/master onto 69b9e27
 ...
 --------
 
-indexterm:[log,-g (walk reflog)]
 Das Reflog-Kommando wird selten direkt benutzt und ist nur ein Alias
 für `git log -g --oneline`. Die Option `-g` bewirkt
 nämlich, dass das Kommando nicht die Vorgänger im Commit-Graphen
@@ -2741,7 +2457,6 @@ Test-Commit und löschen Sie ihn danach wieder mit `git reset
 den `HEAD` anzeigen, dann den gelöschten Commit und dann wieder
 den `HEAD`.
 
-indexterm:[branch,-D (forced delete)]
 Das Reflog referenziert also auch Commits, die sonst nicht mehr
 referenziert sind, also ``verloren'' sind (siehe
 <<sec.branch-management>>). So hilft das Reflog Ihnen

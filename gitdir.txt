@@ -1,9 +1,6 @@
 [[sec.git-repository-layout]]
 == Struktur eines Repositorys ==
 
-indextermsee:[Git-Directory,GITDIR]
-indexterm:[$GIT_DIR]
-indexterm:[HEAD,im GIT_DIR]
 Git speichert die Objektdatenbank, die zugehörigen Referenzen usw. im
 sogenannten 'Git-Directory', oft auch als `$GIT_DIR`
 bezeichnet.  Standardmäßig ist dies `.git/`. Es existiert
@@ -16,7 +13,6 @@ angelegt.footnote:[Da ein Bare-Repository
   zusätzliches Verzeichnis `.git`.] Es enthält unter anderem
 folgende Einträge:
 
-indexterm:[Objektdatenbank,im GIT_DIR]
 
 `HEAD`:: Der `HEAD`, siehe <<sec.branch-refs>>. Neben `HEAD` liegen
 ggf. auch andere wichtige symbolische Referenzen auf oberster Ebene,
@@ -70,7 +66,6 @@ Man-Page `gitrepository-layout(5)`.
 
 
 
-indexterm:[Garbage Collection]
 Wie beispielsweise schon in <<sec.branch-management>> erwähnt, sind
 Commits, die nicht mehr referenziert werden (sei es durch Branches
 oder andere Commits), nicht mehr zu erreichen. In der Regel ist das der
@@ -85,11 +80,6 @@ Allerdings werden die  Tools mit entsprechenden Optionen
 automatisch von der 'Garbage Collection' (``Müllabfuhr'')
 ausgeführt: `git gc`. Folgende Aufgaben erledigt das Tool:
 
-indexterm:[Objekt,dangling]
-indexterm:[Objekt,unreachable]
-indexterm:[Dangling Object]
-indexterm:[Unreachable Object]
-indexterm:[Loose Objects]
 
 * 'Dangling' und 'Unreachable Objects' löschen.
   Diese entstehen bei diversen Operationen und können in der Regel
@@ -117,9 +107,6 @@ indexterm:[Loose Objects]
   ungelöst/gelöst).
 
 
-indextermseealso:[git,gc,gc]
-indexterm:[gc]
-indextermseealso:[gc,Garbage Collection]
 Die Garbage Collection kennt drei Modi: automatisch, normal und
 aggressiv. Den automatischen Modus rufen Sie per `git gc
   --auto` auf -- der Modus überprüft, ob es wirklich eklatante
@@ -129,7 +116,6 @@ konfigurierbar. Über folgende Konfigurationseinstellungen können Sie
 Anzahl ``kleiner'' Dateien der automatische Modus aufräumt,
 also diese in große Archive zusammenfasst.
 
-indexterm:[gc.auto]
 
 `gc.auto` (Default: 6700 Objekte):: Objekte zu einem Packfile
 zusammenfassen
@@ -154,8 +140,6 @@ run "git gc" manually. See "git help gc" for more information.
 [[sec.gc-performance]]
 === Performance === 
 
-indexterm:[Repository,neu packen]
-indexterm:[Performance,eines Repositorys]
 Sie sollten entweder die Schwellen, ab denen die automatische Garbage
 Collection greift, deutlich herabsetzen, oder von Zeit zu Zeit
 `git gc` aufrufen. Dies hat einen offensichtlichen Vorteil,
@@ -175,7 +159,6 @@ $ *du -sh .git*
 6.3M    .git
 --------
 
-indexterm:[Packfile]
 Einzelne Objekte unterhalb von `.git/objects/` wurden zu einem
 Packfile zusammengefasst:
 
@@ -187,8 +170,6 @@ $ *file .git/objects/pack/pack-a97624dd23&lt;...&gt;.pack*
 .git/objects/pack/pack-a97624dd23&lt;...&gt;.pack: Git pack, version 2, 3726 objects
 --------
 
-indexterm:[count-objects]
-indexterm:[git,count-objects]
 Sie können sich per `git count-objects` ausgeben lassen, aus
 wie vielen Dateien die Objektdatenbank besteht. Hier nebeneinander vor
 und nach dem obigen Packvorgang:
@@ -226,7 +207,6 @@ Pack-Index und ein entsprechendes Auslesen der Stelle im Packfile,
 d.h. im Speicher. Dies entlastet das Datei- und Betriebssystem
 erheblich.
 
-indexterm:[Delta-Kompression]
 Der zweite Vorteil der Packfiles liegt in der Delta-Kompression. So
 werden Objekte möglichst als 'Deltas' ('Veränderungen')
 anderer Objekte gespeichert.footnote:[Das ist nicht zu verwechseln mit
