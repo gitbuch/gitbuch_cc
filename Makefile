@@ -8,7 +8,7 @@ git.txt: advanced.txt automatisierung.txt erste_schritte.txt gitdir.txt \
 git.html: git.txt
 	asciidoc -a numbered -a data-uri -a toclevels=3 $<
 
-git.chunked: git.txt
+git.chunked: git.txt styles
 	a2x -f chunked --resource styles --stylesheet=gitbuch.css \
 	  --xsltproc-opts="--stringparam chunk.section.depth 0 --stringparam chunker.output.indent yes" $<
 

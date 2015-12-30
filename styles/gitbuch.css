@@ -21,12 +21,18 @@ body blockquote {
 }
 
 html body {
-  margin: 1em 5% 1em 5%;
+  margin: 1em auto;
+  width: 60em;
   line-height: 1.2;
 }
 
 body div {
   margin: 0;
+}
+
+body p {
+  text-align: justify;
+  hyphens: auto;
 }
 
 h1, h2, h3, h4, h5, h6
