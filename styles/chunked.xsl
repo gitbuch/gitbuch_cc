@@ -14,4 +14,8 @@
 <xsl:param name="navig.graphics.path">images/icons/</xsl:param>
 <xsl:param name="admon.graphics.path">images/icons/</xsl:param>
 <xsl:param name="callout.graphics.path" select="'images/icons/callouts/'"/>
+
+<xsl:param name="chunk.section.depth" select="0"/>
+<xsl:param name="chunker.output.indent">yes</xsl:param>
+
 </xsl:stylesheet>
