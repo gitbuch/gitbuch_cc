@@ -20,5 +20,4 @@ clean:
 	pdfcrop $<
 
 %-crop.png : %-crop.pdf
-	convert -density 1000 $< -flatten ../../bilder/$@
 	convert -density 1000 $< -flatten ../../bilder_ebook/$@

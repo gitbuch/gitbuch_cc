@@ -8,4 +8,3 @@ all: $(addsuffix .png,$(DIAS))
 
 %.png: %.dia
 	dia $< -s 2000x -e ../../bilder_ebook/$@
-	./remap-sw $<

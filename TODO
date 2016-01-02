@@ -1,21 +1,9 @@
 Form und Funktionalität
 =======================
 
-* Screenshots und Diagramme
-    -> Seitenbreite festlegen oder Bilder absolut skalieren?
 * Fußnoten sollten nicht nach unten springen, sondern lieber eine Art Popup
   produzieren oder in einer Randspalte dargestellt werden
 
-Archäologie
-===========
-
-* Quelldaten finden für folgende Bilder (und dann farbige Version):
-    ‘bilder_ebook/git-branches-neu-crop.png’
-    ‘bilder_ebook/git-convert-refs-after-neu.png’
-    ‘bilder_ebook/git-convert-refs-before-neu.png’
-    ‘bilder_ebook/git-svn-merge-demo-neu.png’
-    ‘bilder_ebook/svn_dcommit-neu.png’
-    ‘bilder_ebook/svn_rebase-neu.png’
 
 Inhaltlich
 ==========
