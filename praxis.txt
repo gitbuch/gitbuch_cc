@@ -448,7 +448,7 @@ Git bietet Ihnen mit 'Tags' (``Etiketten'') die Möglichkeit,
 beliebige Git-Objekte -- meist Commits -- zu markieren, um markante
 Zustände in der Entwicklungsgeschichte hervorzuheben. Tags sind, wie
 Branches auch, als Referenzen auf Objekte implementiert. Im Gegensatz
-zu Branches jedoch sind Tags statisch, dass heißt, sie werden nicht
+zu Branches jedoch sind Tags statisch, das heißt, sie werden nicht
 verschoben, wenn neue Commits hinzukommen, und zeigen stets auf
 dasselbe Objekt. Es gibt zwei Arten von Tags: 'Annotated' (mit
 Anmerkungen versehen) und 'Lightweight'
