@@ -22,7 +22,7 @@ body blockquote {
 
 html body {
   margin: 1em auto;
-  width: 60em;
+  width: 70em;
   line-height: 1.2;
 }
 
@@ -115,6 +115,25 @@ div.navheader a, div.navfooter a {
 }
 div.navfooter hr {
   border: 1px solid silver;
+}
+
+div.toc {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 25em;
+    padding: 1em .5em 1em .5em;
+    border-right: 1px solid #c0c0c0;
+    border-bottom: 1px solid #c0c0c0;
+    font-size: 80%;
+}
+
+div.toc dl.toc dd {
+    margin-left: 20px;
+}
+
+div.navheader, div.navfooter, div.chapter, div.preface, div.appendix {
+    margin-left: 25em;
 }
 
 body td {

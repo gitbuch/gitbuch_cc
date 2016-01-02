@@ -17,6 +17,7 @@
 
 <xsl:param name="chunk.section.depth" select="0"/>
 <xsl:param name="chunker.output.indent">yes</xsl:param>
+<xsl:param name="toc.section.depth">1</xsl:param>
 
 <xsl:template name="user.header.navigation">
     <xsl:copy-of select="document('toc.html')"></xsl:copy-of>
