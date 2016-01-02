@@ -22,4 +22,12 @@
 <xsl:template name="user.header.navigation">
     <xsl:copy-of select="document('toc.html')"></xsl:copy-of>
 </xsl:template>
+<xsl:template name="user.footer.navigation">
+    <div class="cc-license">
+    <hr />
+    <p>
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Lizensiert unter der <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+    </p>
+    </div>
+</xsl:template>
 </xsl:stylesheet>

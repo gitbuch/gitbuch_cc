@@ -113,7 +113,7 @@ div.navheader img, div.navfooter img {
 div.navheader a, div.navfooter a {
   font-weight: normal;
 }
-div.navfooter hr {
+div.navfooter hr, div.cc-license hr{
   border: 1px solid silver;
 }
 
@@ -132,8 +132,12 @@ div.toc dl.toc dd {
     margin-left: 20px;
 }
 
-div.navheader, div.navfooter, div.chapter, div.preface, div.appendix {
+div.navheader, div.navfooter, div.chapter, div.preface, div.appendix, div.cc-license {
     margin-left: 25em;
+}
+
+div.cc-license p {
+    text-align: center;
 }
 
 body td {
