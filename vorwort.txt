@@ -289,16 +289,26 @@ Eingestreut finden sich, inspiriert von Fragen aus Git-Schulungen und
 unserer eigenen Erfahrung, neue Hinweise auf Probleme, Lösungsansätze
 und interessante Funktionalitäten.
 
-//////////////
-Für diese Auflage wurde der Text von 'LaTeX' nach 'AsciiDoc'
-konvertiert. Wir hoffen, dass dabei nicht allzu viele neue Fehler
-entstanden sind.
-//////////////
-
 Wir danken allen Einsendern von Korrekturen an der ersten Auflage:
 Philipp Hahn, Ralf Krüdewagen, Michael Prokop, Johannes Reinhold, Heiko
 Schlichting, Markus Weber.
 
 Valentin Haenel und Julius Plenz – Berlin, September 2014
+
+[[chap.vorwort-cc-ausgabe]]
+=== Vorwort zur CreativeCommons-Ausgabe ===
+
+Der Verlag 'Open Source Press', der uns initial überzeugte, überhaupt
+dieses Buch zu schreiben und es die vergangenen Jahre über verlegte, hat
+zum 31.12.2015 den Betrieb eingestellt, und sämtliche Rechte an den
+veröffentlichten Texten an die Autoren zurückübertragen. Wir danken
+insbesondere Markus Wirtz für die immer gute und produktive
+Zusammenarbeit, die uns über viele Jahre verbunden hat.
+
+Aufgrund hauptsächlich sehr positiven Feedbacks zu diesem Text haben wir
+uns entschieden, diesen unter einer CreativeCommons-Lizens frei verfügbar
+zu machen.
+
+Valentin Haenel und Julius Plenz – Berlin/Sydney, Januar 2016
 
 // vim:set tw=72 ft=asciidoc:
