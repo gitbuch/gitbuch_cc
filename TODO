@@ -3,18 +3,3 @@ Form und Funktionalität
 
 * Fußnoten sollten nicht nach unten springen, sondern lieber eine Art Popup
   produzieren oder in einer Randspalte dargestellt werden
-
-
-Inhaltlich
-==========
-
-* gitbu.ch entsprechend umbauen
-    -> Einleitender Text auf der Startseite, mit dem Inhaltsverzeichnis schon am Rand
-    -> Guidelines und Hilfetexte wie man mitmachen kann
-    -> Hinweis: eBook möglich, aber das KnowHow fehlt
-    -> Schulungsmaterialien auch unter CC veröffentlichen
-
-Aufräumen
-=========
-
-* "wipdeploy" Makefile-Target löschen

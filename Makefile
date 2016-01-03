@@ -24,6 +24,3 @@ git.chunked: git.chunked-prereq styles/toc.html
 
 clean:
 	rm -rf git.html git.chunked style/toc.html
-
-wipdeploy:
-	 rsync -r --info=progress2 --delete --chmod=a+r git.chunked/ noam:www/plenz.com/gitbuch-wip
