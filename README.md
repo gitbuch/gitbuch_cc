@@ -16,6 +16,22 @@ den Quelldateien nur schnell eine halbwegs ansehnliche Webseite
 zusammengestoppelt. Auch sind gegebenenfalls eine PDF- oder EPUB-Version
 interessant; falls Du dies übernehmen willst, gerne!
 
+Bauen
+=====
+
+Mac OS X
+--------
+
+Zur Vorbereitung (mit [Homebrew](http://brew.sh/):
+* `brew install asciidoc xmlstarlet`
+* [xmllint fixen](https://groups.google.com/forum/#!topic/asciidoc/FC-eOwU8rYg):
+ * `sudo mkdir /etc/xml`
+ * `sudo ln -s /usr/local/etc/xml/catalog /etc/xml/catalog`
+
+Bauen:
+* `make` erstellt die HTML Version
+* `open git.chunked/index.html` öffnet das Ergebnis im Browser.
+
 Lizenz
 ======
 
