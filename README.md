@@ -22,7 +22,7 @@ Bauen
 Mac OS X
 --------
 
-Zur Vorbereitung (mit [Homebrew](http://brew.sh/):
+Zur Vorbereitung (mit [Homebrew](http://brew.sh/)):
 * `brew install asciidoc xmlstarlet`
 * [xmllint fixen](https://groups.google.com/forum/#!topic/asciidoc/FC-eOwU8rYg):
  * `sudo mkdir /etc/xml`
