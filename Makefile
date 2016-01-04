@@ -22,5 +22,9 @@ git.chunked-prereq: git.txt styles asciidoc.conf
 git.chunked: git.chunked-prereq styles/toc.html
 	a2x -f chunked --xsl-file styles/chunked.xsl --resource styles --stylesheet=gitbuch.css git.txt
 
+epub:
+	a2x -dbook -fepub git.txt
+	epubcheck git.epub
+
 clean:
-	rm -rf git.html git.chunked style/toc.html
+	rm -rf git.html git.chunked style/toc.html git.epub.d git.epub
