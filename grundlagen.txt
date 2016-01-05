@@ -1090,7 +1090,7 @@ Typen:footnote:[Die technische Dokumentation
 
 
 
-[[tab:cgit-options]]
+[[tab.cgit-options]]
 .Git-Objekte
 [options="header",cols="1,2,2,2"]
 |=====================
