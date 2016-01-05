@@ -8,6 +8,9 @@ git.txt: advanced.txt automatisierung.txt erste_schritte.txt gitdir.txt \
 git.html: git.txt asciidoc.conf
 	asciidoc -a numbered -a data-uri -a toclevels=3 $<
 
+git.epub: git.html 
+	a2x -f epub git.txt
+
 # ARE YOU OUT OF YOUR MIND? ARE YOU NOT CAPABLE OF WRITING UTTERLY
 # SIMPLE XSL TEMPLATES TO ACHIEVE THIS SIMPLE THING? –– No. I’ve tried and failed.
 styles/toc.html: git.chunked-prereq
