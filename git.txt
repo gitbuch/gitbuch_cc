@@ -1,6 +1,7 @@
 Git
 ===
 :subtitle: Verteilte Versionskontrolle für Code und Dokumente
+:author: Valentin_Haenel_und_Julius_Plenz
 :doctype: book
 :revnumber: 3.0
 :lang: de
