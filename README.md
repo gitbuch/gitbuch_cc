@@ -24,9 +24,12 @@ Mac OS X
 
 Zur Vorbereitung (mit [Homebrew](http://brew.sh/)):
 * `brew install asciidoc xmlstarlet epubcheck`
-* [xmllint fixen](https://groups.google.com/forum/#!topic/asciidoc/FC-eOwU8rYg):
+* [xmllint fixen - nutzt dauerhaft das Homebrew Environment](https://groups.google.com/forum/#!topic/asciidoc/FC-eOwU8rYg):
  * `sudo mkdir /etc/xml`
  * `sudo ln -s /usr/local/etc/xml/catalog /etc/xml/catalog`
+* [xmllint temporär fixen](https://groups.google.com/forum/#!topic/asciidoc/FC-eOwU8rYg):
+ * `export XML_CATALOG_FILES=/usr/local/etc/xml/catalog`
+ 
 
 Bauen:
 * `make` erstellt die HTML Version.
