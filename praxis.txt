@@ -26,7 +26,7 @@ Branches werden als grüne Labels, Tags als gelbe Zeiger dargestellt.
 Für weitere Informationen siehe <<sec.gitk>>.
 
 .Das Beispiel-Repository aus <<ch.interna>> in Gitk. Zur Illustration wurde der zweite Commit mit  dem Tag `v0.1` versehen.
-image::bilder_ebook/gitk-basic.png[id="fig.gitk-basic",width="90%"]
+image::bilder_ebook/gitk-basic.png[id="fig.gitk-basic",scaledwidth="90%"]
 
 Da Branches in Git ``billig'' und Merges einfach sind, können
 Sie es sich leisten, Branches exzessiv zu verwenden.  Sie wollen etwas
@@ -77,7 +77,7 @@ Commits auf einem Branch erstellen -- sie bleiben also an der Spitze
 der Versionsgeschichte.
 
 .Der Branch referenziert immer den aktuellsten Commit
-image::bilder_ebook/commit.png[id="fig.commit",width="80%"]
+image::bilder_ebook/commit.png[id="fig.commit",scaledwidth="80%"]
 
 Branches in Repositories anderer Entwickler (z.B. der Master-Branch
 des offiziellen Repositorys), sog.
@@ -157,7 +157,7 @@ eine spezielle Bedeutung hat und Sie es durch Anführungszeichen oder
 mit einem Backslash schützen müssen.
 
 .Relative-Referenzen, `^` und `~<n>`
-image::bilder_ebook/relative-refs.png[id="fig.relative-refs",width="65%"]
+image::bilder_ebook/relative-refs.png[id="fig.relative-refs",scaledwidth="65%"]
 
 Die Syntax `<ref>~<n>` kommt einer
 'n'-fachen Wiederholung von `^` gleich:
@@ -466,7 +466,7 @@ während ein Lightweight Tag direkt auf das markierte Objekt zeigt.
 vergleichen Sie auch die anderen Git-Objekte, <<fig.objekte>>.
 
 .Das Tag-Objekt
-image::bilder_ebook/tags.png[id="fig.tag-objekt",width="90%"]
+image::bilder_ebook/tags.png[id="fig.tag-objekt",scaledwidth="90%"]
 
 Das gezeigte Tag-Objekt hat sowohl eine Größe (158 Byte) als auch eine
 SHA-1-Summe. Es enthält die Bezeichnung (`0.1`), den Objekt-Typ
@@ -527,7 +527,7 @@ Gitk stellt Tags als gelbe, pfeilartige Kästchen dar, die sich
 deutlich von den grünen, rechteckigen Branches unterscheiden:
 
 .Tags in Gitk
-image::bilder_ebook/tag-screenshot.png[id="fig.tag-gitk",width="90%"]
+image::bilder_ebook/tag-screenshot.png[id="fig.tag-gitk",scaledwidth="90%"]
 
 [[sec.lightweight-tags]]
 ===== Lightweight Tags =====  
@@ -710,7 +710,7 @@ der sich im Commit-Graphen sieben Commits nach der Version `1.7.1`
 befindet:
 
 .Der zu beschreibende Commit in Grau hervorgehoben
-image::bilder_ebook/describe-screenshot.png[id="fig.describe",width="90%"]
+image::bilder_ebook/describe-screenshot.png[id="fig.describe",scaledwidth="90%"]
 
 [subs="macros,quotes"]
 --------
@@ -1186,7 +1186,7 @@ verschmolzen werden.
 
 
 .Merge-Basis und Merge-Commit
-image::bilder_ebook/merge-base-commit.png[id="fig.merge-base-commit",width="70%"]
+image::bilder_ebook/merge-base-commit.png[id="fig.merge-base-commit",scaledwidth="70%"]
 
 
 Dafür geht Git so vor:footnote:[Die
@@ -1266,14 +1266,14 @@ Ein Fast-Forward-Merge tritt dann auf, wenn ein Branch, z.B.{empty}{nbsp}`topic`
 ist:
 
 .Vor dem 'Fast-Forward'-Merge
-image::bilder_ebook/ff-vorher.png[id="fig.merge-ff-before",width="90%"]
+image::bilder_ebook/ff-vorher.png[id="fig.merge-ff-before",scaledwidth="90%"]
 
 Ein einfaches `git merge topic` im Branch `master` führt
 nun dazu, dass `master` einfach weitergerückt wird -- es wird
 kein Merge-Commit erzeugt.
 
 .Nach dem 'Fast-Forward'-Merge – es wurde kein Merge-Commit erzeugt
-image::bilder_ebook/ff-nachher.png[id="fig.merge-ff-after",width="90%"]
+image::bilder_ebook/ff-nachher.png[id="fig.merge-ff-after",scaledwidth="90%"]
 
 Ein solches Verhalten geht natürlich nur dann, wenn die beiden
 Branches nicht divergiert haben, wenn also die Merge-Basis beider
@@ -1322,7 +1322,7 @@ folgenden Ausschnitte aus der Versionsgeschichte eines Projekts:
 
 
 .Integration eines Features mit und ohne Fast-Forward
-image::bilder_ebook/ff-no-ff-vergleich.png[id="fig.ff-vergleich",width="80%"]
+image::bilder_ebook/ff-no-ff-vergleich.png[id="fig.ff-vergleich",scaledwidth="80%"]
 
 Im oberen Fall können Sie nicht ohne weiteres erkennen, welche
 Commits ehemals im Branch `sha1-caching` entwickelt wurden,
@@ -1798,7 +1798,7 @@ Letzteres visualisiert besonders gut, wie sich eine Datei zwischen den
 Commits verändert hat.
 
 .Der Beispiel-Merge-Konflikt, im Merge-Tool ``Meld'' visualisiert
-image::bilder_ebook/meld-example.png[id="fig.meld",width="100%"]
+image::bilder_ebook/meld-example.png[id="fig.meld",scaledwidth="100%"]
 
 Sie starten ein solches Merge-Tool über `git mergetool`. Git wird alle
 Dateien, die Konflikte enthalten, durchgehen und jeweils (wenn Sie
@@ -2157,7 +2157,7 @@ untersuchen wir ein kleines Beispiel-Repository mit mehreren Branches,
 die untereinander gemergt wurden:
 
 .Der Graph der Commits, wie er in `gitk` dargestellt wird
-image::bilder_ebook/revision-list-commit-graph-gitk.png[id="fig.rev-list-graph",width="90%"]
+image::bilder_ebook/revision-list-commit-graph-gitk.png[id="fig.rev-list-graph",scaledwidth="90%"]
 
 Wir erkennen vier Branches (A-D) sowie einen Tag `release`.
 Diesen Baum können wir mit geeigneten Kommandozeilenoptionen auch per
@@ -2369,7 +2369,7 @@ einzelner Commits in einen anderen Branch (siehe auch
 <<sec.cherry-pick>>).
 
 .Komplizierte Topologie in Gitk
-image::bilder_ebook/gitk.png[id="fig.gitk",width="90%"]
+image::bilder_ebook/gitk.png[id="fig.gitk",scaledwidth="90%"]
 
 Gitk akzeptiert im wesentlichen die gleichen Optionen wie `git
   log`. Einige Beispiele:

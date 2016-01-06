@@ -152,7 +152,7 @@ Folgt das Projekt dem Subversion-Standardlayout
 Argument `--stdlayout` bzw.  kurz `-s`.
 
 .Standardlayout Subversion
-image::bilder_ebook/svn-stdlayout-crop.png[id="fig.svn-stdlayout",width="20%"]
+image::bilder_ebook/svn-stdlayout-crop.png[id="fig.svn-stdlayout",scaledwidth="20%"]
 
 [[sec.git-svn-metadata]]
 ===== SVN-Metadaten =====  
@@ -215,7 +215,7 @@ passen Sie den Aufruf von `git svn` entsprechend an: Statt
 Projekte in einem Subversion-Repository verwaltet werden (<<fig.svn-nonstdlayout>>).
 
 .Non-Standard Layout
-image::bilder_ebook/svn-nonstdlayout-crop.png[id="fig.svn-nonstdlayout",width="20%"]
+image::bilder_ebook/svn-nonstdlayout-crop.png[id="fig.svn-nonstdlayout",scaledwidth="20%"]
 
 Um `projekt1` zu konvertieren, würde der Aufruf wie folgt
 lauten:footnote:[Existieren
@@ -298,12 +298,12 @@ Angenommen, das Subversion-Repository hat folgende Subversion-Branches
 und -Tags:
 
 .Beispiel Subversion-Branches und -Tags
-image::bilder_ebook/svn-branches-crop.png[id="fig.svn-branches",width="20%"]
+image::bilder_ebook/svn-branches-crop.png[id="fig.svn-branches",scaledwidth="20%"]
 
 In diesem Fall erzeugt `git svn` folgende Git-Branches:
 
 .Konvertierte Git-Branches
-image::bilder_ebook/git-branches-crop.png[id="fig.git-konverted-branches",width="35%"]
+image::bilder_ebook/git-branches-crop.png[id="fig.git-konverted-branches",scaledwidth="35%"]
 
 Das Präfix passen Sie mit der Option `--prefix=` an. So
 werden zum Beispiel mit der Anweisung `--prefix=svn/` alle
@@ -398,10 +398,10 @@ Das Script `git-convert-refs` übersetzt schließlich
 Lightweight Tag.
 
 .Konvertierte Branches und Tags vor der Übersetzung
-image::bilder_ebook/git-convert-refs-before.png[id="fig.git-convert-refs-before",width="90%"]
+image::bilder_ebook/git-convert-refs-before.png[id="fig.git-convert-refs-before",scaledwidth="90%"]
 
 .Konvertierte Branches und Tags nach der Übersetzung
-image::bilder_ebook/git-convert-refs-after.png[id="fig.git-convert-refs-after",width="90%"]
+image::bilder_ebook/git-convert-refs-after.png[id="fig.git-convert-refs-after",scaledwidth="90%"]
 
 
 Nachdem Sie die Subversion-Branches und Tags umgeschrieben haben,
@@ -460,7 +460,7 @@ Veränderungen. Das Tag `v2.0` hingegen wurde nach seiner
 Erstellung von Commit `C2` nochmals verändert.
 
 .Konvertierte Git-Tags auf Abzweigungen
-image::bilder_ebook/git-svn-tag-fix-before.png[id="fig.git-svn-tag-fix-before",width="90%"]
+image::bilder_ebook/git-svn-tag-fix-before.png[id="fig.git-svn-tag-fix-before",scaledwidth="90%"]
 
 In <<fig.git-svn-tag-fix-after>> sehen Sie, wie das Tag
 `v1.0` von obigem Script auf den Vorfahren verschoben wurde
@@ -469,7 +469,7 @@ Ort und Stelle (weil die Trees aufgrund nachträglicher Veränderungen
 verschieden sind).
 
 .Tag `v1.0` wurde umgeschrieben
-image::bilder_ebook/git-svn-tag-fix-after.png[id="fig.git-svn-tag-fix-after",width="90%"]
+image::bilder_ebook/git-svn-tag-fix-after.png[id="fig.git-svn-tag-fix-after",scaledwidth="90%"]
 
 
 [TIP]
@@ -547,7 +547,7 @@ unten abgebildet.
 
 
 .Konvertiertes Subversion-Repository
-image::bilder_ebook/git-svn-merge-demo.png[id="fig.git-svn-merge-demo",width="90%"]
+image::bilder_ebook/git-svn-merge-demo.png[id="fig.git-svn-merge-demo",scaledwidth="90%"]
 
 Die Commits im Subversion-Repository wurden in der folgenden
 Reihenfolge gemacht:
@@ -837,7 +837,7 @@ aktuelle Branch (in diesem Fall `master`) neu aufgebaut. Der
 Commit D&#39; kann nun hochgeladen werden.
 
 .`git svn rebase` integriert die neu hinzugekommene Subversion-Revision als Commit  `C` – vor `D`, was dadurch zu `D'` wird.
-image::bilder_ebook/svn_rebase.png[id="fig.git-svn-rebase",width="90%"]
+image::bilder_ebook/svn_rebase.png[id="fig.git-svn-rebase",scaledwidth="90%"]
 
 Mit `git svn dcommit` laden Sie das Changeset eines Git-Commits
 als Revision in das Subversion-Repository hoch. Als Teil der Operation
@@ -851,7 +851,7 @@ ist.
 
 
 .Nach einem `git svn dcommit` hat der Commit `D'` eine neue SHA-1-ID und wird zu  `D''`, weil seine Commit-Beschreibung verändert wurde, um Metainformationen abzuspeichern.
-image::bilder_ebook/svn_dcommit.png[id="fig.git-svn-dcommit",width="90%"]
+image::bilder_ebook/svn_dcommit.png[id="fig.git-svn-dcommit",scaledwidth="90%"]
 
 Ähnlich wie bei `git push` dürfen Sie keine Commits, die Sie
 bereits mit `git svn dcommit` hochgeladen haben, nachträglich
