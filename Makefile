@@ -26,5 +26,10 @@ epub:
 	a2x -dbook -fepub git.txt
 	epubcheck git.epub
 
+pdf: git.pdf
+
+git.pdf: git.txt
+	a2x -fpdf $<
+
 clean:
 	rm -rf git.html git.chunked style/toc.html git.epub.d git.epub
