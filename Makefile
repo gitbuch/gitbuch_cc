@@ -28,8 +28,12 @@ epub:
 
 pdf: git.pdf
 
-git.pdf: git.txt
-	a2x -fpdf $<
+git.pdf: git.txt styles/dblatex.sty
+	a2x -fpdf --dblatex-opts "-P latex.output.revhistory=0 \
+                                  -P doc.publisher.show=0 \
+                                  -P latex.class.book=book \
+                                  -P geometry.options=margin=2cm \
+                                  -s styles/dblatex.sty" $<
 
 clean:
 	rm -rf git.html git.chunked style/toc.html git.epub.d git.epub
