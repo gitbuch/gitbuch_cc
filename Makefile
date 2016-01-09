@@ -32,7 +32,7 @@ git.pdf: git.txt styles/dblatex.sty
 	a2x -fpdf --dblatex-opts "-P latex.output.revhistory=0 \
 	                              -P doc.publisher.show=0 \
 	                              -P latex.class.book=book \
-	                              -P geometry.options=margin=2cm \
+	                              -P geometry.options=margin=3cm \
 	                              -s styles/dblatex.sty" \
 	          --asciidoc-opts="-f asciidoc-pdf.conf" $<
 
