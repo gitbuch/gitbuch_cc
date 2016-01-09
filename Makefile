@@ -4,6 +4,7 @@ all: git.chunked git.html
 git.txt: advanced.txt automatisierung.txt erste_schritte.txt gitdir.txt \
     github.txt grundlagen.txt installation.txt praxis.txt remote.txt \
     server.txt shell.txt vorwort.txt workflows.txt zusammenspiel.txt
+	touch $@
 
 git.html: git.txt asciidoc.conf
 	asciidoc -a numbered -a data-uri -a toclevels=3 $<
@@ -22,9 +23,10 @@ git.chunked-prereq: git.txt styles asciidoc.conf
 git.chunked: git.chunked-prereq styles/toc.html
 	a2x -f chunked --xsl-file styles/chunked.xsl --resource styles --stylesheet=gitbuch.css git.txt
 
-epub:
-	a2x -dbook -fepub git.txt
-	epubcheck git.epub
+epub: git.epub
+
+git.epub: git.txt
+	a2x -fepub --epubcheck $<
 
 clean:
 	rm -rf git.html git.chunked style/toc.html git.epub.d git.epub
