@@ -385,7 +385,7 @@ als das alte sind.
 
 
 .Die Ausgabe von `git diff` mit dem eigenen Diff-Programm `imgdiff`
-image::bilder_ebook/tux-diff.png[id="fig.tux-diff",width="90%"]
+image::bilder_ebook/tux-diff.png[id="fig.tux-diff",scaledwidth="90%",width="90%"]
 
 Das Beispiel mit dem Tux inkl. Anleitung finden Sie auch in einem Repository
 unter: https://github.com/gitbuch/tux-diff-demo.

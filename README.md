@@ -19,6 +19,18 @@ interessant; falls Du dies übernehmen willst, gerne!
 Bauen
 =====
 
+Voraussetzungen: Installiertes `asciidoc`, `dblatex` und `texlive-fonts-extra` (für PDF).
+
+Bauen:
+* `make` erstellt die HTML Version.
+* `xdg-open git.chunked/pr01.html` öffnet das Ergebnis im Browser.
+
+* `make epub` erstellt die EPUB Version.
+* `xdg-open git.epub` öffnet das EPUB.
+
+* `make pdf` erstellt die EPUB Version.
+* `xdg-open git.epub` öffnet das PDF.
+
 Mac OS X
 --------
 
@@ -27,13 +39,6 @@ Zur Vorbereitung (mit [Homebrew](http://brew.sh/)):
 * [xmllint fixen](https://groups.google.com/forum/#!topic/asciidoc/FC-eOwU8rYg):
  * `sudo mkdir /etc/xml`
  * `sudo ln -s /usr/local/etc/xml/catalog /etc/xml/catalog`
-
-Bauen:
-* `make` erstellt die HTML Version.
-* `open git.chunked/index.html` öffnet das Ergebnis im Browser.
-
-* `make epub` erstellt die EPUB Version.
-* `open git.epub` öffnet das EPUB.
 
 Lizenz
 ======

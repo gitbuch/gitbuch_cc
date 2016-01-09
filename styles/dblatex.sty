@@ -1,0 +1,50 @@
+%%
+%% This style is derived from the docbook one.
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{asciidoc}[2008/06/05 AsciiDoc DocBook Style]
+
+%% Just use the original package and pass the options.
+\RequirePackageWithOptions{docbook}
+
+\usepackage{ebgaramond}
+
+% Sidebar is a boxed minipage that can contain verbatim.
+% Changed shadow box to double box.
+\renewenvironment{sidebar}[1][0.95\textwidth]{
+  \hspace{0mm}\newline%
+  \noindent\begin{Sbox}\begin{minipage}{#1}%
+  \setlength\parskip{\medskipamount}%
+}{
+  \end{minipage}\end{Sbox}\doublebox{\TheSbox}%
+}
+
+% For DocBook literallayout elements, see `./dblatex/dblatex-readme.txt`.
+\usepackage{alltt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RO,LE]{\thepage}
+\fancyhead[LO]{\leftmark}
+\fancyhead[RE]{\rightmark}
+\renewcommand{\footrulewidth}{0pt}
+
+\newcommand\edhead{}
+\renewcommand{\maketitle}{
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \vspace{10cm}
+    \begin{center}
+      {\Huge\bfseries\sffamily Git}\\
+      \vspace{1cm}
+      {\large\sffamily Verteilte Versionskontrolle f\"{u}r Code und Dokumente}\\
+      \vspace{1cm}
+      Valentin Haenel und Julius Plenz\\
+      \vspace{3cm}
+      {\small Version vom \today{}.}\\
+      {\small Homepage: \url{http://gitbu.ch/}}\\
+      \vspace{3cm}
+      {\small Lizensiert unter der \emph{CreativeCommons Attribution-NonCommercial-ShareAlike 4.0 International}\\ (CC BY-NC-SA 4.0)}
+    \end{center}
+  \end{titlepage}
+}

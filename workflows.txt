@@ -176,7 +176,7 @@ Punkte umfassenden Workflows, der unten detailliert erläutert wird.
 
 
 .Branch-Modell gemäß `gitworkflows (7)`
-image::bilder_ebook/branch-model.png[id="fig.branch-model",width="90%"]
+image::bilder_ebook/branch-model.png[id="fig.branch-model",scaledwidth="90%",width="90%"]
 
 . Neue Topic-Branches entstehen von
   wohldefinierten Punkten, z.B. getaggten Releases, auf dem

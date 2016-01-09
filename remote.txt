@@ -44,7 +44,7 @@ Repositories zum Einsatz kommen (<<sec.multi-remote>>),
 und den Patch-Austausch per E-Mail (<<sec.patch-queue>>).
 
 .Zentraler Workflow mit verteilter Versionsverwaltung
-image::bilder_ebook/zentral.png[id="fig.zentraler-workflow",width="70%"]
+image::bilder_ebook/zentral.png[id="fig.zentraler-workflow",scaledwidth="70%",width="70%"]
 
 Im Unterschied zu zentralen Systemen erfolgen die Commit- und
 Checkout-Vorgänge bei Git lokal.  Auch andere alltägliche Aufgaben,
@@ -300,7 +300,7 @@ initialisiert Git für jeden Remote-Branch einen
 Remote-Tracking-Branch.
 
 .Erzeugte Remote-Tracking-Branches
-image::bilder_ebook/clone.png[id="fig.clone",width="100%"]
+image::bilder_ebook/clone.png[id="fig.clone",scaledwidth="100%",width="100%"]
 
 
 In <<fig.clone>> sehen Sie ein Beispiel. Das
@@ -377,7 +377,7 @@ dem Präfix `remotes/<remote-name>/` angezeigt, das zudem dunkelgelb
 gefärbt ist (<<fig.remote-tracking-gitk>>).
 
 .Branch `next` und der entsprechende Remote-Tracking-Branch in Gitk
-image::bilder_ebook/remote-tracking-gitk.png[id="fig.remote-tracking-gitk",width="90%"]
+image::bilder_ebook/remote-tracking-gitk.png[id="fig.remote-tracking-gitk",scaledwidth="90%",width="90%"]
 
 [[sec.git_fetch]]
 === Commits herunterladen === 
@@ -438,7 +438,7 @@ lädt Git den fehlenden Commit C herunter und setzt anschließend den
 Remote-Tracking-Branch darauf.
 
 .Remote-Tracking-Branches werden aktualisiert
-image::bilder_ebook/fetch.png[id="fig.fetch",width="90%"]
+image::bilder_ebook/fetch.png[id="fig.fetch",scaledwidth="90%",width="90%"]
 
 [[sec.refspec]]
 ===== Refspec =====  
@@ -676,7 +676,7 @@ integriert, was Sie an dem Merge-Commit M sowie der
 aktuellen Position des lokalen `master` erkennen.
 
 .Was bei einem Pull passiert
-image::bilder_ebook/pull.png[id="fig.pull",width="90%"]
+image::bilder_ebook/pull.png[id="fig.pull",scaledwidth="90%",width="90%"]
 
 Alternativ weist die Option `--rebase` das Pull-Kommando an, nach dem
 `fetch` den lokalen Branch per Rebase auf den
@@ -692,7 +692,7 @@ Sie statt des Standard-Merge einen Rebase ausführen.
 
 
 .Was bei einem Pull mit Rebase passiert
-image::bilder_ebook/pull_rebase.png[id="fig.pull_rebase",width="90%"]
+image::bilder_ebook/pull_rebase.png[id="fig.pull_rebase",scaledwidth="90%",width="90%"]
 
 
 Die Ausgangssituation ist dieselbe wie in 
@@ -976,7 +976,7 @@ entspricht. Außerdem wird der Remote-Tracking-Branch
 Remote widerspiegelt.
 
 .Referenzen und Commits hochladen
-image::bilder_ebook/push.png[id="fig.push",width="100%"]
+image::bilder_ebook/push.png[id="fig.push",scaledwidth="100%",width="100%"]
 
 Analog zu `fetch` weigert sich Git, Referenzen zu aktualisieren,
 bei denen der Ziel-Commit kein Nachfahre des aktuellen Commits ist:
@@ -1282,7 +1282,7 @@ eigene Entwicklungsmaschine zu geben, das geschieht in der Praxis aber
 beinahe nie.
 
 .Integration-Manager Workflow
-image::bilder_ebook/developer-public.png[id="fig.developer-public-workflow",width="70%"]
+image::bilder_ebook/developer-public.png[id="fig.developer-public-workflow",scaledwidth="70%",width="70%"]
 
 Einer der Maintainer, die Zugriff auf das Haupt-Repository haben,
 überprüft dann, ob der Code funktioniert, ob er den
@@ -1603,7 +1603,7 @@ Nummerierung und der Commit-Message und enden auf
   die Auswahl von dem Commit bis zum `HEAD`.
 
 .Drei Commits nach  `master` als Patches formatieren
-image::bilder_ebook/gitk-screen-format-patch.png[id="fig.gitk-screen-format-patch",width="90%"]
+image::bilder_ebook/gitk-screen-format-patch.png[id="fig.gitk-screen-format-patch",scaledwidth="90%",width="90%"]
 
 <<fig.gitk-screen-format-patch>> zeigt die
 Ausgangssituation. Wir wollen die drei Commits in dem Branch
@@ -1762,7 +1762,7 @@ angezeigt:footnote:[Sie sehen in
 
 
 .Patch-Serie als Mail-Thread
-image::bilder_ebook/mail-thread.png[id="fig.mail-thread",width="100%"]
+image::bilder_ebook/mail-thread.png[id="fig.mail-thread",scaledwidth="100%",width="100%"]
 
 Das Kommando können Sie über Optionen -- beispielsweise `--to`, `--from` und `--cc` -- anpassen (siehe die Man-Page `git-send-email(1)`).  Die
 unbedingt benötigten Angaben werden aber, sofern nicht angegeben,
@@ -1933,7 +1933,7 @@ wiederum alle Mitstreiter synchronisieren.
 
 
 .Workflow: 'Dictator and Lieutenants'
-image::bilder_ebook/patches-per-mail.png[id="fig.dictator",width="90%"]
+image::bilder_ebook/patches-per-mail.png[id="fig.dictator",scaledwidth="90%",width="90%"]
 
 Der Workflow basiert auf Vertrauen: Der Diktator vertraut seinen
 Lieutenants und übernimmt deren weitergeleitete Modifikationen meist
