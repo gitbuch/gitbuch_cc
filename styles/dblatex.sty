@@ -3,8 +3,11 @@
 %%
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{asciidoc}[2008/06/05 AsciiDoc DocBook Style]
+
 %% Just use the original package and pass the options.
 \RequirePackageWithOptions{docbook}
+
+\usepackage{ebgaramond}
 
 % Sidebar is a boxed minipage that can contain verbatim.
 % Changed shadow box to double box.
@@ -35,10 +38,13 @@
       {\Huge\bfseries\sffamily Git}\\
       \vspace{1cm}
       {\large\sffamily Verteilte Versionskontrolle f\"{u}r Code und Dokumente}\\
-      \vspace{3cm}
+      \vspace{1cm}
       Valentin Haenel und Julius Plenz\\
       \vspace{3cm}
-      {\small Lizensiert unter der \emph{CreativeCommons Attribution-NonCommercial-ShareAlike 4.0 International} (CC BY-NC-SA 4.0)}
+      {\small Version vom \today{}.}\\
+      {\small Homepage: \url{http://gitbu.ch/}}\\
+      \vspace{3cm}
+      {\small Lizensiert unter der \emph{CreativeCommons Attribution-NonCommercial-ShareAlike 4.0 International}\\ (CC BY-NC-SA 4.0)}
     \end{center}
   \end{titlepage}
 }

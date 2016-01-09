@@ -33,8 +33,9 @@ git.pdf: git.txt styles/dblatex.sty
 	                              -P doc.publisher.show=0 \
 	                              -P latex.class.book=book \
 	                              -P geometry.options=margin=3cm \
+	                              -P latex.class.options=12pt \
 	                              -s styles/dblatex.sty" \
 	          --asciidoc-opts="-f asciidoc-pdf.conf" $<
 
 clean:
-	rm -rf git.html git.chunked style/toc.html git.epub.d git.epub
+	rm -rf git.html git.chunked style/toc.html git.epub.d git.epub git.pdf
