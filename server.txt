@@ -1165,10 +1165,10 @@ $HTTP["host"] =~ "^git\.example\.com(:\d+)?$" {
 
 
 .Übersichtsseite von Gitweb
-image::bilder_ebook/gitweb-overview.png[id="fig.gitweb-overview",scaledwidth="90%"]
+image::bilder_ebook/gitweb-overview.png[id="fig.gitweb-overview",scaledwidth="90%",width="90%"]
 
 .Darstellung eines Commits in Gitweb
-image::bilder_ebook/gitweb-commitdiff.png[id="fig.gitweb-commitdiff",scaledwidth="90%"]
+image::bilder_ebook/gitweb-commitdiff.png[id="fig.gitweb-commitdiff",scaledwidth="90%",width="90%"]
 
 
 
@@ -1219,7 +1219,7 @@ zu verwenden, so dass Sie das Paket ggf. leicht wieder loswerden
 können.
 
 .Übersichtsseite von CGit
-image::bilder_ebook/cgit-overview.png[id="fig.cgit-overview",scaledwidth="90%"]
+image::bilder_ebook/cgit-overview.png[id="fig.cgit-overview",scaledwidth="90%",width="90%"]
 
 
 [[sec.cgit-integration]]
@@ -1354,7 +1354,7 @@ scan-path=/var/git/repositories
 
 
 .Darstellung eines Commits in CGit
-image::bilder_ebook/cgit-commitdiff.png[id="fig.cgit-commitdiff",scaledwidth="90%"]
+image::bilder_ebook/cgit-commitdiff.png[id="fig.cgit-commitdiff",scaledwidth="90%",width="90%"]
 
 
 [[sec.cgit-special-config]]

@@ -47,7 +47,7 @@ löschen diese wieder; erst das Kommando `commit` überträgt die
 Datei, wie sie im Index vorgehalten wird, in das Repository (<<fig.index>>).
 
 .Kommandos `add`, `reset` und `commit`
-image::bilder_ebook/index.png[id="fig.index",scaledwidth="90%"]
+image::bilder_ebook/index.png[id="fig.index",scaledwidth="90%",width="90%"]
 
 Im Ausgangszustand, das heißt wenn `git status` die Nachricht
 `nothing to commit` ausgibt, sind Working Tree und Index mit
@@ -999,7 +999,7 @@ untersucht wird, mit dem Befehl `git clone
 git://github.com/gitbuch/objektmodell-beispiel.git` herunterladen.]
 
 .Hello World!-Programm in Python
-image::bilder_ebook/objektmodell-programm-crop.png[id="fig.objektmodell-program-crop",scaledwidth="25%"]
+image::bilder_ebook/objektmodell-programm-crop.png[id="fig.objektmodell-program-crop",scaledwidth="25%",width="25%"]
 
 Das Projekt besteht aus der Datei `hello.py` sowie einer
 `README`-Datei und einem Verzeichnis `test`. Führt man
@@ -1048,7 +1048,7 @@ Diese Eigenschaft wird als 'Kollisionssicherheit' bezeichnet.
 
 
 .SHA-1-Algorithmus
-image::bilder_ebook/sha.png[id="fig.sha",scaledwidth="90%"]
+image::bilder_ebook/sha.png[id="fig.sha",scaledwidth="90%",width="90%"]
 
 
 Allen Bemühungen der Kryptologen zum Trotz wurden vor einigen Jahren
@@ -1119,7 +1119,7 @@ referenziert, die diese Unterverzeichnisse abbilden.
 
 
 .Git-Objekte
-image::bilder_ebook/objekte.png[id="fig.objekte",scaledwidth="90%"]
+image::bilder_ebook/objekte.png[id="fig.objekte",scaledwidth="90%",width="90%"]
 
 
 Das Commit-Objekt enthält also genau 'eine' Referenz auf einen
@@ -1198,7 +1198,7 @@ zeigen, illustriert.
 
 
 .Hierarchische Beziehung der Git-Objekte
-image::bilder_ebook/objekte-zusammenhang.png[id="fig.objekte-zusammenhang",scaledwidth="65%"]
+image::bilder_ebook/objekte-zusammenhang.png[id="fig.objekte-zusammenhang",scaledwidth="65%",width="65%"]
 
 
 Jeder Commit referenziert den Top-Level Tree -- auch der Commit
@@ -1332,7 +1332,7 @@ gleichen.
 
 
 .Inhalt des Repositorys
-image::bilder_ebook/struktur.png[id="fig.struktur",scaledwidth="80%"]
+image::bilder_ebook/struktur.png[id="fig.struktur",scaledwidth="80%",width="80%"]
 
 
 Mehr noch: Eine Datei, die zweimal existiert, existiert nur einmal in
@@ -1423,7 +1423,7 @@ wurde. Commit G ist ein einzelner Commit, der noch nicht in den
 Hauptentwicklungszweig integriert wurde.
 
 .Ein Commit-Graph
-image::bilder_ebook/graph.png[id="fig.graph",scaledwidth="45%"]
+image::bilder_ebook/graph.png[id="fig.graph",scaledwidth="45%",width="45%"]
 
 Ein Resultat der Graph-Struktur ist die kryptographisch gesicherte
 'Integrität' eines Repositorys. Git referenziert durch die
@@ -1472,5 +1472,5 @@ Branches `master`, `HEAD`, `feature` und  `bugfix`.
 Sowie den Tags  `v0.1` und `v0.2`.
 
 .Ein beispielhafter Commit-Graph mit Branches und Tags
-image::bilder_ebook/graph-mit-refs.png[id="fig.graph-mit-refs",scaledwidth="75%"]
+image::bilder_ebook/graph-mit-refs.png[id="fig.graph-mit-refs",scaledwidth="75%",width="75%"]
 
