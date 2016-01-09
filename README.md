@@ -13,8 +13,7 @@ immer gerne gesehen!
 Falls Du ein DocBook-Experte und/oder Webprogrammierer bist, und denkst: Das
 Design könnte man ja wohl mal professionalisieren – dann gerne! Ich habe aus
 den Quelldateien nur schnell eine halbwegs ansehnliche Webseite
-zusammengestoppelt. Auch sind gegebenenfalls eine PDF- oder EPUB-Version
-interessant; falls Du dies übernehmen willst, gerne!
+zusammengestoppelt.
 
 Bauen
 =====
