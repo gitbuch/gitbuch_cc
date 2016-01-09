@@ -25,3 +25,20 @@
 \fancyhead[LO]{\leftmark}
 \fancyhead[RE]{\rightmark}
 \renewcommand{\footrulewidth}{0pt}
+
+\newcommand\edhead{}
+\renewcommand{\maketitle}{
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \vspace{10cm}
+    \begin{center}
+      {\Huge\bfseries\sffamily Git}\\
+      \vspace{1cm}
+      {\large\sffamily Verteilte Versionskontrolle f\"{u}r Code und Dokumente}\\
+      \vspace{3cm}
+      Valentin Haenel und Julius Plenz\\
+      \vspace{3cm}
+      {\small Lizensiert unter der \emph{CreativeCommons Attribution-NonCommercial-ShareAlike 4.0 International} (CC BY-NC-SA 4.0)}
+    \end{center}
+  \end{titlepage}
+}
