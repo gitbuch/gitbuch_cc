@@ -24,10 +24,10 @@ Bauen:
 * `make` erstellt die HTML Version.
 * `xdg-open git.chunked/pr01.html` öffnet das Ergebnis im Browser.
 
-* `make epub` erstellt die EPUB Version.
+* `make epub` erstellt die EPUB-Version.
 * `xdg-open git.epub` öffnet das EPUB.
 
-* `make pdf` erstellt die EPUB Version.
+* `make pdf` erstellt die PDF-Version.
 * `xdg-open git.epub` öffnet das PDF.
 
 Mac OS X
