@@ -28,7 +28,7 @@ Bauen:
 * `xdg-open git.epub` öffnet das EPUB.
 
 * `make pdf` erstellt die PDF-Version.
-* `xdg-open git.epub` öffnet das PDF.
+* `xdg-open git.pdf` öffnet das PDF.
 
 Mac OS X
 --------
