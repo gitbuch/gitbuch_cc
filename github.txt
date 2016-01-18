@@ -6,13 +6,13 @@ für Open-Source-Projekte anbieten. Die mit Abstand bekannteste von
 allen ist
 'Github'.footnote:[https://github.com/]
 Zwei andere bekannte reine Git-Hoster sind
-'Gitorious'{wj}footnote:[http://gitorious.org/]
+'Gitorious'{empty}footnote:[http://gitorious.org/]
 und
-'repo.or.cz'{wj}footnote:[http://repo.or.cz/].
+'repo.or.cz'{empty}footnote:[http://repo.or.cz/].
 Aber auch bereits etablierte Hosting-Seiten wie
-'Sourceforge'{wj}footnote:[http://sourceforge.net/]
+'Sourceforge'{empty}footnote:[http://sourceforge.net/]
 und
-'Berlios'{wj}footnote:[http://www.berlios.de/]
+'Berlios'{empty}footnote:[http://www.berlios.de/]
 bieten mittlerweile Git-Hosting an.
 
 Github wurde 2008 von Chris Wanstrath,
@@ -26,11 +26,11 @@ Auch wenn man bedenkt, dass viele dieser Repositories sogenannte
 Viele namhafte Projekte
 verwenden heutzutage Github, um ihren Quelltext zu verwalten, unter
 anderem das Kommandozeilen-Tool
-'Curl'{wj}footnote:[http://curl.haxx.se/],
+'Curl'{empty}footnote:[http://curl.haxx.se/],
 das Web-Framework 'Ruby on
-  Rails'{wj}footnote:[http://rubyonrails.org/] und
+  Rails'{empty}footnote:[http://rubyonrails.org/] und
 die JavaScript-Bibliothek
-'jQuery'{wj}footnote:[http://jquery.com/].
+'jQuery'{empty}footnote:[http://jquery.com/].
 
 Das kostenfreie Angebot umfasst unbegrenzte Git-Repositories -- mit
 der Einschränkung, dass diese öffentlich verfügbar sind
@@ -43,10 +43,10 @@ Github eine Lösung namens 'GitHub Enterprise' an.
 Github bietet alle wesentlichen Features, die Sie von einer
 Projekt-Hosting-Plattform erwarten, darunter auch Projekt-Wiki und
 Issue-Tracker. Das besondere daran ist aber, dass das Wiki-System
-'Gollum'{wj}footnote:[https://github.com/github/gollum]
+'Gollum'{empty}footnote:[https://github.com/github/gollum]
 als Backend keine Datenbank, sondern lediglich ein Git-Repository
 verwendet.  Als Markup bietet Github mehrere
-Syntax-Optionen{wj}footnote:[https://github.com/github/markup]
+Syntax-Optionen{empty}footnote:[https://github.com/github/markup]
 an, unter anderem 'Markdown', 'Textile', 'Mediawiki'
 und 'Asciidoc'.
 
@@ -91,7 +91,7 @@ image::bilder_ebook/github-workflow.png[id="fig.github-workflow",scaledwidth="70
 
 
 . Ein potentieller Contributor
-'forkt'{wj}footnote:[Nicht als Projekt-Fork
+'forkt'{empty}footnote:[Nicht als Projekt-Fork
   misszuverstehen, bei dem sich ein Projekt aufgrund interner
   Differenzen spaltet.] ein Repository bei Github.
 

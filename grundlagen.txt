@@ -1150,7 +1150,7 @@ können ein Objekt, nachdem es gespeichert wurde, über seine
 SHA-1-Summe in der Datenbank finden. Dadurch funktioniert die
 Objektdatenbank im Prinzip wie eine große 'Hash-Tabelle', wo die
 SHA-1-Summen als Schlüssel für den gespeicherten
-Inhalt{wj}footnote:[Git speichert sämtliche Objekte
+Inhalt{empty}footnote:[Git speichert sämtliche Objekte
   unterhalb von `.git/objects`. Man unterscheidet zwischen
   'Loose Objects' und 'Packfiles'. Die ``losen''
   Objekte speichern den Inhalt in einer Datei, deren Name der

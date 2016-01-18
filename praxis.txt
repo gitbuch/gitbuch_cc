@@ -1791,9 +1791,9 @@ die Lösung des Konflikts erleichtert.
 
 Gängige IDEs und Editoren wie z.B. Vim und Emacs bieten einen
 solchen Modus an. Außerdem gibt es externe Tools, wie zum Beispiel
-'KDiff3'{wj}footnote:[http://kdiff3.sourceforge.net/]
+'KDiff3'{empty}footnote:[http://kdiff3.sourceforge.net/]
 und
-'Meld'{wj}footnote:[http://meld.sourceforge.net/].
+'Meld'{empty}footnote:[http://meld.sourceforge.net/].
 Letzteres visualisiert besonders gut, wie sich eine Datei zwischen den
 Commits verändert hat.
 
@@ -2034,7 +2034,7 @@ führen.
 Ein weiterer Faktor, der leider häufig zu unnötigen(!) Konflikten
 führt, sind autogenerierte Inhalte. Angenommen, Sie schreiben die
 Dokumentation einer Software in
-'AsciiDoc'{wj}footnote:[AsciiDoc ist eine simple,
+'AsciiDoc'{empty}footnote:[AsciiDoc ist eine simple,
   wiki-ähnliche Markup-Sprache:
   `http://www.methods.co.nz/asciidoc/`. Die Git-Dokumentation liegt in
   diesem Format vor und wird in HTML-Seiten und Man-Pages konvertiert,
