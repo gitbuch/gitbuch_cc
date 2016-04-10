@@ -446,7 +446,7 @@ essentiell die gleiche Änderung einbringen, die gleiche ID.
 In der Regel wird `git cherry` eingesetzt, wenn sich die Frage
 stellt: Welche Commits wurden schon in den Integrations-Branch
 übernommen? Dafür wird das Kommando `git cherry -v <upstream>
-  <topic>` verwendet: Es listet alle Commits auf `<topic>` auf,
+  <topic>` verwendet: Es listet alle Commits aus `<topic>` auf,
 und stellt ihnen ein Minus (`-`) voran, wenn sie schon in
 `<upstream>` sind, ansonsten ein Plus (`+`).  Das sieht z.B.
 so aus:
