@@ -1186,7 +1186,7 @@ Version im aktuellen Working Tree) sowie `Stashed Changes`
 [IMPORTANT]
 ============
 Sollten Sie versucht haben, einen Stash mit `git stash
-  pop` anzuwenden, wird der Stash 'nicht' automatisch gelöscht.
+  apply` anzuwenden, wird der Stash 'nicht' automatisch gelöscht.
 Sie müssen ihn explizit mit `git stash drop` löschen.
 ============
 
