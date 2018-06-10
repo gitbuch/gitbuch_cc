@@ -170,6 +170,7 @@ body pre {
   margin: 0.5em 1em 0.5em 1em !important;
   line-height: 1.0;
   color: navy;
+  white-space: pre-wrap;
 }
 
 tt.literal, code.literal {
