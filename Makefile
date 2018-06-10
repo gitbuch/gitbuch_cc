@@ -26,7 +26,7 @@ git.chunked: git.chunked-prereq styles/toc.html
 epub: git.epub
 
 git.epub: git.txt
-	a2x -fepub --epubcheck $<
+	a2x -fepub --stylesheet="docbook-xsl.css styles/ebook.css" --epubcheck $<
 
 pdf: git.pdf
 
