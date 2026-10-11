@@ -1,7 +1,7 @@
 Quelldaten für das Git-Buch
 ===========================
 
-Eine gerenderte Version findet sich auf [gitbu.ch](http://gitbu.ch/pr01.html).
+Eine gerenderte Version findet sich auf [gitbuch.github.io](https://gitbuch.github.io/pr01.html) und im [Webachive.org](https://web.archive.org/web/20260514143319/http://gitbu.ch/).
 
 Pull-Requests sind willkommen; es handelt sich allerdings um ein Buch, das
 wiederholt professionell lektoriert wurde. Diesen Qualitäts-Standard wollen wir
